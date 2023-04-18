@@ -27,12 +27,15 @@
 
 
       public function __construct ($frequencia, string $codigo_plan, Aeronave $aeronave, 
-                                  Aeroporto $chegada, Aeroporto $saida) {
+                                  Aeroporto $chegada, Aeroporto $saida,
+                                  DateTime $horarios, DateTime $horarioc) {
         $this->_frequencia = $frequencia;
         $this->_codigo_plan = $codigo_plan;
         $this->_aeronave = $aeronave;
         $this->_ae_chegada = $chegada;
         $this->_ae_saida = $saida;
+        $this->_horario_s = $horarios;
+        $this->_horario_c = $horarioc;
       }
 
       public function ExecutarViagem (Viagem $voo, CompanhiaAerea $comp) {
@@ -60,15 +63,15 @@
             $hora_chegada = $this->_horario_c->format('h:i:s');
             
             //transfomra os dados anteriores em uma variavel tipo DateTime.
-            $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_partida + " " + $hora_partida );
-            $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_chegada + " " + $hora_chegada );
+            $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_partida . " " . $hora_partida );
+            $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_chegada . " " . $hora_chegada );
             
             //caracteres para a a fomração do código da viagem.
             $permstr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             $permint = "01234567890";
             
             //formação do código da viagem (gerado aleatoriamente).
-            $codigo = substr(str_shuffle($permstr), 0, 2) + substr(str_shuffle($permint), 0, 4);
+            $codigo = substr(str_shuffle($permstr), 0, 2) . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
             $viagem = new Viagem( $data_partida,
@@ -77,11 +80,9 @@
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,
-                        0.0,
                         false);
             
             array_push($this->_viagens_planejadas, $viagem);
-
           }
           
           //vai para o próximo dia.
@@ -123,18 +124,20 @@
 
       public function showViagens(){
 
+        if(!$this->_viagens_planejadas) echo "opa \n";
         foreach ($this->_viagens_planejadas as $viagem){
+
           
-          echo $viagem->getCodigo;
+          echo $viagem->getCodigo();
           echo " -> \n";
-          echo $viagem->getAeroportoS->getSigla();
+          echo $viagem->getAeroportoSaida()->getSigla();
           echo ": ";
-          echo $viagem->getDataS->format('m-d h:i');
+          echo $viagem->getDataS()->format('m-d h:i');
           echo "\n";
 
-          echo $viagem->getAeroportoC->getSigla();
+          echo $viagem->getAeroportoChegada()->getSigla();
           echo ": ";
-          echo $viagem->getDataC->format('m-d h:i');
+          echo $viagem->getDataC()->format('m-d h:i');
           echo "\n";
           echo "\n";
           

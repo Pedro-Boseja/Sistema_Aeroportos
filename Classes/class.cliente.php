@@ -1,20 +1,14 @@
 <?php
 include_once("class.passagem.php");
+include_once("class.cadastro.php");
 
 class Cliente{
-    private string $_nome;
-    private int $_idade;
-    private string $_identificacao;
-    private string $_n_identificacao;
+    private Cadastro $_cadastro;
     private $_viagens_compradas = array();
     private $_passagens = array();
 
-    public function __construct(string $nome, int $idade, string $identificacao, 
-                                string $n_identificacao) {
-        $this -> _nome = $nome;
-        $this -> _idade = $idade;
-        $this -> _identificacao = strtoupper($identificacao);
-        $this -> _n_identificacao = $n_identificacao;
+    public function __construct(Cadastro $cadastro) {
+        $this -> _cadastro = $cadastro;
     }
 
         //array_intersect
@@ -55,37 +49,17 @@ class Cliente{
 
         return $viagens;
     }
-
-    public function getNome (){
-        return $this -> _nome;
-    }
-
-    public function getIdade(){
-        return $this -> _idade;
-    
-    }
-    public function getIdentificacao(){
-        return $this -> _identificacao;
-    }
-
-    public function getNidentificacao(){
-        return $this -> _n_identificacao;
-    }
-
-    public function setNome(string $nome){
-        $this -> _nome = $nome;
-    }
-
-    public function setIdade(int $idade){
-        $this -> _idade = $idade;
-    }
-
-    public function setIdenticacao(string $identificacao){
-        $this -> _identificacao = $identificacao;
-    }
-
-    public function setNidentificacao(string $n_identificacao){
-        $this -> _n_identificacao = $n_identificacao;
-    }
+  public function CancelarViagem (Passagem $passagem){
+    if(in_array(EnumStatus::Passagem_adquirida, $passagem->getStatus)){
+        if(in_array(EnumStatus::Passagem_cancelada, $passagem->getStatus)){
+          echo "A passagem já foi cancelada";
+        }else
+        if(in_array(EnumStatus::Checkin_realizado, $passagem->getStatus)){
+          echo "A passagem não pode ser cancelada";
+        }else{
+          $passagem->setStatus(EnumStatus::Passagem_cancelada);
+        }
+    }  
+  }
 
 }

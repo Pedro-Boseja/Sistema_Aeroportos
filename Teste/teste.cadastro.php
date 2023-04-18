@@ -1,7 +1,7 @@
 <?php
 
 // Inclua a classe Cadastro
-require_once 'Cadastro.php';
+include_once '../Classes/class.cadastro.php';
 
 // Crie um objeto Cadastro
 $cadastro = new Cadastro(
@@ -18,7 +18,8 @@ echo 'Idade: ' . $cadastro->getIdade() . PHP_EOL;
 echo 'Documento: ' . $cadastro->getDocumento() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
-echo 'Email: ' . $cadastro->getEmail() . PHP_EOL;
+echo 'Email: ' . $cadastro->getEmail() . PHP_EOL ;
+echo "\n";
 
 // Teste os métodos setters
 $cadastro->setNome('José da Silva');

@@ -16,15 +16,13 @@
 
         public function __construct (DateTime $data_s, DateTime $data_c, Aeronave $aeronave, 
                                     string $codigo, Aeroporto $aeroporto_chegada, 
-                                    Aeroporto $aeroporto_saida, float $duracao, 
-                                    bool $execucao = 0) { //Nao seria melho tirar esse = 0??
+                                    Aeroporto $aeroporto_saida, bool $execucao = false) { //Nao seria melho tirar esse = 0??
           $this->_data_s = $data_s;
           $this->_data_c = $data_c;
           $this->_aeronave = $aeronave;
           $this->_codigo = $codigo;
           $this->_aeroporto_chegada = $aeroporto_chegada;
           $this->_aeroporto_saida = $aeroporto_saida;
-          $this->_duracao = $duracao;
           $this->_executado = $execucao;
         }
 

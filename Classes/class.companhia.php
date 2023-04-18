@@ -12,6 +12,7 @@
         private $_planejamentos = array();
         private $_aeronaves = array();
         private $_franquias = array();
+        private static $tempo_
 
         public function __construct(string $nome, int $codigo, string $cnpj, 
                                     string $razao, string $sigla){
@@ -31,12 +32,23 @@
                         array_push($planejamentos, $plans);
                     }
             }
-            return $planejamentos;
+            if(count($planejamentos) == 0){
+              return 0;
+            }else{
+              return $planejamentos;
+            }
+            
         }
         
         public function getPlanejamentoB (string $aero_saida, string $aero_chegada) {
+            if($this->getPlanejamentoA($aero_saida, $aero_chegada) != 0){
+                throw new Exception('Há voos diretos entre os aeroportos');
+            }
+          
             $planejamentos_saida = array();
             $planejamentos_chegada = array();
+            $v1 = array();
+            $v2 = array();
             foreach($this->_planejamentos as $plans){
                 if ($plans->getAeroportoS() == $aero_saida ){
                     array_push($planejamentos_saida, $plans);
@@ -45,9 +57,10 @@
             foreach($this->_planejamentos as $plans){
                 if ($plans->getAeroportoC() == $aero_chegada ){
                     array_push($planejamentos_chegada, $plans);
-                }
+                } 
+              
             }
-            
+
         }
 
         public function addPlanejamento(Planejamento $plan){
