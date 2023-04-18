@@ -67,5 +67,4 @@ class Cadastro {
         $this -> _email = $email;
     }
 
-
 }    
