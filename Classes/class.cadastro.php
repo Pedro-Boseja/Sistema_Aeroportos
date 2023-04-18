@@ -12,10 +12,11 @@ class Cadastro {
                                 string $numero_cpf, DateTime $data_nascimento, string $email) {
         $this -> _nome = $nome;
         $idade = (New DateTime);
+        $idade = $idade->diff($data_nascimento);
         $this -> _documento = strtoupper($documento);
         $this -> _numero_cpf = $numero_cpf;
         $this -> _data_nascimento = $data_nascimento;
-        $this -> _idade = ($idade - $data_nascimento);
+        $this -> _idade = $idade->y;
         $this -> _email = $email;
     }
 
