@@ -23,12 +23,12 @@
       private Aeroporto $_ae_saida;
       private Datetime $_horario_c;
       private Datetime $_horario_s;
-
+      private string $_companhia;
 
 
       public function __construct ($frequencia, string $codigo_plan, Aeronave $aeronave, 
                                   Aeroporto $chegada, Aeroporto $saida,
-                                  DateTime $horarios, DateTime $horarioc) {
+                                  DateTime $horarios, DateTime $horarioc, string $companhia = 'CA') {
         $this->_frequencia = $frequencia;
         $this->_codigo_plan = $codigo_plan;
         $this->_aeronave = $aeronave;
@@ -36,13 +36,25 @@
         $this->_ae_saida = $saida;
         $this->_horario_s = $horarios;
         $this->_horario_c = $horarioc;
+        $this->_companhia = $companhia;
       }
 
-      public function ExecutarViagem (Viagem $voo, CompanhiaAerea $comp) {
-        // $execucao = "Voo " . $voo->getCodigo() . " da " . $comp->getNome() . " entre " .
-        // $voo->_viagem->getAeroportoS() . " e " . $voo->_viagem->getAeroportoC() . 
-        // " executado no dia " . $voo->getDataS();
-        // return $execucao;
+
+      public function ExecutarViagem (string $codigo, Viagem $viagem_exe) {
+        
+        foreach ($this->_viagens_planejadas as $viagem){
+
+          if ($viagem->getCodigo() == $codigo){
+
+            $this->_viagens_executadas [ $codigo ] = array('planejado' => $viagem,
+                                                           'executado' => $viagem_exe);
+
+            
+            unset($viagem);
+
+            break;
+          }
+        }
 
       }
       
@@ -67,11 +79,10 @@
             $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_chegada . " " . $hora_chegada );
             
             //caracteres para a a fomração do código da viagem.
-            $permstr = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             $permint = "01234567890";
             
-            //formação do código da viagem (gerado aleatoriamente).
-            $codigo = substr(str_shuffle($permstr), 0, 2) . substr(str_shuffle($permint), 0, 4);
+            //formação do código da viagem (número gerado aleatoriamente e iniciais da companhia aérea).
+            $codigo = $this->_companhia . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
             $viagem = new Viagem( $data_partida,
@@ -90,12 +101,32 @@
       }
       }
 
-      public function RemoverViagens(){
+      public function RemoverViagem(string $codigo){
+        
+        foreach ($this->_viagens_planejadas as $viagem){
 
+          if ($viagem->getCodigo() == $codigo){
+
+            unset($viagem);
+
+            break;
+          }
+        }
       }
 
-      public function EditarViagem(){
+      public function EditarViagem(string $codigo, DateTime $hpartida, DateTime $hchegada){
         
+        foreach ($this->_viagens_planejadas as $viagem){
+
+          if ($viagem->getCodigo() == $codigo){
+
+            //fazer o sethorarios em viagem.
+
+            break;
+          }
+
+        }
+
       }
 
       public function getFrequencia()
