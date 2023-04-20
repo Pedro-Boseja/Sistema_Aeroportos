@@ -3,17 +3,19 @@
 class Cadastro {
     private string $_nome;
     private int $_idade;
+    private string $_n_documento;
     private string $_documento;
     private string $_numero_cpf;
     private DateTime $_data_nascimento;
     private string $_email;
 
-    public function __construct(string $nome, string $documento, 
+    public function __construct(string $nome, string $documento, string $n_documento, 
                                 string $numero_cpf, DateTime $data_nascimento, string $email) {
         $this -> _nome = $nome;
         $idade = (New DateTime);
         $idade = $idade->diff($data_nascimento);
         $this -> _documento = strtoupper($documento);
+        $this -> _n_documento = $n_documento;
         $this -> _numero_cpf = $numero_cpf;
         $this -> _data_nascimento = $data_nascimento;
         $this -> _idade = $idade->y;
@@ -26,8 +28,12 @@ class Cadastro {
 
     public function getIdade(){
         return $this -> _idade;
-    
     }
+
+    public function getNDocumento(){
+        return $this -> _n_documento;
+    }
+
     public function getDocumento(){
         return $this -> _documento;
     }
@@ -50,6 +56,10 @@ class Cadastro {
 
     public function setIdade(int $idade){
         $this -> _idade = $idade;
+    }
+
+    public function SetNDocumento(string $n_documento){
+        $this -> _n_documento = $n_documento;
     }
 
     public function SetDocumento(string $documento){
