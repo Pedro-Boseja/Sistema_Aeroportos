@@ -7,7 +7,7 @@ include_once '../Classes/class.cadastro.php';
 $cadastro = new Cadastro(
     'João da Silva', // nome
     'RG',            // documento
-    '12.244.876', //n documento
+    '12.244.876', //numero documento
     '123.456.789-00',// número CPF
     new DateTime('1990-01-01'), // data de nascimento
     'joao.silva@example.com' // email
@@ -17,7 +17,7 @@ $cadastro = new Cadastro(
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
 echo 'Idade: ' . $cadastro->getIdade() . PHP_EOL;
 echo 'Documento: ' . $cadastro->getDocumento() . PHP_EOL;
-echo 'N Documento: ' . $cadastro->getNDocumento() . PHP_EOL;
+echo 'Numero Documento: ' . $cadastro->getNumeroDocumento() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
 echo 'Email: ' . $cadastro->getEmail() . PHP_EOL ;
@@ -36,6 +36,7 @@ $cadastro->setEmail('jose.silva@example.com');
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
 echo 'Idade: ' . $cadastro->getIdade() . PHP_EOL;
 echo 'Documento: ' . $cadastro->getDocumento() . PHP_EOL;
+echo 'Numero Documento: ' . $cadastro->getNumeroDocumento() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
 echo 'Email: ' . $cadastro->getEmail() . PHP_EOL;
