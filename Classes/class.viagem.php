@@ -66,7 +66,13 @@
           return $this->_executado;
         }
 
-        public function getAssentos () {
-          return $this->_assentos;
+        public function getAssentosLivres () {
+          $assentos = array();
+          foreach($this->_assentos as $as){
+            if(count($as) == 0){
+              array_push ($assentos, $as);
+            }
+          }
+          return $assentos;
         }
   }

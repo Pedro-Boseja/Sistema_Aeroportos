@@ -1,4 +1,5 @@
 <?php
+
     include_once("class.planejamento.php");
     include_once("class.aeronave.php");
     include_once("../verificacoes.php");
@@ -57,10 +58,8 @@
             foreach($this->_planejamentos as $plans){
                 if ($plans->getAeroportoC() == $aero_chegada ){
                     array_push($planejamentos_chegada, $plans);
-                } 
-              
+                }  
             }
-
         }
 
         public function addPlanejamento(Planejamento $plan){
@@ -71,7 +70,6 @@
             array_push($this->_aeronaves, $aeronave);
         }
 
-    
         public function getNome(){
             return $this->_nome;
         }
