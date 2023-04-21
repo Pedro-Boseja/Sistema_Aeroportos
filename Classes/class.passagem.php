@@ -3,13 +3,13 @@
 include_once("class.viagem.php");
 include_once("class.passageiro.php");
 
-enum EnumStatus { //utilizado para determinar o status da passagem
-  case Passagem_adquirida;
-  case Passagem_cancelada; 
-  case Checkin_realizado;
-  case Embarque_realizado;
-  case No_show;
-  }
+enum EnumStatus : string { //utilizado para determinar o status da passagem
+  case Passagem_adquirida = "passagem adquirida";
+  case Passagem_cancelada = "passagem cancelada"; 
+  case Checkin_realizado = "check in realizado";
+  case Embarque_realizado = "embarque realizado";
+  case No_show = "não apareceu";
+}
 
 class Passagem  {
     
@@ -20,7 +20,8 @@ class Passagem  {
     protected Passageiro $_passageiro;
     protected $_status = array();
 
-    public function __construct(float $tarifa, Viagem $viagem, string $assento, Passageiro $passageiro) {
+    public function __construct(float $tarifa, Viagem $viagem, 
+                                string $assento, Passageiro $passageiro) {
         $this -> _tarifa = $tarifa;
         $this -> _viagem = $viagem;
         $this -> _assento = $assento;
@@ -29,20 +30,22 @@ class Passagem  {
     }
 
     public function CheckIn () {
-        $date_atual = new DateTime;
-        $time_1_viagem = $this->_viagem->getDataS();
-        $time_1_viagem->date_modify('-2 day');
-        $time_2_viagem = $this->_viagem->getDataS();
-        $time_2_viagem->date_modify('-30 minute');
-        if ($date_atual->format('d/m/Y/H/i') >= $time_1_viagem && 
-            $date_atual->format('d/m/Y/H/i') <= $time_2_viagem) {
-                array_push($this -> _status, EnumStatus::Checkin_realizado);
-            } else if ($date_atual->format('d/m/Y/H/i') < $time_1_viagem){
-                echo 'O periodo de Check-in ainda não começou. Tente mais tarde.';
-            } else {
-                echo 'O periodo de Check-in já foi encerrado hehehehehehe';
-            }
-      }
+
+        $date_atual = new DateTime("now", new DateTimeZone('America/Bahia'));
+        $t = $date_atual->getTimestamp();
+    
+        $t1 = $this->_viagem->getDataS()->getTimestamp() - 172800; //Data do voo - 2 dias
+        $t2 = $this->_viagem->getDataS()->getTimestamp() - 1800; //Data do voo - 30 min
+      
+        if ($t >= $t1 and $t <= $t2) {
+            array_push($this -> _status, EnumStatus::Checkin_realizado);
+            echo 'Seu check-in foi realizado com sucesso!';
+        } else if ($t < $t1){
+            echo 'O periodo de Check-in ainda não começou. Tente mais tarde.';
+        } else {
+            echo 'O periodo de Check-in já foi encerrado hehehehehehe';
+        }
+    }
 
     public function getTarifa() {
         return $this -> _tarifa;
@@ -64,6 +67,14 @@ class Passagem  {
       return $this -> _status;
     }
 
+    public function getStrStatus() {
+      $status = array();
+      foreach($this->_status as $str) {
+        array_push($status, $str->value);
+      }
+      return $status;
+    }
+
     public function setTarifa(float $tarifa) {
       $this -> _tarifa = $tarifa;
     }
@@ -76,7 +87,7 @@ class Passagem  {
     }
 
     public function setFranquia(float $franquia) {
-        $this -> _franquia = $franquia;
+        array_push($this->_franquias, $franquia);
     }
 
     public function setPassageiro (Passageiro $passageiro) {
@@ -87,4 +98,3 @@ class Passagem  {
         array_push($this->_status, $status);
     }
 }
-        
