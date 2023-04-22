@@ -153,6 +153,9 @@
         return $this->_ae_saida->getSigla();
       }
 
+      public function getViagensPLanejadas(){
+        return $this->_viagens_planejadas;
+      }
       public function showViagens(){
 
         if(!$this->_viagens_planejadas) echo "opa \n";
