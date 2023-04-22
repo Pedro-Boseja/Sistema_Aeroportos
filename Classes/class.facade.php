@@ -9,7 +9,7 @@ class Facade{
     //Pegar todas as viagens programadas desses planejamentos e filtrar pelas datas.
     //Retorna um array com as viagens possíveis, um array de arrays de 2 dimensões,
     //no caso de haver conexão, ou 0 caso não hajam viagens;
-    static public function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
+    public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
 
         $planejamentos = array();
         $viagens = array();//array a ser retornado com as possíveis viagens
@@ -24,7 +24,7 @@ class Facade{
             //Pega todas as viagens de saida e de chegada de uma companhia
             foreach($planejamentos_s as $plans){
                 foreach($plans->getViagensPLanejadas() as $vi){
-                    if($data->format('d/m/Y') == $vi->getDataS()){
+                    if($data->format('d/m/Y') == $vi->getDataS()->format('d/m/Y')){
                         array_push($viagens_s, $vi);
                     }   
                 }
@@ -40,7 +40,13 @@ class Facade{
             //A conexão só será válida se a diferença entre o hoŕario de chagada e saída for de
             //no mínimo 1 hora e no máximo 6 horas;
             foreach($viagens_s as $vs){
+                if(count($vs->getAssentosLivres()) == 0){
+                    continue;
+                }
                 foreach($viagens_c as $vc){
+                    if(count($vc->getAssentosLivres()) == 0){
+                        continue;
+                    }
                     $diff = date_diff($vs->getDataC, $vc->getDataS);
                     $sinal = $diff->format('%R');
                     $diff_dias = intval($diff->format('%R%a'));
@@ -49,8 +55,8 @@ class Facade{
 
                     if( $vc->getAeroportoSaida() == $vs->getAeroportoChegada() &&
                         $sinal == '+' && $diff_dias < 0 && $diff_horas >= 1 && $diff_horas <= 3){
-                        $arr = array($vs, $vc);
-                        array_push($viagens, $arr);
+                            $arr = array($vs, $vc);
+                            array_push($viagens, $arr);
                     }
                 }
             }
@@ -79,9 +85,9 @@ class Facade{
 
     }
 
-    
-
-
+    public static function ComprarPassagem(){
+        //criar passageiro ou pegar um já existente no banco de dados
+    }
 
 
 }

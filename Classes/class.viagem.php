@@ -69,7 +69,7 @@
         public function getAssentosLivres () {
           $assentos = array();
           foreach($this->_assentos as $as){
-            if(count($as) == 0){
+            if(count($as) == 1){
               array_push ($assentos, $as);
             }
           }
