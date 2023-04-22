@@ -90,20 +90,26 @@ class Cliente{
     }
 
     public function CancelarViagem (Passagem $passagem){
-
-      if(in_array(EnumStatus::Passagem_adquirida, $passagem->getStatus())){
-
-          if (in_array(EnumStatus::Passagem_cancelada, $passagem->getStatus())){
-            echo "A passagem já foi cancelada \n";
-          } else if (in_array(EnumStatus::Checkin_realizado, $passagem->getStatus())){ 
-            echo "A passagem não pode ser cancelada \n";
-            //A partir do momento em que o check-in é realizado não é possível cancelar a passagem
-          } else {
-            $passagem->setStatus(EnumStatus::Passagem_cancelada);
+    if(in_array(EnumStatus::Passagem_adquirida, $passagem->getStatus())){
+      if(in_array(EnumStatus::Passagem_cancelada, $passagem->getStatus())){
+          echo "A passagem já foi cancelada";
+      }else{
+          if(in_array(EnumStatus::No_show, $passagem->getStatus())){
+            echo "A passagem não pode ser cancelada";
+          }else{
+            if(in_array(EnumStatus::Checkin_realizado, $passagem->getStatus())){
+              echo "A passagem não pode ser cancelada";
+            }else{
+              if(in_array(EnumStatus::Embarque_realizado, $passagem->getStatus())){
+                echo "A passagem não pode ser cancelada";
+              }else{
+                $passagem->setStatus(EnumStatus::Passagem_cancelada);
+              }
+            }
           }
-
-      } else {
-          echo "Essa passagem ainda não foi comprada, logo não é possível cancelá-la.\n";
-      } 
-    }
+        }
+    }else{
+      echo "Antes de cancelar, é necessário adiquirir a passagem";
+    }  
+  }
 }
