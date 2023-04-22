@@ -9,16 +9,15 @@ class Facade{
     //Pegar todas as viagens programadas desses planejamentos e filtrar pelas datas.
     //Retorna um array com as viagens possíveis, um array de arrays de 2 dimensões,
     //no caso de haver conexão, ou 0 caso não hajam viagens;
-    static public function SolicitarViagem(string $aero_c, 
-    string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
+    static public function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
 
         $planejamentos = array();
         $viagens = array();//array a ser retornado com as possíveis viagens
 
         //verificar se há viagens diretas entre os aeroportos:
         if($comp_aerea->getPlanejamento($aero_s, $aero_c) == 0){//Não há viagens diretas
-            $planejamentos_s = $comp_aerea->getPlanejamentoA($aero_s);
-            $planejamentos_c = $comp_aerea->getPlanejamentoA('', $aero_c);
+            $planejamentos_s = $comp_aerea->getPlanejamento($aero_s);
+            $planejamentos_c = $comp_aerea->getPlanejamento('', $aero_c);
             $viagens_s = array();
             $viagens_c = array();
 
@@ -60,7 +59,7 @@ class Facade{
 
         }
         else{
-            $planejamentos = $comp_aerea->getPlanejamentoA($aero_s, $aero_c);
+            $planejamentos = $comp_aerea->getPlanejamento($aero_s, $aero_c);
             foreach($planejamentos as $plans){
                 foreach($plans->getViagensPLanejadas() as $vi){
                     if($data->format('d/m/Y') == $vi->getDataS()->format('d/m/Y')){
@@ -80,6 +79,7 @@ class Facade{
 
     }
 
+    
 
 
 
