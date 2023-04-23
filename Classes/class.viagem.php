@@ -75,4 +75,10 @@
           }
           return $assentos;
         }
+
+        public function setHorarios(DateTime $dataS, DateTime $dataC){
+
+          $this->_data_s = $dataS;
+          $this->_data_c = $dataC;
+        }
   }

@@ -25,7 +25,7 @@ class CompanhiaAerea {
     }
     
     // retorna um array com os planejamentos referentes ao aeroporto de chegada e partida informados
-    public function getPlanejamento(string $aero_saida = '', string $aero_chegada = ''){
+    public function getPlanejamentoFromAeroportos(string $aero_saida = '', string $aero_chegada = ''){
         $planejamentos = array();
 
         if($aero_saida = '' && $aero_chegada = ''){
@@ -95,4 +95,35 @@ class CompanhiaAerea {
         return $this->_nome;
     }
     
+    //retorna todos os plaenjamentos possíveis.
+    public function getPLanejamentos(){
+
+        $planejamentos = array();
+
+        foreach( $this->_planejamentos as $plano){
+
+            array_push($planejamentos, $plano);
+
+        }
+
+        return $planejamentos;
+    }
+
+    //retorna os planejamentos que saem em determinada data.
+    public function getPlanejamentosFromDate(DateTime $data){
+
+        $planejamentos = array();
+
+        foreach($this->_planejamentos as $plano){
+
+            if($plano->getDataS() == $data){
+
+                array_push($planejamentos, $plano);
+
+            }
+        }
+
+        return $planejamentos;
+    }
+
 }

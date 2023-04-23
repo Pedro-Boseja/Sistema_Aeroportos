@@ -120,7 +120,7 @@
 
           if ($viagem->getCodigo() == $codigo){
 
-            //fazer o sethorarios em viagem.
+            $viagem->setHorarios($hpartida, $hchegada);
 
             break;
           }
@@ -177,4 +177,48 @@
           
         }
       }
+
+      //retorna uma viagem a partir de uma data.
+      public function getViagemFromDate(DateTime $data){
+        
+        foreach($this->_viagens_planejadas as $viagem){
+
+          if($viagem->getDataS() == $data){
+
+            return $viagem;
+            
+          }
+        }
+
+        return null;
+      }
+
+      public function getHorarioS(){
+
+        return $this->_horario_s;
+
+      }
+
+      public function getHorarioC(){
+
+        return $this->_horario_c;
+        
+      }
+
+      //verifica se o planejamento ocorre depois de um outro planejamento $plano.
+      public function isAfter(Planejamento $plano){
+
+        if($this->_horario_s->getTimestamp() > $plano->getHorarioS()->getTimestamp()){
+
+          if($this->_horario_s->getTimestamp() > $plano->getHorarioC()->getTimestamp()){
+
+            return true;
+
+          }
+        }
+
+        return false;
+      }
+
+      
     }
