@@ -13,7 +13,7 @@ class CompanhiaAerea {
     private $_planejamentos = array();
     private $_aeronaves = array();
     private $_franquias = array();
-    private static $tempo_;
+    //private static $tempo_; ?
 
     public function __construct(string $nome, int $codigo, string $cnpj, 
                                 string $razao, string $sigla){
