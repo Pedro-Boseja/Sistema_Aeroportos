@@ -1,14 +1,18 @@
 <?php
 
-  class Aeroporto{
+  class Aeroporto extends persist{
     protected string $_sigla;
     protected string $_cidade;
     protected string $_estado;
+    static $local_filename = "aeroportos.txt";
 
     public function __construct (string $sigla, string $cidade, string $estado){
       $this -> _sigla = $sigla;
       $this -> _cidade = $cidade;
       $this -> _estado = $estado;
+    }
+    static public function getFilename() {
+      return get_called_class()::$local_filename;
     }
     public function getSigla(){
       return $this -> _sigla;

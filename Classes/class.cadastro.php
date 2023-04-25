@@ -1,6 +1,6 @@
 <?php
 
-class Cadastro {
+class Cadastro extends persist{
     private string $_nome;
     private int $_idade;
     private string $_numero_documento;
@@ -8,6 +8,7 @@ class Cadastro {
     private string $_numero_cpf;
     private DateTime $_data_nascimento;
     private string $_email;
+    static $local_filename = "cadastros.txt";
 
     public function __construct(string $nome, string $documento, string $numero_documento, 
                                 string $numero_cpf, DateTime $data_nascimento, string $email) {
@@ -21,7 +22,9 @@ class Cadastro {
         $this -> _idade = $idade->y;
         $this -> _email = $email;
     }
-
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
+    }
     public function getNome (){
         return $this -> _nome;
     }

@@ -4,7 +4,7 @@ include_once("class.planejamento.php");
 include_once("class.aeronave.php");
 include_once("../verificacoes.php");
 
-class CompanhiaAerea {
+class CompanhiaAerea extends persist{
     private string $_nome;
     private int $_codigo;
     private string $_cnpj;
@@ -13,6 +13,7 @@ class CompanhiaAerea {
     private $_planejamentos = array();
     private $_aeronaves = array();
     private $_franquias = array();
+    static $local_filename = "companhia.txt";
     //private static $tempo_; ?
 
     public function __construct(string $nome, int $codigo, string $cnpj, 
@@ -22,6 +23,9 @@ class CompanhiaAerea {
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
+    }
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
     }
     
     // retorna um array com os planejamentos referentes ao aeroporto de chegada e partida informados

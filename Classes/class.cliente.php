@@ -4,16 +4,19 @@ include_once("class.cadastro.php");
 include_once("class.viagem.php");
 include_once("class.facade.php");
 
-class Cliente{
+class Cliente extends persist{
 
     private Cadastro $_cadastro;
     private $_viagens_compradas = array();
     private $_passagens = array();
+    static $local_filename = "clientes.txt";
 
     public function __construct(Cadastro $cadastro) {
         $this -> _cadastro = $cadastro;
     }
-
+    static public function getFilename() {
+      return get_called_class()::$local_filename;
+    }
     public function EscolherAssento (Viagem $viagem){
 
       if(count($viagem->getAssentosLivres()) == 0) {
