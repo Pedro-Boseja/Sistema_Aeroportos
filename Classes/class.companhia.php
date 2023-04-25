@@ -66,26 +66,6 @@ class CompanhiaAerea extends persist{
         
     }
     
-    // public function getPlanejamentoB (string $aero_saida, string $aero_chegada) {
-    //     if($this->getPlanejamentoA($aero_saida, $aero_chegada) != 0){
-    //         throw new Exception('Há voos diretos entre os aeroportos');
-    //     }
-        
-    //     $planejamentos_saida = array();
-    //     $planejamentos_chegada = array();
-    //     $v1 = array();
-    //     $v2 = array();
-    //     foreach($this->_planejamentos as $plans){
-    //         if ($plans->getAeroportoS() == $aero_saida ){
-    //             array_push($planejamentos_saida, $plans);
-    //         }
-    //     }
-    //     foreach($this->_planejamentos as $plans){
-    //         if ($plans->getAeroportoC() == $aero_chegada ){
-    //             array_push($planejamentos_chegada, $plans);
-    //         }  
-    //     }
-    // }
 
     public function addPlanejamento(Planejamento $plan){
         array_push($this->_aeronaves, $plan);
