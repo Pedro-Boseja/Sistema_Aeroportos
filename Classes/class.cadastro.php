@@ -3,20 +3,21 @@
 class Cadastro extends persist{
     private string $_nome;
     private int $_idade;
-    private string $_numero_documento;
-    private string $_documento;
+    //private string $_numero_documento;
+    private $_documento = array("RG" => "doc1", "PASSAPORTE" => "doc2", "CHT" => "doc3");
     private string $_numero_cpf;
     private DateTime $_data_nascimento;
     private string $_email;
+    private string $_endereco;
     static $local_filename = "cadastros.txt";
 
-    public function __construct(string $nome, string $documento, string $numero_documento, 
-                                string $numero_cpf, DateTime $data_nascimento, string $email) {
+    public function __construct(string $nome, string $numero_cpf, 
+                                DateTime $data_nascimento, string $email) {
         $this -> _nome = $nome;
         $idade = (New DateTime);
         $idade = $idade->diff($data_nascimento);
-        $this -> _documento = strtoupper($documento);
-        $this -> _numero_documento = $numero_documento;
+        //$this -> _documento = strtoupper($documento);
+        //$this -> _numero_documento = $numero_documento;
         $this -> _numero_cpf = $numero_cpf;
         $this -> _data_nascimento = $data_nascimento;
         $this -> _idade = $idade->y;
@@ -33,9 +34,9 @@ class Cadastro extends persist{
         return $this -> _idade;
     }
 
-    public function getNumeroDocumento(){
-        return $this -> _numero_documento;
-    }
+    //public function getNumeroDocumento(){
+    //    return $this -> _numero_documento;
+    //}
 
     public function getDocumento(){
         return $this -> _documento;
@@ -61,9 +62,9 @@ class Cadastro extends persist{
         $this -> _idade = $idade;
     }
 
-    public function SetNumeroDocumento(string $numero_documento){
-        $this -> _numero_documento = $numero_documento;
-    }
+    //public function SetNumeroDocumento(string $numero_documento){
+    //    $this -> _numero_documento = $numero_documento;
+    //}
 
     public function SetDocumento(string $documento){
         $this -> _documento = $documento;
