@@ -1,5 +1,5 @@
 <?php
-include_once("verificacoes.php");
+include_once("../verificacoes.php");
 class Cadastro extends persist{
     private string $_nome;
     private $_documento = array("RG" => "doc1", "PASSAPORTE" => "doc2", "CHT" => "doc3");
