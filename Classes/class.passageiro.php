@@ -10,8 +10,8 @@ class Passageiro extends persist{
   protected $_viagens = array();
   static $local_filename = "passageiros.txt";
 
-  public function __construct () {
-    //$this->_cadastro = $cadastro;
+  public function __construct (Cadastro $cadastro) {
+    $this->_cadastro = $cadastro;
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;
