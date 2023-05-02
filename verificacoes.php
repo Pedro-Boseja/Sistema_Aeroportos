@@ -70,9 +70,7 @@ function verifica_SiglaAeroporto($string){
 }
 
 
-
-function valida_Documento(string $identificacao, string $n_identificacao){
-    if ($identificacao == "RG"){
+function valida_Rg(string $n_identificacao){
         // Remove possíveis pontos e traços do número do RG
         $n_identificacao = preg_replace('/[^0-9]/', '', $n_identificacao);
 
@@ -111,7 +109,7 @@ function valida_Documento(string $identificacao, string $n_identificacao){
         return true;
     }
 
-    elseif($identificacao == "PASSAPORTE"){
+function valida_Passaporte(string $n_identificacao){
         // Verifica se o número de passaporte tem o tamanho correto
         if (strlen($n_identificacao) != 8) {
             return false;
@@ -130,7 +128,6 @@ function valida_Documento(string $identificacao, string $n_identificacao){
         // Caso tenha passado por todas as verificações, o número de passaporte é válido
         return true;
     }
-}
 
 function valida_Email($email) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
