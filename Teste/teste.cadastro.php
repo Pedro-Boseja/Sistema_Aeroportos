@@ -1,6 +1,7 @@
 <?php
 
 // Inclua a classe Cadastro
+include_once '../Classes/persist.php';
 include_once '../Classes/class.cadastro.php';
 
 // Crie um objeto Cadastro simples (cliente)

@@ -80,11 +80,13 @@ class Cadastro extends persist{
     public function setDocumento(string $documento){
         $bool = 0; 
         $bool = valida_Rg($documento);
-        if($bool == 1)
+        if($bool == 1){
             $this -> _documento["RG"] = $documento;
+            return 0;}
         else $bool = valida_Passaporte($documento);
-        if($bool == 1)
+        if($bool == 1){
             $this -> _documento["PASSAPORTE"] = $documento;
+            return 0;}
         else $this -> _documento["CHT"] = $documento;;
     }
 
