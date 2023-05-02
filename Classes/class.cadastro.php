@@ -6,7 +6,7 @@ class Cadastro extends persist{
     private string $_nacionalidade;
     private string $_numero_cpf;
     private DateTime $_data_nascimento;
-    private int $_idade;
+    //private int $_idade; pedro testes
     private string $_email;
     private string $_endereco;
     static $local_filename = "cadastros.txt";
@@ -18,9 +18,6 @@ class Cadastro extends persist{
 
     public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $numero_cpf, string $email){
         $this -> _data_nascimento = $data_nascimento;
-        $idade = (New DateTime);
-        $idade = $idade->diff($data_nascimento);
-        $this -> _idade = $idade->y;
         $this -> _nacionalidade = strtoupper($nacionalidade);
         $this -> _numero_cpf = $numero_cpf;
         $this -> _email = $email;
@@ -43,7 +40,6 @@ class Cadastro extends persist{
     }
 
     public function getDocumento(string $documento){
-        //mudar tudo
         return $this -> _documento[$documento];
     }
 
@@ -60,7 +56,11 @@ class Cadastro extends persist{
     }
 
     public function getIdade(){
-        return $this -> _idade;
+        $_idade = 0;
+        $idade = (New DateTime);
+        $idade = $idade->diff($this -> getDataNascimento());
+        $this -> $_idade = $idade->y;
+        return $this -> $_idade;
     }
 
     public function getEmail(){
@@ -100,9 +100,9 @@ class Cadastro extends persist{
         $this -> _data_nascimento = $data_nascimento;
     }
 
-    public function setIdade(int $idade){
-        $this -> _idade = $idade;
-    }
+    // public function setIdade(int $idade){
+    //     $this -> _idade = $idade;
+    // }
 
     public function setEmail(string $email){
         $this -> _email = $email;
