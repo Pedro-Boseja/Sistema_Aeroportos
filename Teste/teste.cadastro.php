@@ -1,8 +1,8 @@
 <?php
 
 // Inclua a classe Cadastro
-include_once '../Classes/persist.php';
-include_once '../Classes/class.cadastro.php';
+include_once 'persist.php';
+include_once 'class.cadastro.php';
 
 // Crie um objeto Cadastro simples (cliente)
 $cadastro = new Cadastro(
@@ -12,20 +12,20 @@ $cadastro = new Cadastro(
 
 // Testa os métodos getters
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
-echo 'Documento: ' . $cadastro->getDocumento("RG") . PHP_EOL;
+echo 'RG: ' . $cadastro->getDocumento("RG") . PHP_EOL;
+echo 'PASSAPORTE: ' . $cadastro->getDocumento("PASSAPORTE") . PHP_EOL;
+echo 'CHT: ' . $cadastro->getDocumento("CHT") . PHP_EOL;
 echo "\n";
 
 // Testa os métodos setters
 $cadastro->setNome('José da Silva');
-$cadastro->setDocumento('98.765.432');
+$cadastro->setDocumento('AB76543');
 
 // Testa os métodos getters novamente
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
-echo 'Documento: '; 
-for ($i = 0; $i < 3; $i++) {
-    echo $cadastro->getDocumento($i) . "/n";
-}
-echo PHP_EOL;
+echo 'RG: ' . $cadastro->getDocumento("RG") . PHP_EOL;
+echo 'PASSAPORTE: ' . $cadastro->getDocumento("PASSAPORTE") . PHP_EOL;
+echo 'CHT: ' . $cadastro->getDocumento("CHT") . PHP_EOL;
 echo 'Nacionalidade: ' . $cadastro->getNacionalidade() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
@@ -62,11 +62,9 @@ $cadastro->setEmail('jose.silva@example.com');
 
 // Testa os métodos getters novamente
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
-echo 'Documento: '; 
-for ($i = 0; $i < 3; $i++) {
-    echo $cadastro->getDocumento($i) . "/n";
-}
-echo PHP_EOL;
+echo 'RG: ' . $cadastro->getDocumento("RG") . PHP_EOL;
+echo 'PASSAPORTE: ' . $cadastro->getDocumento("PASSAPORTE") . PHP_EOL;
+echo 'CHT: ' . $cadastro->getDocumento("CHT") . PHP_EOL;
 echo 'Nacionalidade: ' . $cadastro->getNacionalidade() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
@@ -83,11 +81,9 @@ $cadastro->fillTripulante(
 
 // Testa os métodos getters
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
-echo 'Documento: '; 
-for ($i = 0; $i < 3; $i++) {
-    echo $cadastro->getDocumento($i) . "/n";
-}
-echo PHP_EOL;
+echo 'RG: ' . $cadastro->getDocumento("RG") . PHP_EOL;
+echo 'PASSAPORTE: ' . $cadastro->getDocumento("PASSAPORTE") . PHP_EOL;
+echo 'CHT: ' . $cadastro->getDocumento("CHT") . PHP_EOL;
 echo 'Nacionalidade: ' . $cadastro->getNacionalidade() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;

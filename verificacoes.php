@@ -112,7 +112,7 @@ function valida_Rg(string $n_identificacao){
 
 function valida_Passaporte(string $n_identificacao){
         // Verifica se o número de passaporte tem o tamanho correto
-        if (strlen($n_identificacao) != 8) {
+        if (strlen($n_identificacao) != 7) {
             return false;
         }
         

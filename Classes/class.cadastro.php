@@ -3,17 +3,18 @@ include_once("../verificacoes.php");
 class Cadastro extends persist{
     private string $_nome;
     private $_documento = array("RG" => "doc1", "PASSAPORTE" => "doc2", "CHT" => "doc3");
-    private string $_nacionalidade;
-    private string $_numero_cpf;
+    private string $_nacionalidade = "VAZIO";
+    private string $_numero_cpf = "VAZIO";
     private DateTime $_data_nascimento;
-    //private int $_idade; pedro testes
-    private string $_email;
-    private string $_endereco;
+    //private int $_idade; //pedro testes
+    private string $_email = "VAZIO";
+    private string $_endereco = "VAZIO";
     static $local_filename = "cadastros.txt";
 
     public function __construct(string $nome, string $documento){
         $this -> _nome = $nome;
         $this -> SetDocumento($documento);
+        $this->_data_nascimento = new DateTime('0002-02-02');
     }
 
     public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $numero_cpf, string $email){
@@ -56,11 +57,11 @@ class Cadastro extends persist{
     }
 
     public function getIdade(){
-        $_idade = 0;
+        //$_idade = 0;
         $idade = (New DateTime);
         $idade = $idade->diff($this -> getDataNascimento());
-        $this -> $_idade = $idade->y;
-        return $this -> $_idade;
+        //$this -> $_idade = $idade->y;
+        return $idade->y;
     }
 
     public function getEmail(){
@@ -90,7 +91,7 @@ class Cadastro extends persist{
         else $this -> _documento["CHT"] = $documento;;
     }
 
-    public function setNacionalidade(int $nacionalidade){
+    public function setNacionalidade(string $nacionalidade){
         $this -> _nacionalidade = $nacionalidade;
     }
 
