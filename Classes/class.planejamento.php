@@ -114,13 +114,13 @@
         }
       }
 
-      public function EditarViagem(string $codigo, DateTime $hpartida, DateTime $hchegada){
+      public function EditarViagem(string $codigo, DateTime $date_partida, DateTime $date_chegada){
         
         foreach ($this->_viagens_planejadas as $viagem){
 
           if ($viagem->getCodigo() == $codigo){
 
-            $viagem->setHorarios($hpartida, $hchegada);
+            $viagem->setDates($date_partida, $date_chegada);
 
             break;
           }

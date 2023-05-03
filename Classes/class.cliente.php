@@ -46,7 +46,7 @@ class Cliente{
         $aeroporto_chegada = fgets(STDIN);
 
         $planos = array();   
-        Viagem $viagem;
+        $viagem;
 
         $planos = $companhia_aerea->getPlanejamentoA($aeroporto_saida, $aeroporto_chegada); 
 

@@ -7,7 +7,7 @@ include_once ('../Classes/class.aeronave.php');
 include_once ('../Classes/class.aeroporto.php');
 
 // criar um objeto da classe Passagem
-$aeronave = new Aeronave ("AvioesTalita", "AeroTalit3000", "TA-LIT", 180, 10000.7);
+$aeronave = new Aeronave ("AvioesTalita", "AeroTalit3000", "TA-LIT", 180, 10000.7, 32, 6);
 
 $aeroporto_saida = new Aeroporto ("CNF", "Belo Horizonte", "Minas Gerais");
 $aeroporto_chegada = new Aeroporto ("GUA", "Guarulhos", "Sao Paulo");
