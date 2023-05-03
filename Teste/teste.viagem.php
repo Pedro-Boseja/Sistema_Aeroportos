@@ -1,5 +1,6 @@
 <?php
 
+include_once '../Classes/persist.php';
 include_once '../Classes/class.aeronave.php';
 include_once '../Classes/class.aeroporto.php';
 include_once '../Classes/class.passageiro.php';
@@ -27,7 +28,7 @@ $aeroporto_chegada1 = new Aeroporto ("GUA", "Gua", "Sao Paulo");
 
 $viagem = new Viagem($date_s, $date_c, $aeronave, "TA444", $aeroporto_saida, $aeroporto_chegada);
 
-$cadastro = new Cadastro ("Talita", "RG", "111", "111.111.111-11", $date_s1, "ta@g.com");
+$cadastro = new Cadastro ("Talita", "111.111.111-11");
 $passageiro = new Passageiro ($cadastro);
 $passagem = new Passagem (50.0, $viagem, "27D", $passageiro);
 

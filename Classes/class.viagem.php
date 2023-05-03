@@ -13,7 +13,7 @@
       private Aeroporto $_aeroporto_saida;
       private DateInterval $_duracao;
       private bool $_executado;
-      private $_assentos = array(); //array(string, Cliente)
+      private $_assentos = array(); //array(numero do assento, nome do passageiro)
 
         public function __construct (DateTime $data_s, 
                                     DateTime $data_c, 
@@ -73,16 +73,8 @@
 
         public function getAssentosLivres () {
           $assentos = $this->_aeronave->getAssentos();
-          //foreach ($this->_assentos as $c) {
-          //while(true){
-          //  if ((current($this->_assentos)) == "vazio"){
-          //    array_push($assentos, (current($this->_assentos));
-          //  }
-          //  next($this->_assentos);
-          //}
           $assentos_ocupados = array_diff($this->_assentos, $assentos);
           $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
-      
           return $assentos_livres;
         }
 

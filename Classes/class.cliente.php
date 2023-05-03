@@ -48,8 +48,8 @@ class Cliente extends persist{
         // echo "E o aeropordo de chegada?(Escreve a sigla da companhia escolhida)\n\n";
         // $aeroporto_chegada = fgets(STDIN);
 
-        $planos = array();   
-        Viagem $viagem;
+        //$planos = array();   
+        //Viagem $viagem;
 
         // $planos = $companhia_aerea->getPlanejamentoA($aeroporto_saida, $aeroporto_chegada); 
 
