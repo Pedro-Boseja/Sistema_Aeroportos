@@ -15,9 +15,9 @@ class Facade{
         $viagens = array();//array a ser retornado com as possíveis viagens
 
         //verificar se há viagens diretas entre os aeroportos:
-        if($comp_aerea->getPlanejamento($aero_s, $aero_c) == 0){//Não há viagens diretas
-            $planejamentos_s = $comp_aerea->getPlanejamento($aero_s);
-            $planejamentos_c = $comp_aerea->getPlanejamento('', $aero_c);
+        if($comp_aerea->getPlanejamentoFromAeroportos($aero_s, $aero_c) == 0){//Não há viagens diretas
+            $planejamentos_s = $comp_aerea->getPlanejamentoFromAeroportos($aero_s);
+            $planejamentos_c = $comp_aerea->getPlanejamentoFromAeroportos('', $aero_c);
             $viagens_s = array();
             $viagens_c = array();
 
@@ -65,7 +65,7 @@ class Facade{
 
         }
         else{
-            $planejamentos = $comp_aerea->getPlanejamento($aero_s, $aero_c);
+            $planejamentos = $comp_aerea->getPlanejamentoFromAeroportos($aero_s, $aero_c);
             foreach($planejamentos as $plans){
                 foreach($plans->getViagensPLanejadas() as $vi){
                     if($data->format('d/m/Y') == $vi->getDataS()->format('d/m/Y')){

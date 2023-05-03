@@ -1,12 +1,13 @@
 <?php
 
-class Aeronave {
+class Aeronave extends persist{
   
   private string $_fabricante;
   private string $_modelo;
   private string $_registro;
   private int $_capacidade_p;
   private float $_capacidade_c;
+  static $local_filename = "aeronaves.txt";
   private $_assentos = array();
 
   public function __construct(
@@ -25,7 +26,9 @@ class Aeronave {
     $this->_capacidade_c = $capacidade_c;
     $this->_assentos = $this->MontarAssentos($largura, $comprimento);      
   }
-
+  static public function getFilename() {
+    return get_called_class()::$local_filename;
+}
   public function getFabricante(){
     return $this->_fabricante;
   }
