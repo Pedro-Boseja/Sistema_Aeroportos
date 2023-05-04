@@ -183,7 +183,7 @@
         
         foreach($this->_viagens_planejadas as $viagem){
 
-          if($viagem->getDataS() == $data){
+          if($viagem->getDataS()->format('Y m d') == $data->format('Y m d')){
 
             return $viagem;
             

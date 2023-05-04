@@ -100,7 +100,7 @@ class CompanhiaAerea extends persist{
 
         foreach($this->_planejamentos as $plano){
 
-            if($plano->getDataS() == $data){
+            if($plano->getViagemFromDate($data) != null){
 
                 array_push($planejamentos, $plano);
 

@@ -49,7 +49,12 @@ class Passageiro extends persist{
 
   }
 
-  
+  public function getViagens(){
 
+    return $this->_viagens;
+
+  }
+
+  
 
 }
