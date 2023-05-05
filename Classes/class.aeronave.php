@@ -24,7 +24,8 @@ class Aeronave extends persist{
     $this->_registro = $registro;
     $this->_capacidade_p = $capacidade_p;
     $this->_capacidade_c = $capacidade_c;
-    $this->_assentos = $this->MontarAssentos($largura, $comprimento);      
+    $this->_assentos = $this->MontarAssentos($largura, $comprimento);
+    $this->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;

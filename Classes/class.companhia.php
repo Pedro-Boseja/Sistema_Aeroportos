@@ -23,6 +23,7 @@ class CompanhiaAerea extends persist{
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
+        $this->save();
     }
     static public function getFilename() {
         return get_called_class()::$local_filename;

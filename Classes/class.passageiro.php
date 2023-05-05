@@ -12,7 +12,8 @@ class Passageiro extends persist{
 
   public function __construct (Cadastro $cadastro, DateTime $data_nascimento, string $nacionalidade, string $numero_cpf = "VAZIO", string $email) {
     $this->_cadastro = $cadastro;
-    $cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
+    $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
+    $this->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;

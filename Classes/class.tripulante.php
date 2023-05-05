@@ -9,7 +9,7 @@ class Tripulante extends Passageiro{
 
     public function __construct(Cadastro $cadastro, string $documento, string $endereco){
         $this->_cadastro = $cadastro;
-        $cadastro->fillTripulante($documento, $endereco);
+        $this->_cadastro->fillTripulante($documento, $endereco);
     }
 
     public function getCadastro(){
