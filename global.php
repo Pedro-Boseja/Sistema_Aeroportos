@@ -1,5 +1,6 @@
 <?php
     function autoloader($pClassName) {
+        $pClassName = strtolower($pClassName);
         echo __NAMESPACE__;
         $path = __DIR__ . '/classes/class.'. $pClassName . '.php';
         if (is_file($path)) {

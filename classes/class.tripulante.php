@@ -6,10 +6,15 @@ class Tripulante extends Passageiro{
 
     private Aeroporto $_aeroporto_base;
     private string $_companhia;
+    static $local_filename = "tripulantes.txt";
 
     public function __construct(Cadastro $cadastro, string $documento, string $endereco){
         $this->_cadastro = $cadastro;
         $this->_cadastro->fillTripulante($documento, $endereco);
+    }
+    
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
     }
 
     public function getCadastro(){

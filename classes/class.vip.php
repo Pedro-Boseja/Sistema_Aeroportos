@@ -16,7 +16,7 @@ include_once "class.passageiro.php";
 
             $this->_cadastro = $passageiro->getCadastro();
             $this->_viagens = $passageiro->getViagens();
-
+            $this->save();
         }
 
         static public function getFilename() {
