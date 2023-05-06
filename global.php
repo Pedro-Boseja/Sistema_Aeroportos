@@ -1,8 +1,7 @@
 <?php
     function autoloader($pClassName) {
-        $pClassName = strtolower($pClassName);
         echo __NAMESPACE__;
-        $path = __DIR__ . '/classes/class.'. $pClassName . '.php';
+        $path = __DIR__ . '/Classes/' . $pClassName . '.php';
         if (is_file($path)) {
             include_once $path;
         }

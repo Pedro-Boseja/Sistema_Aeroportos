@@ -3,7 +3,6 @@ include_once("class.passagem.php");
 include_once("class.cadastro.php");
 include_once("class.viagem.php");
 include_once("class.facade.php");
-include_once("persist.php");
 
 class Cliente extends persist{
 
@@ -14,7 +13,6 @@ class Cliente extends persist{
 
     public function __construct(Cadastro $cadastro) {
         $this -> _cadastro = $cadastro;
-        $this->save();
     }
     static public function getFilename() {
       return get_called_class()::$local_filename;
@@ -50,8 +48,8 @@ class Cliente extends persist{
         // echo "E o aeropordo de chegada?(Escreve a sigla da companhia escolhida)\n\n";
         // $aeroporto_chegada = fgets(STDIN);
 
-        //$planos = array();   
-        //Viagem $viagem;
+        // $planos = array();   
+        // Viagem $viagem;
 
         // $planos = $companhia_aerea->getPlanejamentoA($aeroporto_saida, $aeroporto_chegada); 
 

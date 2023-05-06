@@ -114,13 +114,13 @@
         }
       }
 
-      public function EditarViagem(string $codigo, DateTime $date_partida, DateTime $date_chegada){
+      public function EditarViagem(string $codigo, DateTime $hpartida, DateTime $hchegada){
         
         foreach ($this->_viagens_planejadas as $viagem){
 
           if ($viagem->getCodigo() == $codigo){
 
-            $viagem->setDates($date_partida, $date_chegada);
+            $viagem->setHorarios($hpartida, $hchegada);
 
             break;
           }
@@ -183,7 +183,7 @@
         
         foreach($this->_viagens_planejadas as $viagem){
 
-          if($viagem->getDataS()->format('Y m d') == $data->format('Y m d')){
+          if($viagem->getDataS() == $data){
 
             return $viagem;
             

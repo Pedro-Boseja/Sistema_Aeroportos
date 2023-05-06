@@ -1,5 +1,4 @@
 <?php
-include_once("persist.php");
 
   class Aeroporto extends persist{
     protected string $_sigla;
@@ -11,7 +10,6 @@ include_once("persist.php");
       $this -> _sigla = $sigla;
       $this -> _cidade = $cidade;
       $this -> _estado = $estado;
-      $this->save();
     }
     static public function getFilename() {
       return get_called_class()::$local_filename;

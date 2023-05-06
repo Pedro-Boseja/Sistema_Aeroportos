@@ -70,49 +70,50 @@ function verifica_SiglaAeroporto($string){
 }
 
 
-function valida_Rg(string $n_identificacao){
+
+function valida_Documento(string $identificacao, string $n_identificacao){
+    if ($identificacao == "RG"){
         // Remove possíveis pontos e traços do número do RG
         $n_identificacao = preg_replace('/[^0-9]/', '', $n_identificacao);
 
         // Verifica se o RG possui 9 dígitos
-        if (strlen($n_identificacao) != 8) {
-            // echo 'Nome: ';
+        if (strlen($n_identificacao) != 9) {
             return false;
         }
 
-        // // Verifica se o primeiro dígito é válido
-        // $d1 = $n_identificacao[0];
-        // if ($d1 < 1 || $d1 > 9) {
-        //     return false;
-        // }
+        // Verifica se o primeiro dígito é válido
+        $d1 = $n_identificacao[0];
+        if ($d1 < 1 || $d1 > 9) {
+            return false;
+        }
 
-        // // Verifica se o segundo dígito é válido
-        // $d2 = $n_identificacao[1];
-        // if ($d2 < 0 || $d2 > 9) {
-        //     return false;
-        // }
+        // Verifica se o segundo dígito é válido
+        $d2 = $n_identificacao[1];
+        if ($d2 < 0 || $d2 > 9) {
+            return false;
+        }
 
-        // // Verifica se os próximos 6 dígitos são válidos
-        // $d3 = $n_identificacao[2];
-        // $d4 = $n_identificacao[3];
-        // $d5 = $n_identificacao[4];
-        // $d6 = $n_identificacao[5];
-        // $d7 = $n_identificacao[6];
-        // $d8 = $n_identificacao[7];
-        // $soma = ($d3 * 2) + ($d4 * 3) + ($d5 * 4) + ($d6 * 5) + ($d7 * 6) + ($d8 * 7);
-        // $resto = $soma % 11;
-        // $digito = ($resto == 0 || $resto == 1) ? 0 : (11 - $resto);
-        // if ($n_identificacao[7] != $digito) {
-        //     return false;
-        // }
+        // Verifica se os próximos 6 dígitos são válidos
+        $d3 = $n_identificacao[2];
+        $d4 = $n_identificacao[3];
+        $d5 = $n_identificacao[4];
+        $d6 = $n_identificacao[5];
+        $d7 = $n_identificacao[6];
+        $d8 = $n_identificacao[7];
+        $soma = ($d3 * 2) + ($d4 * 3) + ($d5 * 4) + ($d6 * 5) + ($d7 * 6) + ($d8 * 7);
+        $resto = $soma % 11;
+        $digito = ($resto == 0 || $resto == 1) ? 0 : (11 - $resto);
+        if ($n_identificacao[8] != $digito) {
+            return false;
+        }
 
         // Se passar em todas as verificações, o RG é válido
         return true;
     }
 
-function valida_Passaporte(string $n_identificacao){
+    elseif($identificacao == "PASSAPORTE"){
         // Verifica se o número de passaporte tem o tamanho correto
-        if (strlen($n_identificacao) != 7) {
+        if (strlen($n_identificacao) != 8) {
             return false;
         }
         
@@ -129,6 +130,7 @@ function valida_Passaporte(string $n_identificacao){
         // Caso tenha passado por todas as verificações, o número de passaporte é válido
         return true;
     }
+}
 
 function valida_Email($email) {
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {

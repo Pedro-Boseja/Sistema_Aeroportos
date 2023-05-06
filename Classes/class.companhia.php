@@ -2,8 +2,7 @@
 
 include_once("class.planejamento.php");
 include_once("class.aeronave.php");
-include_once("verificacoes.php");
-include_once("persist.php");
+include_once("../verificacoes.php");
 
 class CompanhiaAerea extends persist{
     private string $_nome;
@@ -14,7 +13,7 @@ class CompanhiaAerea extends persist{
     private $_planejamentos = array();
     private $_aeronaves = array();
     private $_franquias = array();
-    static $local_filename = "companhias.txt";
+    static $local_filename = "companhia.txt";
     //private static $tempo_; ?
 
     public function __construct(string $nome, int $codigo, string $cnpj, 
@@ -24,7 +23,6 @@ class CompanhiaAerea extends persist{
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
-        $this->save();
     }
     static public function getFilename() {
         return get_called_class()::$local_filename;
@@ -102,7 +100,7 @@ class CompanhiaAerea extends persist{
 
         foreach($this->_planejamentos as $plano){
 
-            if($plano->getViagemFromDate($data) != null){
+            if($plano->getDataS() == $data){
 
                 array_push($planejamentos, $plano);
 
