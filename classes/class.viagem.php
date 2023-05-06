@@ -2,6 +2,7 @@
   include_once("class.aeroporto.php");
   include_once("class.aeronave.php");
   include_once("class.passagem.php");
+  include_once("persist.php");
 
   class Viagem extends persist{
 

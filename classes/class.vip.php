@@ -10,12 +10,18 @@ include_once "class.passageiro.php";
 
         private $_pontos_milhagem = array();
 
+        static $local_filename = "passageirosVip.txt";
+
         public function __construct(Passageiro $passageiro){
 
             $this->_cadastro = $passageiro->getCadastro();
             $this->_viagens = $passageiro->getViagens();
 
         }
+
+        static public function getFilename() {
+            return get_called_class()::$local_filename;
+          }
 
         public function verificaPontos(){
 

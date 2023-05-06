@@ -1,5 +1,7 @@
 <?php
-include_once("../verificacoes.php");
+include_once("verificacoes.php");
+include_once("persist.php");
+
 class Cadastro extends persist{
     private string $_nome;
     private $_documento = array("RG" => "doc1", "PASSAPORTE" => "doc2", "CHT" => "doc3");
@@ -15,7 +17,6 @@ class Cadastro extends persist{
         $this -> _nome = $nome;
         $this -> SetDocumento($documento);
         $this->_data_nascimento = new DateTime('0002-02-02');
-        $this->save();
     }
 
     public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $numero_cpf, string $email){

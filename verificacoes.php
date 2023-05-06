@@ -76,7 +76,7 @@ function valida_Rg(string $n_identificacao){
 
         // Verifica se o RG possui 9 dígitos
         if (strlen($n_identificacao) != 8) {
-            echo 'Nome: ';
+            // echo 'Nome: ';
             return false;
         }
 

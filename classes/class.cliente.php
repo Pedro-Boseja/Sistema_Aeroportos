@@ -3,6 +3,7 @@ include_once("class.passagem.php");
 include_once("class.cadastro.php");
 include_once("class.viagem.php");
 include_once("class.facade.php");
+include_once("persist.php");
 
 class Cliente extends persist{
 

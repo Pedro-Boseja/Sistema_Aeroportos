@@ -1,5 +1,5 @@
 <?php
-    // require_once('global.php');
+    require_once('global.php');
     // //Aeronave(string $fabricante,string $modelo, string $registro,int $capacidade_p,float $capacidade_c)
     // $aeronave1 = new Aeronave("Boeing", "737", "ABC123", 200, 4000.0);
     // $aeronave2 = new Aeronave("Airbus", "A320", "DEF456", 150, 3000.0);
@@ -12,7 +12,7 @@
     // $aeroporto2 = new Aeroporto("GIG", "Rio de Janeiro", "RJ");
     // $aeroporto3 = new Aeroporto("BSB", "Brasília", "DF");
     // //Cadastro(string $nome, string $documento, string $numero_documento, string $numero_cpf, DateTime $data_nascimento, string $email)
-    // $cadastro1 = new Cadastro("João Silva", "01234567890", "0001", "11122233344", new DateTime("1990-01-01"), "joao.silva@email.com");
+    $cadastro1 = new Cadastro("João Silva", "01234567890");
     // $cadastro2 = new Cadastro("Maria Souza", "01234567891", "0002", "11122233345", new DateTime("1985-05-15"), "maria.souza@email.com");
     // $cadastro3 = new Cadastro("Pedro Santos", "01234567892", "0003", "11122233346", new DateTime("1992-08-27"), "pedro.santos@email.com");
     // $cadastro4 = new Cadastro("Ana Costa", "01234567893", "0004", "11122233347", new DateTime("1983-12-10"), "ana.costa@email.com");

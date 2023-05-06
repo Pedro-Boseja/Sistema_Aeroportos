@@ -2,7 +2,8 @@
 
 include_once("class.planejamento.php");
 include_once("class.aeronave.php");
-include_once("../verificacoes.php");
+include_once("verificacoes.php");
+include_once("persist.php");
 
 class CompanhiaAerea extends persist{
     private string $_nome;
@@ -13,7 +14,7 @@ class CompanhiaAerea extends persist{
     private $_planejamentos = array();
     private $_aeronaves = array();
     private $_franquias = array();
-    static $local_filename = "companhia.txt";
+    static $local_filename = "companhias.txt";
     //private static $tempo_; ?
 
     public function __construct(string $nome, int $codigo, string $cnpj, 
