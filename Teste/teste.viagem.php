@@ -1,12 +1,12 @@
 <?php
 
-include_once '../Classes/persist.php';
-include_once '../Classes/class.aeronave.php';
-include_once '../Classes/class.aeroporto.php';
-include_once '../Classes/class.passageiro.php';
-include_once '../Classes/class.passagem.php';
-include_once '../Classes/class.cadastro.php';
-include_once '../Classes/class.viagem.php';
+include_once '../classes/persist.php';
+include_once '../classes/class.aeronave.php';
+include_once '../classes/class.aeroporto.php';
+include_once '../classes/class.passageiro.php';
+include_once '../classes/class.passagem.php';
+include_once '../classes/class.cadastro.php';
+include_once '../classes/class.viagem.php';
 
 
 // criar um objeto da classe Viagem
