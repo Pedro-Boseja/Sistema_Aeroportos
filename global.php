@@ -6,7 +6,7 @@
             include_once $path;
         }
         else {
-            $path = __DIR__ . '/classes/class.' . $pClassName . '.php';
+            $path = __DIR__ . '/Classes/class.' . $pClassName . '.php';
             if (is_file($path)) {
                 include_once $path;
             }
