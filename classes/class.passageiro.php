@@ -57,6 +57,4 @@ class Passageiro extends persist{
 
   }
 
-  
-
 }
