@@ -58,7 +58,7 @@
 
       }
       
-      public function ProgramaViagens(){
+      public function ProgramaViagens(string $sigla){
         $data = new DateTime();
 
         for($i=0;$i<30;$i++){

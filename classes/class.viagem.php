@@ -19,6 +19,7 @@
       private int $_milhagem;
       private $_tripulantes = array();
       private Veiculo $_veiculo;
+      private string $_siglacompanhia;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -29,7 +30,8 @@
                                   Aeroporto $aeroporto_saida,
                                   int $milhagem,
                                   Veiculo $veiculo, 
-                                  bool $execucao = false) { 
+                                  bool $execucao = false,
+                                  string $sigla) { 
         $this->_data_s = $data_s;
         $this->_data_c = $data_c;
         $this->_duracao = $data_c->diff($data_s);
@@ -41,6 +43,7 @@
         $this->_assentos = $aeronave->getAssentos();
         $this->_milhagem = $milhagem;
         $this->_veiculo = $veiculo;
+        $this->_siglacompanhia = $sigla;
         $this->save();
       }
 

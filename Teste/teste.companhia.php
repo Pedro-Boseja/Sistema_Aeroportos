@@ -24,8 +24,14 @@ $freq2 = ['Monday', 'Tuesday', 'Wednesday','Thursday', 'Friday', 'Saturday', 'Su
 $freq3 = ['Tuesday', 'Thursday', 'Friday'];
 $freq4 = ['Monday', 'Tuesday', 'Thursday', 'Sunday'];
 
-$aerop= new Aeroporto('GRU', 'São Paulo', 'SP');
-$aeroc = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
+$aerop1 = new Aeroporto('GRU', 'São Paulo', 'SP');
+$aeroc1 = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
+$aerop2 = new Aeroporto('OPO', 'Portugal', 'PT');
+$aeroc2 = new Aeroporto('JUN', 'Belo Horizonte', 'MG');
+$aerop3 = new Aeroporto('GRU', 'São Paulo', 'SP');
+$aeroc3 = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
+$aerop4 = new Aeroporto('GRU', 'São Paulo', 'SP');
+$aeroc4 = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
 
 $plano1 = new Planejamento(  $freq,
                             "codplan",
