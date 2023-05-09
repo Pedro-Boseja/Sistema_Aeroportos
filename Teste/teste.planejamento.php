@@ -1,6 +1,6 @@
 <?
 
-include_once ('../classes/class.planejamento.php');
+include_once ('global.php');
 
 $aviao = new Aeronave('Boeing', '737', 'PR-GIU', 150, 10000.5, 10, 10);
 $horarios = DateTime::createFromFormat('H\h i\m s\s','14h 00m 00s');

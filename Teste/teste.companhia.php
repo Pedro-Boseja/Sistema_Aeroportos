@@ -1,5 +1,5 @@
 <?php
-include_once('global');
+include_once('global.php');
 
 $companhia1 = new CompanhiaAerea("Azul Linhas Aéreas", 123, "12.345.678/0001-01", "Azul S.A.", "AZL");
 
@@ -33,11 +33,17 @@ $aeroc3 = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
 $aerop4 = new Aeroporto('GRU', 'São Paulo', 'SP');
 $aeroc4 = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
 
-$plano1 = new Planejamento(  $freq,
-                            "codplan",
-                            $aviao,
-                            $aeroc,
-                            $aerop,
-                            $horarios,
-                            $horarioc);
+$plano1 = new Planejamento($freq1, "codplan",$aviao2,$aeroc1,$aerop1,$horarios1,$horarioc1);
+
+$plano2 = new Planejamento($freq2, "codplan",$aviao1,$aeroc2,$aerop2,$horarios2,$horarioc2);
+
+$plano3 = new Planejamento($freq3, "codplan",$aviao3,$aeroc3,$aerop3,$horarios3,$horarioc3);
+
+$plano4 = new Planejamento($freq4, "codplan",$aviao4,$aeroc4,$aerop4,$horarios4,$horarioc4);
+
+$companhia1->addPlanejamento($plano1);
+$companhia1->addPlanejamento($plano2);
+$companhia1->addPlanejamento($plano3);
+$companhia1->addPlanejamento($plano4);
+
 

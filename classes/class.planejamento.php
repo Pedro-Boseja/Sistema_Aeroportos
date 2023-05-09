@@ -59,7 +59,7 @@
 
       }
       
-      public function ProgramaViagens(string $sigla){
+      public function ProgramaViagens(){
         $data = new DateTime();
 
         for($i=0;$i<30;$i++){
@@ -99,7 +99,7 @@
             $codigo = $this->_companhia . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
-            $viagem = new Viagem( $data_partida,
+            $viagem = new Viagem($data_partida,
                         $data_chegada,
                         $this->_aeronave,
                         $codigo,
