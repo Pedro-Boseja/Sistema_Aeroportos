@@ -24,7 +24,8 @@
       private Datetime $_horario_c;
       private Datetime $_horario_s;
       private string $_companhia;
-
+      private Veiculo $_veiculo;
+      private int $_milhagem;
 
       public function __construct ($frequencia, string $codigo_plan, Aeronave $aeronave, 
                                   Aeroporto $chegada, Aeroporto $saida,
@@ -104,7 +105,10 @@
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,
-                        $this->_companhia
+                        $this->_companhia,
+                        $this->_milhagem,
+                        $this->_veiculo,
+                        false
                         );
             
             array_push($this->_viagens_planejadas, $viagem);
