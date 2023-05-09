@@ -1,66 +1,20 @@
 <?php
 
-class Aeronave {
-  
-  private string $_fabricante;
-  private string $_modelo;
-  private string $_registro;
-  private int $_capacidade_p;
-  private float $_capacidade_c;
-  private $_assentos = array();
+// incluir a definição da classe Aeronave
+include '../Classes/class.aeronave.php';
 
-  public function __construct(
-                            string $fabricante,
-                            string $modelo, 
-                            string $registro,
-                            int $capacidade_p,
-                            float $capacidade_c,
-                            int $largura,
-                            int $comprimento,)       
-  {
-    $this->_fabricante = $fabricante;
-    $this->_modelo = $modelo;
-    $this->_registro = $registro;
-    $this->_capacidade_p = $capacidade_p;
-    $this->_capacidade_c = $capacidade_c;
-    $this->_assentos = $this->MontarAssentos($largura, $comprimento);      
-  }
+// criar um objeto da classe Aeronave
+$aviao = new Aeronave('Boeing', '737', 'PR-GIU', 150, 10000.5, 6, 30);
 
-  public function getFabricante(){
-    return $this->_fabricante;
-  }
-
-  public function getModelo(){
-    return $this->_modelo;
-  }
-
-  public function getRegistro(){
-    return $this->_registro;
-  }
-
-  public function getCapacidadeP(){
-    return $this->_capacidade_p;
-  }
-
-  public function getCapacidadeC(){
-    return $this->_capacidade_c;
-  }
-
-  public function getAssentos(){
-    return $this->_assentos;
-  }
-
-  public function MontarAssentos (int $largura, int $comprimento){
-    $assentos = array();
-    for($i = 1; $i <= $comprimento; $i++) {
-      $l = 65;
-      for ($j = 0; $j < $largura; $j++) {
-        $str = chr($l);
-        array_push($assentos, "$i$str");
-        $l += 1;
-      }
-    }
-    $a = array_fill_keys($assentos, "vazio");
-    return $a;
-  }
+// verificar os valores dos atributos do objeto
+echo 'Fabricante: ' . $aviao->getFabricante() . "\n";
+echo 'Modelo: ' . $aviao->getModelo() . "\n";
+echo 'Registro: ' . $aviao->getRegistro() . "\n";
+echo 'Capacidade de passageiros: ' . $aviao->getCapacidadeP() . "\n";
+echo 'Capacidade de combustível: ' . $aviao->getCapacidadeC() . "\n";
+echo 'Assentos: ';
+$a = array_keys($aviao->getAssentos());
+foreach($a as $al){
+    echo "$al" . "\n";
 }
+echo "\n";

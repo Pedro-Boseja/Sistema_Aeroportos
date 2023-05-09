@@ -2,6 +2,7 @@
   include_once("class.aeroporto.php");
   include_once("class.aeronave.php");
   include_once("class.passagem.php");
+  include_once("class.veiculo.php");
   include_once("persist.php");
 
   class Viagem extends persist{
@@ -15,6 +16,9 @@
       private DateInterval $_duracao;
       private bool $_executado;
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
+      private int $_milhagem;
+      private $_tripulantes = array();
+      private Veiculo $_veiculo;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -22,7 +26,9 @@
                                   Aeronave $aeronave, 
                                   string $codigo, 
                                   Aeroporto $aeroporto_chegada, 
-                                  Aeroporto $aeroporto_saida, 
+                                  Aeroporto $aeroporto_saida,
+                                  int $milhagem,
+                                  Veiculo $veiculo, 
                                   bool $execucao = false) { 
         $this->_data_s = $data_s;
         $this->_data_c = $data_c;
@@ -33,15 +39,16 @@
         $this->_aeroporto_saida = $aeroporto_saida;
         $this->_executado = $execucao;
         $this->_assentos = $aeronave->getAssentos();
+        $this->_milhagem = $milhagem;
+        $this->_veiculo = $veiculo;
         $this->save();
-      
       }
 
       static public function getFilename() {
         return get_called_class()::$local_filename;
       }
 
-      public function AddPassagem (string $assento, Passagem $passagem) {
+      public function AddPassageiro (string $assento, Passagem $passagem) {
         $nome_passageiro = $passagem->getPassageiro()->getCadastro()->getNome();
         $as_passagem = array($assento => $nome_passageiro);
         $this->_assentos = array_replace($this->_assentos, $as_passagem);
@@ -79,6 +86,18 @@
         return $this->_executado;
       }
 
+      public function getMilhagem () {
+        return $this->_milhagem;
+      }
+
+      public function getTripulantes () {
+        return $this->_tripulantes;
+      }
+
+      public function getVeiculo () {
+        return $this->_veiculo;
+      }
+
       public function getAssentosLivres () {
         $assentos = $this->_aeronave->getAssentos();
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
@@ -87,9 +106,13 @@
       }
 
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
-      public function setAeronave(Aeronave $aeronave){
+      public function TrocarAeronave(Aeronave $aeronave){
         $this->_aeronave = $aeronave;
         $this->_assentos = $aeronave->getAssentos(); 
+      }
+
+      public function TrocarVeículo(Veiculo $veiculo){
+        $this->_veiculo = $veiculo;
       }
 
       public function setDates(DateTime $dataS, DateTime $dataC){
