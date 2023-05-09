@@ -1,4 +1,6 @@
 <?php
+    include_once('classes/persist.php');
+    include_once('verificações.php');
     function autoloader($pClassName) {
         $pClassName = strtolower($pClassName);
         echo __NAMESPACE__;
@@ -7,7 +9,7 @@
             include_once $path;
         }
         else {
-            $path = __DIR__ . '/Classes/class.' . $pClassName . '.php';
+            $path = __DIR__ . '/classes/class.' . $pClassName . '.php';
             if (is_file($path)) {
                 include_once $path;
             }
