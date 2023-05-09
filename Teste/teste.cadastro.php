@@ -2,7 +2,7 @@
 
 // Inclua a classe Cadastro
 include_once 'persist.php';
-include_once 'class.cadastro.php';
+include_once '../classes/class.cadastro.php';
 
 // Crie um objeto Cadastro simples (cliente)
 $cadastro = new Cadastro(

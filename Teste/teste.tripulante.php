@@ -1,6 +1,6 @@
 <?php
 
-include_once ('../Classes/class.tripulante.php');
+include_once ('../classes/class.tripulante.php');
 include_once 'persist.php';
 
 

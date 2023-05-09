@@ -1,8 +1,7 @@
 <?php
 
-// include_once 'persist.php';
-// include_once ("../classes/class.passageiro.php");
-include_once('global');
+include_once 'persist.php';
+include_once ("../classes/class.passageiro.php");
 
 // cria um cadastro inicial
 $cadastro = new Cadastro(
