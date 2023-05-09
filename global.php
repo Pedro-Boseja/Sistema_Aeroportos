@@ -1,6 +1,6 @@
 <?php
     include_once('classes/persist.php');
-    include_once('verificações.php');
+    include_once('verificacoes.php');
     function autoloader($pClassName) {
         $pClassName = strtolower($pClassName);
         echo __NAMESPACE__;

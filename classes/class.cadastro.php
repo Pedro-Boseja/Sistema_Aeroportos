@@ -19,7 +19,7 @@ class Cadastro extends persist{
         $this->_data_nascimento = new DateTime('0002-02-02');
     }
 
-    public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $numero_cpf, string $email){
+    public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $email, string $numero_cpf){
         $this -> _data_nascimento = $data_nascimento;
         $this -> _nacionalidade = strtoupper($nacionalidade);
         $this -> _numero_cpf = $numero_cpf;
