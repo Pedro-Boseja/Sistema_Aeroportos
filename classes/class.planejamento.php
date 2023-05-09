@@ -74,10 +74,23 @@
             $dia_chegada = $data->format('Y-m-d');
             $hora_chegada = $this->_horario_c->format('h:i:s');
             
+            
             //transfomra os dados anteriores em uma variavel tipo DateTime.
             $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_partida . " " . $hora_partida );
             $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_chegada . " " . $hora_chegada );
             
+            if($data_partida->getTimestamp() > $data_chegada->getTimestamp()){
+
+              $mid = $data_partida;
+
+              $data_partida = $data_chegada;
+
+              $data_chegada = $mid;
+              
+              $data_chegada->setTimestamp($data->getTimestamp() + 86400);
+
+            }
+
             //caracteres para a a fomração do código da viagem.
             $permint = "01234567890";
             
@@ -91,7 +104,8 @@
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,
-                        false);
+                        $this->_companhia
+                        );
             
             array_push($this->_viagens_planejadas, $viagem);
           }

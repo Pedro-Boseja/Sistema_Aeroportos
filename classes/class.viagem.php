@@ -28,10 +28,11 @@
                                   string $codigo, 
                                   Aeroporto $aeroporto_chegada, 
                                   Aeroporto $aeroporto_saida,
-                                  int $milhagem,
-                                  Veiculo $veiculo, 
-                                  bool $execucao = false,
-                                  string $sigla) { 
+                                  string $sigla= "",
+                                  int $milhagem = 0,
+                                  Veiculo $veiculo= null, 
+                                  bool $execucao = false
+                                  ) { 
         $this->_data_s = $data_s;
         $this->_data_c = $data_c;
         $this->_duracao = $data_c->diff($data_s);
