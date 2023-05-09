@@ -1,25 +1,21 @@
 <?php
 
-include_once ('../Classes/class.tripulante.php');
-include_once 'persist.php';
+// include_once 'persist.php';
+// include_once ("../classes/class.passageiro.php");
+include_once('global');
 
-
+// cria um cadastro inicial
 $cadastro = new Cadastro(
     'João da Silva', // nome
     '12.244.876', //numero documento
 );
 
-$cadastro->fillPassageiro(
+$passageiro = new Passageiro(
+    $cadastro, // nome e documento
     $DateTime = new DateTime(10/10/2010), // data de nascimento
     'Brasileiro', // nacionalidade
-    'jaodasirva@orkut.com', // email
+    'jaodasirva@orkut.com', // e-mail
     '666.666.666-66' // cpf
-);
-
-$tripulante = new Tripulante(
-    $cadastro, // cadastro
-    '54321', // cht
-    'Rua dos Piratas, 99 - Centro, Caribe-CA, Haiti' // endereço
 );
 
 // Testa os métodos getters
@@ -31,18 +27,16 @@ echo 'Nacionalidade: ' . $cadastro->getNacionalidade() . PHP_EOL;
 echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
 echo 'Idade: ' . $cadastro->getIdade() . PHP_EOL;
-echo 'Email: ' . $cadastro->getEmail() . PHP_EOL;
-echo 'Endereço: ' . $cadastro->getEndereco() . PHP_EOL;
+echo 'Email: ' . $cadastro->getEmail() . PHP_EOL ;
 echo "\n";
 
 // Testa os métodos setters
-$cadastro->setNome('Bruno Cimbler');
+$cadastro->setNome('Bateus Mastos');
 $cadastro->setDocumento('12.345.678');
-$cadastro->setNacionalidade('zimbabueano');
+$cadastro->setNacionalidade('MEXICANO');
 $cadastro->setNumeroCpf('987.654.321-00');
-$cadastro->setDataNascimento(new DateTime('1969-01-01'));
-$cadastro->setEmail('brunin.games@example.com');
-$cadastro->setEndereco('Rua Constantinopla. 666 - Cracolandia, Espirito Sanri - ES, Zimbabue');
+$cadastro->setDataNascimento(new DateTime('1988-01-01'));
+$cadastro->setEmail('jose.silva@example.com');
 
 // Testa os métodos getters novamente
 echo 'Nome: ' . $cadastro->getNome() . PHP_EOL;
@@ -54,5 +48,4 @@ echo 'Número CPF: ' . $cadastro->getNumeroCpf() . PHP_EOL;
 echo 'Data de nascimento: ' . $cadastro->getDataNascimento()->format('d/m/Y') . PHP_EOL;
 echo 'Idade: ' . $cadastro->getIdade() . PHP_EOL;
 echo 'Email: ' . $cadastro->getEmail() . PHP_EOL;
-echo 'Endereço: ' . $cadastro->getEndereco() . PHP_EOL;
 echo "\n";

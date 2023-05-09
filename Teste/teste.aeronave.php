@@ -1,7 +1,7 @@
 <?php
 
 // incluir a definição da classe Aeronave
-include '../Classes/class.aeronave.php';
+include '../classes/class.aeronave.php';
 
 // criar um objeto da classe Aeronave
 $aviao = new Aeronave('Boeing', '737', 'PR-GIU', 150, 10000.5, 6, 30);

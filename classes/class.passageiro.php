@@ -11,7 +11,7 @@ class Passageiro extends persist{
   protected $_viagens = array();
   static $local_filename = "passageiros.txt";
 
-  public function __construct (Cadastro $cadastro, DateTime $data_nascimento, string $nacionalidade,string $email, string $numero_cpf = "VAZIO") {
+  public function __construct (Cadastro $cadastro, DateTime $data_nascimento, string $nacionalidade, string $email, string $numero_cpf = "VAZIO") {
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
     $this->save();
@@ -20,9 +20,13 @@ class Passageiro extends persist{
     return get_called_class()::$local_filename;
   }
 
-  public function addFranquia(string $franquia){}
+  public function addFranquia(string $franquia){
 
-  public function delFranquia(string $franquia){}
+  }
+
+  public function delFranquia(string $franquia){
+
+  }
 
   public function addViagem(Viagem $viagem){
     array_push($_viagens, $viagem);
@@ -31,6 +35,7 @@ class Passageiro extends persist{
   public function delViagem(Viagem $viagem){
     unset($_viagens, $viagem);
   }
+
   public function getViagem(string $codigo){
 
     foreach($this->_viagens as $viagem){
