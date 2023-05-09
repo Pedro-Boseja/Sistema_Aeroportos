@@ -1,7 +1,7 @@
 <?php
 
 // incluir a definição da classe Aeroporto
-include '../Classes/class.aeroporto.php';
+include '../classes/class.aeroporto.php';
 
 // criar um objeto da classe Aeroporto
 $aeroporto = new Aeroporto('GRU', 'São Paulo', 'SP');
