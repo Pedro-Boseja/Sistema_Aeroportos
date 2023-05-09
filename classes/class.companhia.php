@@ -112,4 +112,10 @@ class CompanhiaAerea extends persist{
         return $planejamentos;
     }
 
+
+    public function atualizaViagens(){
+        foreach($this->_planejamentos as $plan){
+            $plan->ProgramaViagens();
+        }
+    }
 }

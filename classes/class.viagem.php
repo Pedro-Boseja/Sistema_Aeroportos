@@ -33,6 +33,7 @@
         $this->_aeroporto_saida = $aeroporto_saida;
         $this->_executado = $execucao;
         $this->_assentos = $aeronave->getAssentos();
+        $this->save();
       
       }
 
