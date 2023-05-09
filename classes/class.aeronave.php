@@ -1,4 +1,5 @@
 <?php
+include_once("persist.php");
 
 class Aeronave extends persist{
   

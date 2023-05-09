@@ -9,7 +9,7 @@ class Facade{
     //Pegar todas as viagens programadas desses planejamentos e filtrar pelas datas.
     //Retorna um array com as viagens possíveis, um array de arrays de 2 dimensões,
     //no caso de haver conexão, ou 0 caso não hajam viagens;
-    public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
+    public static function SolicitarViagemCompanhia(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
 
         $planejamentos = array();
         $viagens = array();//array a ser retornado com as possíveis viagens

@@ -40,17 +40,22 @@
     $passageiro2 = new Passageiro($cadastro2, new DateTime("1985-05-15"), "brasileiro", "01234567891" ,"maria.souza@email.com");
     $passageiro3 = new Passageiro($cadastro3, new DateTime("1985-05-15"), "brasileiro", "01234567891" ,"maria.souza@email.com");
     
-    //Passagem(float $tarifa, Viagem $viagem, string $assento, Passageiro $passageiro)
-    $passagem1 = new Passagem(1000.0, $viagem1, "A1", $passageiro1);
-    $passagem2 = new Passagem(1500.0, $viagem2, "B2", $passageiro2);
-    $passagem3 = new Passagem(2000.0, $viagem3, "C3", $passageiro3);
     
     //planejamentos ($frequencia, string $codigo_plan, Aeronave $aeronave, Aeroporto $chegada, Aeroporto $saida, DateTime $horarios, DateTime $horarioc, string $companhia = 'CA')
     $planejamento1 = new Planejamento(array(EnumDias::Sunday, EnumDias::Monday), "P001", $aeronave1, $aeroporto1, $aeroporto2, new DateTime('2023-05-01 08:00:00'), new DateTime('2023-05-01 10:00:00'), $companhia1);
     $planejamento2 = new Planejamento(array(EnumDias::Saturday, EnumDias::Friday), "P002", $aeronave2, $aeroporto2, $aeroporto3, new DateTime('2023-05-02 09:00:00'), new DateTime('2023-05-02 11:00:00'), $companhia2);
-    $planejamento3 = new Planejamento(array(EnumDias::Thursday, EnumDias::Wednesday), "P003", $aeronave3, $aeroporto3, $aeroporto4, new DateTime('2023-05-03 10:00:00'), new DateTime('2023-05-03 12:00:00'), $companhia3);
+    $planejamento3 = new Planejamento(array(EnumDias::Thursday, EnumDias::Wednesday), "P003", $aeronave3, $aeroporto3, $aeroporto1, new DateTime('2023-05-03 10:00:00'), new DateTime('2023-05-03 12:00:00'), $companhia3);
     
     //Viagem(DateTime $data_s, DateTime $data_c, Aeronave $aeronave, string $codigo, Aeroporto $aeroporto_chegada, Aeroporto $aeroporto_saida, bool $execucao = false)
     $viagem1 = new Viagem(new DateTime('2023-05-01 08:00:00'), new DateTime('2023-05-01 10:00:00'), $aeronave1, "V001", $aeroporto1, $aeroporto2);
     $viagem2 = new Viagem(new DateTime('2023-05-02 09:00:00'), new DateTime('2023-05-02 11:00:00'), $aeronave2, "V002", $aeroporto2, $aeroporto3);
-    $viagem3 = new Viagem(new DateTime('2023-05-03 10:00:00'), new DateTime('2023-05-03 12:00:00'), $aeronave3, "V003", $aeroporto3, $aeroporto4);
+    $viagem3 = new Viagem(new DateTime('2023-05-03 10:00:00'), new DateTime('2023-05-03 12:00:00'), $aeronave3, "V003", $aeroporto3, $aeroporto2);
+
+//Passagem(float $tarifa, Viagem $viagem, string $assento, Passageiro $passageiro)
+    $passagem1 = new Passagem(1000.0, $viagem1, "A1", $passageiro1);
+    $passagem2 = new Passagem(1500.0, $viagem2, "B2", $passageiro2);
+    $passagem3 = new Passagem(2000.0, $viagem3, "C3", $passageiro3);
+
+
+  $passageiros = Passageiro::getRecords();
+  print_r($passageiros[0]->getCadastro()->getNome());

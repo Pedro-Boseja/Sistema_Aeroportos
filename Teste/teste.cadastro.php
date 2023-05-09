@@ -38,8 +38,8 @@ echo "\n";
 $cadastro->fillPassageiro(
     new DateTime('1990-01-01'), // data de nascimento
     'brasileiro', // nacionalidade
-    '123.456.789-00', // data de nascimento
-    'joao.silva@example.com' // email
+    'joao.silva@example.com', // email
+    '123.456.789-00', // CPF
 );
    
 // Testa os métodos getters
