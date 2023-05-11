@@ -1,21 +1,16 @@
 <?php
 
-include_once "../global.php";
+include_once "class.passageiro.php";
 
-class Tripulante extends persist{
+class Tripulante extends Passageiro{
 
-    protected Cadastro $_cadastro;
     private Aeroporto $_aeroporto_base;
-    private CompanhiaAerea $_companhia;
+    private string $_companhia;
     static $local_filename = "tripulantes.txt";
 
-    public function __construct(Cadastro $cadastro, $data_nascimento, $nacionalidade, $email, string $documento, string $endereco, CompanhiaAerea $companhia, Aeroporto $aeroporto, $numero_cpf = "VAZIO"){
+    public function __construct(Cadastro $cadastro, string $documento, string $endereco){
         $this->_cadastro = $cadastro;
-        $this->_cadastro->fillTripulante($data_nascimento, $nacionalidade, $numero_cpf, $email, $documento, $endereco);
-        $this->_companhia = $companhia;
-        $this->_aeroporto_base = $aeroporto;
-        $this->save();
-
+        $this->_cadastro->fillTripulante($documento, $endereco);
     }
     
     static public function getFilename() {
@@ -34,11 +29,11 @@ class Tripulante extends persist{
         return $this->_companhia;
     }
 
-    public function setAeroporto(Aeroporto $aeroporto){
+    public function setAeroportp(Aeroporto $aeroporto){
         $this -> _aeroporto_base = $aeroporto;
     }
 
-    public function setCompanhia(CompanhiaAerea $companhia){
+    public function setCompanhia(string $companhia){
         $this -> _companhia = $companhia;
     }
 

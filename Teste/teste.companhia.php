@@ -46,6 +46,4 @@ $companhia1->addPlanejamento($plano2);
 $companhia1->addPlanejamento($plano3);
 $companhia1->addPlanejamento($plano4);
 
-$companhia1->atualizaViagens();
-
 
