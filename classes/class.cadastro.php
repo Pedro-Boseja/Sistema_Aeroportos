@@ -26,11 +26,7 @@ class Cadastro extends persist{
         $this -> _email = $email;
     }
 
-    public function fillTripulante(DateTime $data_nascimento, string $nacionalidade, string $email, string $numero_cpf, string $documento, string $endereco){
-        $this -> _data_nascimento = $data_nascimento;
-        $this -> _nacionalidade = strtoupper($nacionalidade);
-        $this -> _numero_cpf = $numero_cpf;
-        $this -> _email = $email;
+    public function fillTripulante(string $documento, string $endereco){
         $this -> _endereco = $endereco;
         $this -> _documento["CHT"] = $documento;
         

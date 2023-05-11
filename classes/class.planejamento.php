@@ -23,12 +23,12 @@ include_once "../global.php";
       private Datetime $_horario_c;
       private Datetime $_horario_s;
       private string $_companhia;
-      private Veiculo $_veiculo;
+      private ?Veiculo $_veiculo = NULL;
       private int $_milhagem;
 
       public function __construct ($frequencia, string $codigo_plan, Aeronave $aeronave, 
                                   Aeroporto $chegada, Aeroporto $saida,
-                                  DateTime $horarios, DateTime $horarioc, string $companhia = 'CA') {
+                                  DateTime $horarios, DateTime $horarioc,int $milhagem, string $companhia = 'CA') {
         $this->_frequencia = $frequencia;
         $this->_codigo_plan = $codigo_plan;
         $this->_aeronave = $aeronave;
@@ -37,6 +37,8 @@ include_once "../global.php";
         $this->_horario_s = $horarios;
         $this->_horario_c = $horarioc;
         $this->_companhia = $companhia;
+        $this->_milhagem = $milhagem;
+        $this->_milhagem = $milhagem;
       }
 
 
@@ -105,9 +107,7 @@ include_once "../global.php";
                         $this->_ae_chegada,
                         $this->_ae_saida,
                         $this->_companhia,
-                        $this->_milhagem,
-                        $this->_veiculo,
-                        false
+                        $this->_milhagem
                         );
             
             array_push($this->_viagens_planejadas, $viagem);
@@ -181,12 +181,12 @@ include_once "../global.php";
           
           echo $viagem->getCodigo();
           echo " -> \n";
-          echo $viagem->getAeroportoSaida()->getSigla();
+          echo $viagem->getAeroportoSaida();
           echo ": ";
           echo $viagem->getDataS()->format('m-d h:i');
           echo "\n";
 
-          echo $viagem->getAeroportoChegada()->getSigla();
+          echo $viagem->getAeroportoChegada();
           echo ": ";
           echo $viagem->getDataC()->format('m-d h:i');
           echo "\n";

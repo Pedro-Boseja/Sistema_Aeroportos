@@ -29,7 +29,7 @@ $aeroporto_chegada1 = new Aeroporto ("GUA", "Gua", "Sao Paulo");
 $viagem = new Viagem($date_s, $date_c, $aeronave, "TA444", $aeroporto_saida, $aeroporto_chegada);
 
 $cadastro = new Cadastro ("Talita", "111.111.111-11");
-$passageiro = new Passageiro ($cadastro);
+$passageiro = new Passageiro ($cadastro, new DateTime('1988-01-01'), 'bras', 'emacescsdc');
 $passagem = new Passagem (50.0, $viagem, "27D", $passageiro);
 
 // verificar os valores dos atributos do objeto

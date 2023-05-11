@@ -17,7 +17,7 @@ $plano = new Planejamento(  $freq,
                             $aeroc,
                             $aerop,
                             $horarios,
-                            $horarioc);
+                            $horarioc, 300);
 
 $plano->ProgramaViagens();                       
 
