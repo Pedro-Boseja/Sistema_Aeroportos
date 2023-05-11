@@ -18,7 +18,7 @@
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
       private int $_milhagem;
       private $_tripulantes = array();
-      private Veiculo $_veiculo;
+      private ?Veiculo $_veiculo;
       private string $_siglacompanhia;
       static $local_filename = "viagens.txt";
 
@@ -30,7 +30,6 @@
                                   Aeroporto $aeroporto_saida,
                                   string $sigla= "",
                                   int $milhagem = 0,
-                                  Veiculo $veiculo= null, 
                                   bool $execucao = false
                                   ) { 
         $this->_data_s = $data_s;
@@ -43,7 +42,6 @@
         $this->_executado = $execucao;
         $this->_assentos = $aeronave->getAssentos();
         $this->_milhagem = $milhagem;
-        $this->_veiculo = $veiculo;
         $this->_siglacompanhia = $sigla;
         $this->save();
       }
@@ -52,7 +50,7 @@
         return get_called_class()::$local_filename;
       }
 
-      public function AddPassageiro (string $assento, Passagem $passagem) {
+      public function addPassagem (string $assento, Passagem $passagem) {
         $nome_passageiro = $passagem->getPassageiro()->getCadastro()->getNome();
         $as_passagem = array($assento => $nome_passageiro);
         $this->_assentos = array_replace($this->_assentos, $as_passagem);
@@ -133,6 +131,9 @@
         $this->_aeroporto_chegada = $aeroportoC;
       }
 
+      public function setAeronave(Aeronave $aeronave){
+        $this->_aeronave = $aeronave;
+      }
       public function ViagemExecutada(){
         $this->_executado = 1;
       }
