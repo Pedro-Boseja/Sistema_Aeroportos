@@ -13,7 +13,6 @@ include_once "class.passageiro.php";
         static $local_filename = "passageirosVip.txt";
 
         public function __construct(Passageiro $passageiro){
-
             $this->_cadastro = $passageiro->getCadastro();
             $this->_viagens = $passageiro->getViagens();
             $this->save();

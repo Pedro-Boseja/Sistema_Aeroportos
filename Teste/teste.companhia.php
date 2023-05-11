@@ -1,5 +1,6 @@
 <?php
-include_once('classes/class.companhia.php');
+
+include_once('global.php');
 
 $companhia1 = new CompanhiaAerea("Azul Linhas Aéreas", 123, "12.345.678/0001-01", "Azul S.A.", "AZL");
 
