@@ -1,10 +1,6 @@
 <?php
 
-include_once ('../classes/class.passagem.php');
-include_once ('../classes/class.viagem.php');
-include_once ('../classes/class.passageiro.php');
-include_once ('../classes/class.aeronave.php');
-include_once ('../classes/class.aeroporto.php');
+include_once "../global.php";
 
 // criar um objeto da classe Passagem
 $aeronave = new Aeronave ("AvioesTalita", "AeroTalit3000", "TA-LIT", 180, 10000.7, 32, 6);

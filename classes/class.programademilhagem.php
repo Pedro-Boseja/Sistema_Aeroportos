@@ -1,4 +1,7 @@
 <?php
+
+include_once "../global.php";
+
 class ProgramaDeMilhagem{
     private $_categorias=array();
     public function __construct(){

@@ -1,7 +1,6 @@
 <?php
-include_once("class.passagem.php");
-include_once("class.viagem.php");
-include_once("class.companhia.php");
+
+include_once "../global.php";
 
 class Facade{
 

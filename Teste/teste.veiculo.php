@@ -1,8 +1,8 @@
 <?php
 
-    include_once ("../classes.class.veiculo.php");
+include_once "../global.php";
 
-    $veiculo = new Veiculo (12, 18.0);
+$veiculo = new Veiculo (12, 18.0);
 
-    echo $veiculo->getCapacidade() . "\n";
-    echo $veiculo->getVMedia() . "\n";
+echo $veiculo->getCapacidade() . "\n";
+echo $veiculo->getVMedia() . "\n";

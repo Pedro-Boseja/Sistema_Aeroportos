@@ -1,5 +1,6 @@
 <?php
-include_once("persist.php");
+
+include_once "../global.php";
 
 class Aeronave extends persist{
   

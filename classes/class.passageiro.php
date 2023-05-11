@@ -1,8 +1,6 @@
 <?php
 
-include_once ('class.cadastro.php');
-include_once ('class.viagem.php');
-include_once("persist.php");
+include_once "../global.php";
 
 class Passageiro extends persist{
 

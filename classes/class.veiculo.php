@@ -1,5 +1,7 @@
 <?php
 
+include_once "../global.php";
+
     class Veiculo {
 
         private int $_capacidade;

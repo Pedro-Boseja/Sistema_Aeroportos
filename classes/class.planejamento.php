@@ -1,7 +1,6 @@
 <?php
-  include_once("class.aeronave.php");
-  include_once("class.viagem.php");
-  include_once("class.aeroporto.php");
+
+include_once "../global.php";
 
   enum EnumDias{ //utilizado para determinar a frequencia de um voo
     case Sunday;

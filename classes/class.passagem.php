@@ -1,7 +1,6 @@
 <?php
 
-include_once("class.viagem.php");
-include_once("class.passageiro.php");
+include_once "../global.php";
 
 enum EnumStatus : string { //utilizado para determinar o status da passagem
   case Passagem_adquirida = "passagem adquirida";

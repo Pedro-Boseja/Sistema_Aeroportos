@@ -1,8 +1,6 @@
 <?php
 
-// Inclua a classe Cadastro
-include_once 'persist.php';
-include_once '../classes/class.cadastro.php';
+include_once "../global.php";
 
 // Crie um objeto Cadastro simples (cliente)
 $cadastro = new Cadastro(
@@ -73,10 +71,15 @@ echo 'Email: ' . $cadastro->getEmail() . PHP_EOL;
 echo 'Endereço: ' . $cadastro->getEndereco() . PHP_EOL;
 echo "\n";
 
-// Completa um passageiro para tripulante
+// Completa um cliente para tripulante
 $cadastro->fillTripulante(
+    new DateTime('1990-01-01'), // data de nascimento
+    'brasileiro', // nacionalidade
+    'joao.silva@example.com', // email
     '12345',
-    'Rua dos Piratas, 99 - Centro, Caribe-CA, Haiti'
+    'Rua dos Piratas, 99 - Centro, Caribe-CA, Haiti',
+    '123.456.789-00' // CPF
+
 );
 
 // Testa os métodos getters
