@@ -102,7 +102,6 @@ include_once "../global.php";
             //construtor da nova viagem.
             $viagem = new Viagem($data_partida,
                         $data_chegada,
-                        $this->_aeronave,
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,

@@ -11,6 +11,7 @@ class Aeronave extends persist{
   private float $_capacidade_c;
   static $local_filename = "aeronaves.txt";
   private $_assentos = array();
+  private $viagens_planejadas = array();
 
   public function __construct(
                             string $fabricante,

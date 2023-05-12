@@ -2,13 +2,15 @@
 
 include_once "../global.php";
 
-    class Veiculo {
+    class Veiculo extends persist{
 
         private int $_capacidade;
         private float $_v_media;
         private float $_t_percurso;
         private float $_d_total;
         private $_rota = array();
+        private $viagens_planejadas = array();
+        static $local_filename = "veiculos.txt";
         
         public function __construct (int $capacidade,
                                      float $v_media,) {
@@ -16,6 +18,10 @@ include_once "../global.php";
             $this->_v_media = $v_media;
             $this->_t_percurso = 0.0;  
             $this->_d_total = 0.0;                          
+        }
+
+        static public function getFilename() {
+            return get_called_class()::$local_filename;
         }
 
         public function getCapacidade () {

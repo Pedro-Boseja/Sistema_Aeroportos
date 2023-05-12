@@ -9,7 +9,6 @@
 
       private DateTime $_data_s;
       private DateTime $_data_c;
-      private Aeronave $_aeronave;
       private string $_codigo;
       private Aeroporto $_aeroporto_chegada;
       private Aeroporto $_aeroporto_saida;
@@ -19,18 +18,19 @@
       private int $_milhagem;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
+      private ?Aeronave $_aeronave;
       private string $_siglacompanhia;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
-                                  DateTime $data_c, 
-                                  Aeronave $aeronave, 
+                                  DateTime $data_c,  
                                   string $codigo, 
                                   Aeroporto $aeroporto_chegada, 
                                   Aeroporto $aeroporto_saida,
                                   string $sigla= "",
                                   int $milhagem = 0,
-                                  bool $execucao = false
+                                  bool $execucao = false,
+                                  Aeronave $aeronave = null
                                   ) { 
         $this->_data_s = $data_s;
         $this->_data_c = $data_c;
