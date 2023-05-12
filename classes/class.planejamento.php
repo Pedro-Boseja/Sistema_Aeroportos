@@ -17,30 +17,30 @@ include_once "../global.php";
       private $_viagens_executadas = array();
       private $_frequencia = array();
       private string $_codigo_plan;
-      private Aeronave $_aeronave;
       private Aeroporto $_ae_chegada;
       private Aeroporto $_ae_saida;
       private Datetime $_horario_c;
       private Datetime $_horario_s;
-      private string $_companhia;
-      private ?Veiculo $_veiculo = NULL;
+      private ?CompanhiaAerea $_companhia = null;
       private int $_milhagem;
 
-      public function __construct ($frequencia, string $codigo_plan, Aeronave $aeronave, 
+      public function __construct ($frequencia, string $codigo_plan, 
                                   Aeroporto $chegada, Aeroporto $saida,
-                                  DateTime $horarios, DateTime $horarioc,int $milhagem, string $companhia = 'CA') {
+                                  DateTime $horarios, DateTime $horarioc,int $milhagem) {
         $this->_frequencia = $frequencia;
         $this->_codigo_plan = $codigo_plan;
-        $this->_aeronave = $aeronave;
         $this->_ae_chegada = $chegada;
         $this->_ae_saida = $saida;
         $this->_horario_s = $horarios;
         $this->_horario_c = $horarioc;
-        $this->_companhia = $companhia;
         $this->_milhagem = $milhagem;
         $this->_milhagem = $milhagem;
       }
 
+      //retorna a aeronave, veiculo e tripulação disponível da companhia aérea para criar viagens
+      public function getDisponiveis(){
+
+      }
 
       public function ExecutarViagem (string $codigo, Viagem $viagem_exe) {
         
@@ -145,26 +145,26 @@ include_once "../global.php";
 
       }
 
-      public function getFrequencia()
-      {
+      public function getFrequencia(){
           return $this -> _frequencia;  
       }
-      public function getCodigo()
-      {
+
+      public function getCodigo(){
           return $this -> _codigo_plan;  
       }
-      public function setFrequencia($frequencia) 
-      {
+
+      public function setFrequencia($frequencia){
         $this -> _frequencia = $frequencia;
       }
-      public function setCodigo(string $codigo_plan) 
-      {
-        $this -> _codigo_plan = $codigo_plan;
+      
+      public function setCompanhia(CompanhiaAerea $companhia){
+        $this->_companhia = $companhia;
       }
 
       public function getAeroportoC(){
         return $this->_ae_chegada->getSigla();
       }
+
       public function getAeroportoS(){
         return $this->_ae_saida->getSigla();
       }
@@ -172,6 +172,7 @@ include_once "../global.php";
       public function getViagensPLanejadas(){
         return $this->_viagens_planejadas;
       }
+
       public function showViagens(){
 
         if(!$this->_viagens_planejadas) echo "opa \n";

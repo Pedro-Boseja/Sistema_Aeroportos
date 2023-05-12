@@ -1,9 +1,5 @@
 <?php
-  include_once("class.aeroporto.php");
-  include_once("class.aeronave.php");
-  include_once("class.passagem.php");
-  include_once("class.veiculo.php");
-  include_once("persist.php");
+  include_once("../global.php");
 
   class Viagem extends persist{
 
@@ -19,7 +15,7 @@
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
-      private string $_siglacompanhia;
+      private ?CompanhiaAerea $_companhia;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -27,22 +23,19 @@
                                   string $codigo, 
                                   Aeroporto $aeroporto_chegada, 
                                   Aeroporto $aeroporto_saida,
-                                  string $sigla= "",
+                                  CompanhiaAerea $comp = null,
                                   int $milhagem = 0,
-                                  bool $execucao = false,
-                                  Aeronave $aeronave = null
+                                  bool $execucao = false
                                   ) { 
         $this->_data_s = $data_s;
         $this->_data_c = $data_c;
         $this->_duracao = $data_c->diff($data_s);
-        $this->_aeronave = $aeronave;
         $this->_codigo = $codigo;
         $this->_aeroporto_chegada = $aeroporto_chegada;
         $this->_aeroporto_saida = $aeroporto_saida;
         $this->_executado = $execucao;
-        $this->_assentos = $aeronave->getAssentos();
         $this->_milhagem = $milhagem;
-        $this->_siglacompanhia = $sigla;
+        $this->_companhia = $comp;
         $this->save();
       }
 
@@ -111,6 +104,10 @@
       public function TrocarAeronave(Aeronave $aeronave){
         $this->_aeronave = $aeronave;
         $this->_assentos = $aeronave->getAssentos(); 
+      }
+
+      public function AddTripulaçao($tripulacao){
+        $this->_tripulantes = $tripulacao;
       }
 
       public function TrocarVeículo(Veiculo $veiculo){

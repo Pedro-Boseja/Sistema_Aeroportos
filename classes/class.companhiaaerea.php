@@ -13,8 +13,9 @@ class CompanhiaAerea extends persist{
     private $_franquias = array();
     private ProgramaDeMilhagem $_programa_de_milhagem;
     private $_frota = array();
+    private $_pilotos = array();
+    private $_comissarios = array();
     static $local_filename = "companhias.txt";
-    //private static $tempo_; ?
 
 
     public function __construct (string $nome, 
@@ -29,17 +30,34 @@ class CompanhiaAerea extends persist{
         $this->_sigla = $sigla;
         $this->save();
     }
-    static public function getFilename() {
-        return get_called_class()::$local_filename;
+
+    //Cadastrar nova milhagem ou nova categoria???
+    public function CadastrarMilhagem (string $nome, int $pnts) {
+        //$categoria = array($nome => $pnts);
+        //$this->_programa_de_milhagem->setCategorias($categoria);
     }
 
-    public function addAeronave(Aeronave $aeronave){
+    public function CadastrarComissario(Comissario $comissario){
+        array_push($this->_comissarios, $comissario);
+    }
+
+    public function CadastrarPiloto(Piloto $piloto){
+        array_push($this->_pilotos, $piloto);
+    }
+    
+    public function CadastraVeiculo (Veiculo $veiculo) {
+        array_push($this->_frota, $veiculo);
+    }
+
+    public function CadastrarAeronave(Aeronave $aeronave){
         array_push($this->_aeronaves, $aeronave);
     }
 
-    public function getNome(){
-        return $this->_nome;
+    public function PromoverVIP (Passageiro $p_vip) {
+
     }
+
+    
     
     public function atualizaViagens(){
         foreach($this->_planejamentos as $plan){
@@ -48,9 +66,18 @@ class CompanhiaAerea extends persist{
     }
 
     public function addPlanejamento(Planejamento $plan){
+        $plan->setCompanhia($this);
         array_push($this->_aeronaves, $plan);
     }
     
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
+    }
+
+    public function getNome(){
+        return $this->_nome;
+    }
+
     //retorna todos os plaenjamentos possíveis.
     public function getPLanejamentos(){
         $planejamentos = array();
@@ -109,17 +136,20 @@ class CompanhiaAerea extends persist{
         
     }
 
-    //Cadastrar nova milhagem ou nova categoria???
-    public function CadastrarMilhagem (string $nome, int $pnts) {
-        //$categoria = array($nome => $pnts);
-        //$this->_programa_de_milhagem->setCategorias($categoria);
-    }
-
-    public function PromoverVIP (Passageiro $p_vip) {
+    public function getAeronavesDisponiveis(){
 
     }
 
-    public function CadastraVeiculo (Veiculo $veiculo) {
-        array_push($this->_frota, $veiculo);
+    public function getPilotosDisponiveis(){
+        
     }
+
+    public function getComissariosDisponiveis(){
+        
+    }
+
+    public function getVeiculosDisponiveis(){
+        
+    }
+    
 }

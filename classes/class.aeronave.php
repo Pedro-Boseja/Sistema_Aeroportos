@@ -11,7 +11,7 @@ class Aeronave extends persist{
   private float $_capacidade_c;
   static $local_filename = "aeronaves.txt";
   private $_assentos = array();
-  private $viagens_planejadas = array();
+  private $_viagens_planejadas = array();
 
   public function __construct(
                             string $fabricante,
@@ -70,4 +70,37 @@ class Aeronave extends persist{
     $a = array_fill_keys($assentos, "vazio");
     return $a;
   }
+
+  public function isAvaliable(DateTime $data, string $aeroporto){
+    $avaliable = false;
+    return true;
+    // if(count($this->_viagens_planejadas) == 0){
+    //   return true;
+    // }
+
+    // foreach($this->_viagens_planejadas as $viagem){
+    //   //parametros que podem ser usados no futuro
+    //   $dataS = $viagem->getDataS();
+    //   $dataC = $viagem->getDataC();
+    //   $aeroS = $viagem->getAeroportoChegada();
+    //   $aeroC = $viagem->getAeroportoSaida();
+      
+    //   $diff1 = date_diff($data, $dataS);
+    //   $sinal1 = $diff1->format('%R');
+    //   $diff_dias1 = intval($diff1->format('%R%a'));
+    //   $diff_horas1 = intval($diff1->format('%R%h'));
+
+    //   $diff2 = date_diff($data, $dataC);
+    //   $sinal2 = $diff2->format('%R');
+    //   $diff_dias2 = intval($diff2->format('%R%a'));
+    //   $diff_horas2 = intval($diff2->format('%R%h'));
+
+    //   if($diff_horas2 > 2 && $diff_dias2 < 1){
+
+    //   }
+    // }
+
+
+  }
+
 }
