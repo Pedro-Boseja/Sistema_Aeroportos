@@ -4,8 +4,7 @@ include_once "../global.php";
 
 class Facade{
 
-    //Pegar os planejamentos da companhia referentes ao aeroporto de saida e chagada.
-    //Pegar todas as viagens programadas desses planejamentos e filtrar pelas datas.
+    //Pegar todas as viagens programadas desses e filtrar pelas datas.
     //Retorna um array com as viagens possíveis, um array de arrays de 2 dimensões,
     //no caso de haver conexão, ou 0 caso não hajam viagens;
     public static function SolicitarViagemCompanhia(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
@@ -84,8 +83,69 @@ class Facade{
 
     }
 
-    public static function ComprarPassagem(){
-        //criar passageiro ou pegar um já existente no banco de dados
+    //retorna um array com as viagens possiveis, ou um array de array com as viagens com conexão
+    public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data){
+        $viagens_planejadas = Viagem::getRecords();
+        $viagens = array();
+
+        //verifica se há viagens diretas
+        foreach($viagens_planejadas as $viagem){
+            if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoChegada() == $aero_c && 
+            $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
+                array_push($viagens, $viagem);
+            }
+        }
+        if(count($viagens) == 0){//busca voos com conexão
+            $viagemS = array();
+            $viagemC = array();
+
+            foreach($viagens_planejadas as $viagem){
+                if($viagem->getAeroportoSaida() == $aero_s && $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
+                    array_push($viagemS, $viagem);
+                    continue;
+                }
+                if($viagem->getAeroportoChegada() == $aero_c){
+                    array_push($viagemC, $viagem);
+                }
+            }
+
+            foreach($viagemS as $vs){
+                if(count($vs->getAssentosLivres()) == 0){
+                    continue;
+                }
+                foreach($viagemC as $vc){
+                    if(count($vc->getAssentosLivres()) == 0){
+                        continue;
+                    }
+                    $diff = date_diff($vs->getDataC, $vc->getDataS);
+                    $sinal = $diff->format('%R');
+                    $diff_dias = intval($diff->format('%R%a'));
+                    $diff_horas = intval($diff->format('%R%h'));
+
+                    if( $vc->getAeroportoSaida() == $vs->getAeroportoChegada() &&
+                        $sinal == '+' && $diff_dias < 0 && $diff_horas >= 1 && $diff_horas <= 3){
+                            $arr = array($vs, $vc);
+                            array_push($viagens, $arr);
+                    }
+                }
+            }
+
+            if(count($viagens) == 0){
+                echo "não há viagens disponíveis para o destino";
+            }else{
+                return $viagens;
+            }
+
+        }else{
+            return $viagens;
+        }
+
+
+
+    }
+
+    public static function ComprarPassagem($viagens){
+        
     }
 
 
