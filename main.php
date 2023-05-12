@@ -42,9 +42,9 @@
     
     
     //planejamentos ($frequencia, string $codigo_plan, Aeronave $aeronave, Aeroporto $chegada, Aeroporto $saida, DateTime $horarios, DateTime $horarioc, string $companhia = 'CA')
-    $planejamento1 = new Planejamento(array(EnumDias::Sunday, EnumDias::Monday), "P001", $aeronave1, $aeroporto1, $aeroporto2, new DateTime('2023-05-01 08:00:00'), new DateTime('2023-05-01 10:00:00'), $companhia1);
-    $planejamento2 = new Planejamento(array(EnumDias::Saturday, EnumDias::Friday), "P002", $aeronave2, $aeroporto2, $aeroporto3, new DateTime('2023-05-02 09:00:00'), new DateTime('2023-05-02 11:00:00'), $companhia2);
-    $planejamento3 = new Planejamento(array(EnumDias::Thursday, EnumDias::Wednesday), "P003", $aeronave3, $aeroporto3, $aeroporto1, new DateTime('2023-05-03 10:00:00'), new DateTime('2023-05-03 12:00:00'), $companhia3);
+    $planejamento1 = new Planejamento(array(EnumDias::Sunday, EnumDias::Monday), "P001", $aeronave1, $aeroporto1, $aeroporto2, new DateTime('2023-05-01 08:00:00'), new DateTime('2023-05-01 10:00:00'), 300);
+    $planejamento2 = new Planejamento(array(EnumDias::Saturday, EnumDias::Friday), "P002", $aeronave2, $aeroporto2, $aeroporto3, new DateTime('2023-05-02 09:00:00'), new DateTime('2023-05-02 11:00:00'), 300);
+    $planejamento3 = new Planejamento(array(EnumDias::Thursday, EnumDias::Wednesday), "P003", $aeronave3, $aeroporto3, $aeroporto1, new DateTime('2023-05-03 10:00:00'), new DateTime('2023-05-03 12:00:00'), 300);
     
     //Viagem(DateTime $data_s, DateTime $data_c, Aeronave $aeronave, string $codigo, Aeroporto $aeroporto_chegada, Aeroporto $aeroporto_saida, bool $execucao = false)
     $viagem1 = new Viagem(new DateTime('2023-05-01 08:00:00'), new DateTime('2023-05-01 10:00:00'), $aeronave1, "V001", $aeroporto1, $aeroporto2);
