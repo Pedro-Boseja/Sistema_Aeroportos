@@ -9,7 +9,7 @@ include_once "../global.php";
         private float $_t_percurso;
         private float $_d_total;
         private $_rota = array();
-        private $viagens_planejadas = array();
+        private $_viagens_planejadas = array();
         static $local_filename = "veiculos.txt";
         
         public function __construct (int $capacidade,
@@ -76,4 +76,31 @@ include_once "../global.php";
         public function CalculaDistancia (float $lt1, float $lg1, float $lt2, float $lgn2) {
             return 110.57 * sqrt( pow($lt2-$lt1,2) + pow($lgn2-$lg1, 2));
         }
+
+        public function addViagem( Viagem $viagem ){
+
+            array_push($this->_viagens_planejadas, $viagem);
+
+        }
+
+        public function isAvaliable(Viagem $viagem){
+    
+            if(count($this->_viagens_planejadas) == 0){
+        
+              return true;
+            }
+        
+            foreach($this->_viagens_planejadas as $viplan){
+              
+              if($viagem->IsIn($viplan)){
+        
+                return false;
+        
+              }
+              
+            }
+        
+            return true;
+        
+          }
     }

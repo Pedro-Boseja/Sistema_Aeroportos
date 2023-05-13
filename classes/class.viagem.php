@@ -134,4 +134,30 @@
       public function ViagemExecutada(){
         $this->_executado = 1;
       }
+
+      public function IsIn(Viagem $viagem){
+
+        $ok = false;
+
+        if( $this->_data_s->getTimestamp() > $viagem->getDataS()->getTimestamp() ){
+
+          if($this->_data_s->getTimestamp() < $viagem->getDataC()->getTimestamp() ){
+
+            $ok = true;
+
+          }
+        }
+        
+        if( $this->_data_c->getTimestamp() > $viagem->getDataS()->getTimestamp() ){
+
+          if($this->_data_c->getTimestamp() < $viagem->getDataC()->getTimestamp() ){
+
+            $ok = true;
+
+          }
+        }
+
+        return $ok;
+        
+      }
   }

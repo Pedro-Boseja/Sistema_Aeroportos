@@ -71,36 +71,39 @@ class Aeronave extends persist{
     return $a;
   }
 
-  public function isAvaliable(DateTime $data, string $aeroporto){
-    $avaliable = false;
-    return true;
-    // if(count($this->_viagens_planejadas) == 0){
-    //   return true;
-    // }
+  public function isAvaliable(Viagem $viagem){
+    
+    if(count($this->_viagens_planejadas) == 0){
 
-    // foreach($this->_viagens_planejadas as $viagem){
-    //   //parametros que podem ser usados no futuro
-    //   $dataS = $viagem->getDataS();
-    //   $dataC = $viagem->getDataC();
-    //   $aeroS = $viagem->getAeroportoChegada();
-    //   $aeroC = $viagem->getAeroportoSaida();
+      return true;
+    }
+
+    foreach($this->_viagens_planejadas as $viplan){
       
-    //   $diff1 = date_diff($data, $dataS);
-    //   $sinal1 = $diff1->format('%R');
-    //   $diff_dias1 = intval($diff1->format('%R%a'));
-    //   $diff_horas1 = intval($diff1->format('%R%h'));
+      if($viagem->IsIn($viplan)){
 
-    //   $diff2 = date_diff($data, $dataC);
-    //   $sinal2 = $diff2->format('%R');
-    //   $diff_dias2 = intval($diff2->format('%R%a'));
-    //   $diff_horas2 = intval($diff2->format('%R%h'));
+        return false;
 
-    //   if($diff_horas2 > 2 && $diff_dias2 < 1){
+      }
+      
+    }
 
-    //   }
-    // }
-
+    return true;
 
   }
 
+  public function addViagem(Viagem $viagem){
+
+    array_push($this->_viagens_planejadas, $viagem);
+
+  }
+
+  public function getViagens(){
+
+    $viagens = array();
+
+    foreach($this->_viagens_planejadas as $viagem){
+
+    }
+  }
 }

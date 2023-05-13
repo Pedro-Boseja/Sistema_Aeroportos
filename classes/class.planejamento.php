@@ -21,12 +21,13 @@ include_once "../global.php";
       private Aeroporto $_ae_saida;
       private Datetime $_horario_c;
       private Datetime $_horario_s;
-      private ?CompanhiaAerea $_companhia = null;
+      private CompanhiaAerea $_companhia;
       private int $_milhagem;
 
       public function __construct ($frequencia, string $codigo_plan, 
                                   Aeroporto $chegada, Aeroporto $saida,
-                                  DateTime $horarios, DateTime $horarioc,int $milhagem) {
+                                  DateTime $horarios, DateTime $horarioc,
+                                  int $milhagem, CompanhiaAerea $companhia) {
         $this->_frequencia = $frequencia;
         $this->_codigo_plan = $codigo_plan;
         $this->_ae_chegada = $chegada;
@@ -34,7 +35,7 @@ include_once "../global.php";
         $this->_horario_s = $horarios;
         $this->_horario_c = $horarioc;
         $this->_milhagem = $milhagem;
-        $this->_milhagem = $milhagem;
+        $this->_companhia = $companhia;
       }
 
       //retorna a aeronave, veiculo e tripulação disponível da companhia aérea para criar viagens
@@ -235,6 +236,26 @@ include_once "../global.php";
         }
 
         return false;
+      }
+
+      public function assignAeronave(Aeronave $aeronave, Viagem $viagem){
+
+        if( $aeronave->isAvaliable($viagem) ){
+
+          $aeronave->addViagem($viagem);
+
+        }
+
+      }
+
+      public function assignVeiculo(Veiculo $veiculo, Viagem $viagem){
+
+        if( $veiculo->isAvaliable($viagem) ){
+
+          $veiculo->addViagem($viagem);
+
+        }
+
       }
 
       
