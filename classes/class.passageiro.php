@@ -9,7 +9,12 @@ class Passageiro extends persist{
   protected $_viagens = array();
   static $local_filename = "passageiros.txt";
 
-  public function __construct (Cadastro $cadastro, DateTime $data_nascimento, string $nacionalidade, string $email, string $numero_cpf = "VAZIO") {
+  public function __construct (Cadastro $cadastro,
+                                DateTime $data_nascimento,
+                                string $nacionalidade,
+                                string $email,
+                                string $numero_cpf = "VAZIO") {
+                                  
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
     $this->save();
