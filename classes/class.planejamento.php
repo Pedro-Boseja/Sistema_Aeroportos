@@ -274,5 +274,16 @@ include_once "../global.php";
         $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_de_saida . " " . $hora_partida );
         $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_de_chegada . " " . $hora_chegada );
         
+        $viagem = new Viagem($data_partida,
+                        $data_chegada,
+                        $codigo,
+                        $this->_ae_chegada,
+                        $this->_ae_saida,
+                        $this->_companhia,
+                        $this->_milhagem
+                        );
+
+        return $viagem;
+        
       }
     }
