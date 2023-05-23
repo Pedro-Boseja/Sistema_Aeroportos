@@ -65,4 +65,11 @@ class Passageiro extends persist{
 
   }
 
+  public function generateVip(){
+
+    $vip = new Vip( $this );
+
+    return $vip;
+  }
+
 }
