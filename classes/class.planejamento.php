@@ -258,5 +258,21 @@ include_once "../global.php";
 
       }
 
-      
+      public function createViagem(string $codigo, DateTime $dia_de_saida){
+
+        $hora_partida = $this->_horario_s->format('h:i:s'); 
+        $hora_chegada = $this->_horario_c->format('h:i:s');
+
+        $dia_de_chegada = $dia_de_saida;
+
+        //se o horario de chegada for no outro dia, adicione um dia no dia de chegada.
+        if($this->_horario_s->getTimestamp() > $this->_horario_c->getTimestamp()){
+
+          $dia_de_chegada->setTimestamp( $dia_de_chegada->getTimestamp() + 86400);
+
+        }
+        $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_de_saida . " " . $hora_partida );
+        $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_de_chegada . " " . $hora_chegada );
+        
+      }
     }
