@@ -15,8 +15,6 @@ class Tripulante extends persist{
         $this->_cadastro->fillTripulante($data_nascimento, $nacionalidade, $numero_cpf, $email, $documento, $endereco);
         $this->_companhia = $companhia;
         $this->_aeroporto_base = $aeroporto;
-        $this->save();
-
     }
     
     static public function getFilename() {

@@ -11,7 +11,6 @@ class Cliente extends persist{
 
     public function __construct(Cadastro $cadastro) {
         $this -> _cadastro = $cadastro;
-        $this->save();
     }
   
     static public function getFilename() {

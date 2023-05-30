@@ -17,18 +17,9 @@ class Passageiro extends persist{
                                   
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
-    $this->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;
-  }
-
-  public function addFranquia(string $franquia){
-
-  }
-
-  public function delFranquia(string $franquia){
-
   }
 
   public function addViagem(Viagem $viagem){
@@ -57,10 +48,20 @@ class Passageiro extends persist{
   }
 
   public function generateVip(){
-
     $vip = new Vip( $this );
-
     return $vip;
+  }
+
+  public function CancelarPassagem ($passagem) {
+    
+  }
+
+  public function AlterarPassagem () {
+
+  }
+
+  public function IsVIP () {
+    return false;
   }
 
 }

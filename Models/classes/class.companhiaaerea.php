@@ -10,7 +10,7 @@ class CompanhiaAerea extends persist{
     private string $_sigla;
     private $_planejamentos = array();
     private $_aeronaves = array();
-    private $_franquias = array();
+    private float $_franquia;
     private ProgramaDeMilhagem $_programa_de_milhagem;
     private $_frota = array();
     private $_pilotos = array();
@@ -22,13 +22,14 @@ class CompanhiaAerea extends persist{
                                 int $codigo, 
                                 string $cnpj, 
                                 string $razao, 
-                                string $sigla){
+                                string $sigla,
+                                float $franquia){
         $this->_nome = $nome;
         $this->_codigo = $codigo;
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
-        $this->save();
+        $this->_franquia = $franquia;
     }
 
     //Cadastrar nova milhagem ou nova categoria???
@@ -54,12 +55,8 @@ class CompanhiaAerea extends persist{
     }
 
     public function PromoverVIP (Passageiro $p_vip) {
-
         $p_vip = new Vip($p_vip);
-        
     }
-
-    
     
     public function atualizaViagens(){
         foreach($this->_planejamentos as $plan){
@@ -128,14 +125,11 @@ class CompanhiaAerea extends persist{
                     }
             }
         }
-
-
         if(count($planejamentos) == 0){
             return 0;
         }else{
             return $planejamentos;
         }
-        
     }
 
     public function getAeronavesDisponiveis(){
@@ -152,6 +146,14 @@ class CompanhiaAerea extends persist{
 
     public function getVeiculosDisponiveis(){
         
+    }
+
+    public function getFranquia () {
+        return $this->_franquia;
+    }
+
+    public function setFranquia (float $franquia) {
+        $this->_franquia = $franquia;
     }
     
 }
