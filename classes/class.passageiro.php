@@ -7,8 +7,8 @@ include_once("persist.php");
 class Passageiro extends persist{
 
   protected Cadastro $_cadastro;
-  protected $_franquias = array();
   protected $_viagens = array();
+  protected $_passagens = array();
   static $local_filename = "passageiros.txt";
 
   public function __construct (Cadastro $cadastro, DateTime $data_nascimento, string $nacionalidade,string $email, string $numero_cpf = "VAZIO") {
@@ -32,29 +32,20 @@ class Passageiro extends persist{
     unset($_viagens, $viagem);
   }
   public function getViagem(string $codigo){
-
     foreach($this->_viagens as $viagem){
-
       if($viagem->getCodigo() == $codigo){
-       
         return $viagem;
-
       }
     }
-
     return null;
   }
 
   public function getCadastro(){
-
     return $this->_cadastro;
-
   }
 
   public function getViagens(){
-
     return $this->_viagens;
-
   }
 
 }

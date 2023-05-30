@@ -15,7 +15,7 @@ class CompanhiaAerea extends persist{
     private string $_sigla;
     private $_planejamentos = array();
     private $_aeronaves = array();
-    private $_franquias = array();
+    private $_franquia;
     private ProgramaDeMilhagem $_programa_de_milhagem;
     private $_frota = array();
     static $local_filename = "companhias.txt";
@@ -26,12 +26,14 @@ class CompanhiaAerea extends persist{
                                 int $codigo, 
                                 string $cnpj, 
                                 string $razao, 
-                                string $sigla){
+                                string $sigla,
+                                float $franquia){
         $this->_nome = $nome;
         $this->_codigo = $codigo;
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
+        $this->_franquia = $franquia;
         $this->save();
     }
     static public function getFilename() {
@@ -44,6 +46,10 @@ class CompanhiaAerea extends persist{
 
     public function getNome(){
         return $this->_nome;
+    }
+
+    public function getFranquia() {
+        return $this->_franquia;
     }
     
     public function atualizaViagens(){
@@ -104,7 +110,6 @@ class CompanhiaAerea extends persist{
                     }
             }
         }
-
 
         if(count($planejamentos) == 0){
             return 0;
