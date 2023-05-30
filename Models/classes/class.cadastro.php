@@ -1,6 +1,5 @@
 <?php
-include_once("verificacoes.php");
-include_once("persist.php");
+include_once "../Models/global.php";
 
 class Cadastro extends persist{
     private string $_nome;

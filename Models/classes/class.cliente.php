@@ -1,6 +1,6 @@
 <?php
 
-include_once "../global.php";
+include_once "../Models/global.php";
 
 class Cliente extends persist{
 
@@ -13,9 +13,15 @@ class Cliente extends persist{
         $this -> _cadastro = $cadastro;
         $this->save();
     }
+  
     static public function getFilename() {
       return get_called_class()::$local_filename;
     }
+
+    public function getCadastro() {
+        return $this->_cadastro;
+    }
+  
     public function EscolherAssento (Viagem $viagem){
 
       if(count($viagem->getAssentosLivres()) == 0) {

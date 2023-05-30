@@ -1,15 +1,16 @@
 <?php
-    include_once('classes/persist.php');
-    include_once('verificacoes.php');
+"../Models/global.php"
+    include_once('Models/classes/persist.php');
+    include_once('Models/verificacoes.php');
     function autoloader($pClassName) {
         $pClassName = strtolower($pClassName);
         echo __NAMESPACE__;
-        $path = __DIR__ . '/classes/class.'. $pClassName . '.php';
+        $path = __DIR__ . 'Models/classes/class.'. $pClassName . '.php';
         if (is_file($path)) {
             include_once $path;
         }
         else {
-            $path = __DIR__ . '/classes/class.' . $pClassName . '.php';
+            $path = __DIR__ . 'Models/classes/class.' . $pClassName . '.php';
             if (is_file($path)) {
                 include_once $path;
             }

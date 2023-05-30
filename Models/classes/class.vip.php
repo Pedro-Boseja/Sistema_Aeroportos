@@ -1,6 +1,6 @@
 <?php
 
-include_once "class.passageiro.php";
+include_once "../Models/global.php";
 
     class Vip extends Passageiro{
 
