@@ -39,7 +39,10 @@
             
         }
         public function Sair(){
-
+            $this->_login = '';
+            $this->_senha = '';
+            $this->_email = '';
+            $this->setDeslogado();
         }
         public function getEmail(){
             return $this->_email;
