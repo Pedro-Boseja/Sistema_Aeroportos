@@ -13,18 +13,21 @@ enum EnumStatus : string { //utilizado para determinar o status da passagem
 class Passagem  {
     
     protected float $_tarifa;
-    protected Viagem $_viagem;
-    protected string $_assento;
-    protected $_franquias = array();
-    protected Passageiro $_passageiro;
+    protected $_viagens = array();
+    protected $_assentos = array();
+    protected int $_qtde_franquias;
+    protected float $_valorfranquia;
+    protected $_passageiro;
     protected $_status = array();
 
-    public function __construct(float $tarifa, Viagem $viagem, 
-                                string $assento, Passageiro $passageiro) {
+    public function __construct(float $tarifa, 
+                                string $assento, 
+                                $passageiro,
+                                float $qtde_franquias) {
         $this -> _tarifa = $tarifa;
-        $this -> _viagem = $viagem;
-        $this -> _assento = $assento;
         $this -> _passageiro = $passageiro;
+        $this -> _qtde_franquias = $qtde_franquias;
+        $this -> _valorfranquia = 0.0;
         array_push($this -> _status, EnumStatus::Passagem_adquirida);
     }
 
@@ -33,8 +36,8 @@ class Passagem  {
         $date_atual = new DateTime("now", new DateTimeZone('America/Bahia'));
         $t = $date_atual->getTimestamp();
     
-        $t1 = $this->_viagem->getDataS()->getTimestamp() - 172800; //Data do voo - 2 dias
-        $t2 = $this->_viagem->getDataS()->getTimestamp() - 1800; //Data do voo - 30 min
+        $t1 = $this->_viagens[0]->getDataS()->getTimestamp() - 172800; //Data do voo - 2 dias
+        $t2 = $this->_viagens[0]->getDataS()->getTimestamp() - 1800; //Data do voo - 30 min
       
         if ($t >= $t1 and $t <= $t2) {
             array_push($this -> _status, EnumStatus::Checkin_realizado);
@@ -50,12 +53,12 @@ class Passagem  {
         return $this -> _tarifa;
     }
 
-    public function getViagem() {
-        return $this -> _viagem;
+    public function getViagens() {
+        return $this -> _viagens;
     }
 
-    public function getAssento() {
-        return $this -> _assento;
+    public function getAssentos() {
+        return $this -> _assentos;
     }
 
     public function getPassageiro() {
@@ -64,6 +67,14 @@ class Passagem  {
 
     public function getStatus() {
       return $this -> _status;
+    }
+
+    public function getQtdeFranquias() {
+        return $this -> _qtde_franquias;
+    }
+
+    public function getValorFranquia() {
+        return $this -> _valorfranquia;
     }
 
     public function getStrStatus() {
@@ -78,15 +89,27 @@ class Passagem  {
       $this -> _tarifa = $tarifa;
     }
 
-    public function setViagem(Viagem $viagem) {
-        $this -> _viagem = $viagem;
-    }
-    public function setAssento(string $assento) {
-        $this -> _assento = $assento;
-    }
-
-    public function setFranquia(float $franquia) {
-        array_push($this->_franquias, $franquia);
+    public function setValorFranquia($viagem) {
+        
+        if (!$this->_passageiro->IsVIP()) {
+            $this->_valorfranquia += $this->_qtde_franquias*$viagem->getCompanhia()->getFranquia();
+            //fazer tratamendo exceção cajo hajam mais de 3 franquias
+        }
+        else {
+            if ($this->_qtde_franquias == 1 or $this->_qtde_franquias == 0) {
+                //$this->_valorfranquia += 0;
+            }
+            else if ($this->_qtde_franquias == 2) {
+                $this->_valorfranquia += $viagem->getCompanhia()->getFranquia()/2.0;
+            }
+            else if ($this->_qtde_franquias == 3) {
+                $this->_valorfranquia += $viagem->getCompanhia()->getFranquia();
+            }
+            else {
+                //mudar para tratamento de exceção
+                echo 'Não é possível ter mais de 3 franquias. Selecione outra quantidade';
+            }
+        }     
     }
 
     public function setPassageiro (Passageiro $passageiro) {
@@ -95,5 +118,11 @@ class Passagem  {
 
     public function setStatus ($status) {
         array_push($this->_status, $status);
+    }
+
+    public function addViagem (Viagem $viagem, string $assento) {
+        array_push($this->_viagens, $viagem);
+        array_push($this->_assentos, $assento);
+        $this->setValorFranquia($viagem);
     }
 }

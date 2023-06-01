@@ -12,7 +12,6 @@ include_once "../Models/global.php";
       $this -> _sigla = $sigla;
       $this -> _cidade = $cidade;
       $this -> _estado = $estado;
-      $this->save();
     }
     static public function getFilename() {
       return get_called_class()::$local_filename;

@@ -8,8 +8,6 @@ class Piloto extends Tripulante{
 
     public function __construct(Cadastro $cadastro){
         $this->_cadastro = $cadastro;
-        $this->save();
-
     }
 
     static public function getFilename() {

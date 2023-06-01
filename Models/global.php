@@ -1,7 +1,6 @@
 <?php
-"../Models/global.php"
-    include_once('Models/classes/persist.php');
-    include_once('Models/verificacoes.php');
+    include_once('../Models/classes/persist.php');
+    include_once('../Models/verificacoes.php');
     function autoloader($pClassName) {
         $pClassName = strtolower($pClassName);
         echo __NAMESPACE__;

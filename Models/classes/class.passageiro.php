@@ -5,8 +5,8 @@ include_once "../Models/global.php";
 class Passageiro extends persist{
 
   protected Cadastro $_cadastro;
-  protected $_franquias = array();
   protected $_viagens = array();
+  protected $_passagens = array();
   static $local_filename = "passageiros.txt";
 
   public function __construct (Cadastro $cadastro,
@@ -17,18 +17,9 @@ class Passageiro extends persist{
                                   
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
-    $this->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;
-  }
-
-  public function addFranquia(string $franquia){
-
-  }
-
-  public function delFranquia(string $franquia){
-
   }
 
   public function addViagem(Viagem $viagem){
@@ -40,36 +31,37 @@ class Passageiro extends persist{
   }
 
   public function getViagem(string $codigo){
-
     foreach($this->_viagens as $viagem){
-
       if($viagem->getCodigo() == $codigo){
-       
         return $viagem;
-
       }
     }
-
     return null;
   }
 
   public function getCadastro(){
-
     return $this->_cadastro;
-
   }
 
   public function getViagens(){
-
     return $this->_viagens;
-
   }
 
   public function generateVip(){
-
     $vip = new Vip( $this );
-
     return $vip;
+  }
+
+  public function CancelarPassagem ($passagem) {
+    
+  }
+
+  public function AlterarPassagem () {
+
+  }
+
+  public function IsVIP () {
+    return false;
   }
 
 }

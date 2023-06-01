@@ -144,7 +144,7 @@ class Facade{
 
     }
 
-    public static function ComprarPassagem($viagens){
+    public static function ComprarPassagem($viagens, Passageiro $passageiro){
         
     }
 
