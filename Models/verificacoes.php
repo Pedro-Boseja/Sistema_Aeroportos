@@ -57,7 +57,7 @@ function verifica_ModeloAeronave($string){
         return true;
     }
     else{
-        return false;
+        throw new Exception('Modelo inválido');
     }
 }
 

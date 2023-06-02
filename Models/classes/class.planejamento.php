@@ -110,6 +110,7 @@ include_once "../Models/global.php";
                         $this->_milhagem
                         );
             
+            $viagem->save();
             array_push($this->_viagens_planejadas, $viagem);
           }
           

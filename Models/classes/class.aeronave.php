@@ -24,6 +24,11 @@ class Aeronave extends persist{
   {
     $this->_fabricante = $fabricante;
     $this->_modelo = $modelo;
+    try{
+      verifica_ModeloAeronave($registro);
+    }catch(Exception $e){
+      echo $e->getMessage();
+    }
     $this->_registro = $registro;
     $this->_capacidade_p = $capacidade_p;
     $this->_capacidade_c = $capacidade_c;

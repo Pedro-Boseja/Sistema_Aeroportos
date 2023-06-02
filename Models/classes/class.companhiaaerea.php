@@ -18,18 +18,21 @@ class CompanhiaAerea extends persist{
     static $local_filename = "companhias.txt";
 
 
-    public function __construct (string $nome, 
-                                int $codigo, 
-                                string $cnpj, 
-                                string $razao, 
+    public function __construct (string $nome, int $codigo,  string $cnpj, string $razao, 
                                 string $sigla,
                                 float $franquia){
+        
         $this->_nome = $nome;
         $this->_codigo = $codigo;
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
         $this->_franquia = $franquia;
+        if(Usuario::$logado == null){
+            throw new Exception("não há usuário logado");
+        }
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this));
+        $log->save();
     }
 
     //Cadastrar nova milhagem ou nova categoria???
