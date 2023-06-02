@@ -21,7 +21,7 @@
                 $this->_email = $email;
                 $this->save();
             }else{
-                return "Usuário já cadastrado";
+                throw new Exception("Usuário já cadastrado");
             }
         }
         public function Login ($login, $senha){

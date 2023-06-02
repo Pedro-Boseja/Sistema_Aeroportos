@@ -52,7 +52,6 @@ include_once "../Models/global.php";
             $this->_viagens_executadas [ $codigo ] = array('planejado' => $viagem,
                                                            'executado' => $viagem_exe);
 
-            
             unset($viagem);
 
             break;
@@ -284,7 +283,7 @@ include_once "../Models/global.php";
                         $this->_milhagem
                         );
 
-        return $viagem;
+        array_push($this->_viagens_planejadas, $viagem);
         
       }
     }

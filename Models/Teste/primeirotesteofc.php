@@ -8,7 +8,7 @@ include_once "../Models/global.php";
 // • Razão Social: Latam Airlines do Brasil S.A.
 // • CNPJ: 11.222.333/4444-55
 // • Sigla: LA
-$companhia1 = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA");
+$companhia1 = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
 
 
 // • Nome: Azul
@@ -16,7 +16,7 @@ $companhia1 = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airl
 // • Razão Social: Azul Linhas Aéreas Brasileiras S.A.
 // • CNPJ: 22.111.333/4444-55
 // • Sigla: AD
-$companhia2 = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD");
+$companhia2 = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD", 300);
 
 // Cadastre duas aeronaves 
 //modelo 175 

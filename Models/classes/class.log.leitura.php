@@ -8,7 +8,7 @@ class Log_leitura extends Log{
     protected $_entidade;
     protected $_info;
 
-    static $local_filename = "logs.txt";
+    static $local_filename = "logsLeitura.txt";
 
     public function __construct(DateTime $data_hora,
                                  string $entidade,
