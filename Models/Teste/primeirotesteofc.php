@@ -2,6 +2,10 @@
 
 include_once "../Models/global.php";
 
+
+
+
+
 // Cadastre duas companhias aéreas:
 // • Nome: Latam
 // • Código: 001
