@@ -20,8 +20,7 @@ class Passagem  {
     protected $_passageiro;
     protected $_status = array();
 
-    public function __construct(float $tarifa, 
-                                string $assento, 
+    public function __construct(float $tarifa,  
                                 $passageiro,
                                 float $qtde_franquias) {
         $this -> _tarifa = $tarifa;

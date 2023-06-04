@@ -144,7 +144,8 @@ class Facade{
 
     }
 
-    public static function ComprarPassagem($viagens, Passageiro $passageiro, string $assento, ){
+    public static function ComprarPassagem($viagens = array(), Passageiro $passageiro, $assentos = array(), $qnt_franquias){
+       $passagem = new Passagem(100, $passageiro, $qnt_franquias);
         
     }
 
