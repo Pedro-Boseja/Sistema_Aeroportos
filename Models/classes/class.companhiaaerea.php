@@ -35,12 +35,18 @@ class CompanhiaAerea extends persist{
         $log->save();
     }
 
-    //Cadastrar nova milhagem ou nova categoria???
-    public function CadastrarMilhagem (string $nome, int $pnts) {
-        //$categoria = array($nome => $pnts);
-        //$this->_programa_de_milhagem->setCategorias($categoria);
+    //Cadastrar nova categoria;
+    public function CadastrarCategoria (string $nome, int $pnts) {
+        $this->_programa_de_milhagem->setCategoria($nome, $pnts);
     }
-
+    //Exclui uma categoria existente, com base no nome ou quantidade de pontos;
+    public function ExcluirCategoria ($parametro) {
+        $this->_programa_de_milhagem->excluirCategoria($parametro);
+    }
+    //Cadastra o passageiro VIP no programa de milhagem;
+    public function CadastrarPassageiroMilhagem (Vip $passageiro){
+        $this->_programa_de_milhagem->setPassageiro($passageiro);
+    }
     public function CadastrarComissario(Comissario $comissario){
         array_push($this->_comissarios, $comissario);
     }
