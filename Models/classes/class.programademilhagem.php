@@ -4,7 +4,7 @@ include_once "../Models/global.php";
 
 class ProgramaDeMilhagem{
     private $_categorias=array();
-    private $_passageirosvip=array();
+    private $_passageirosvip=array(); //array(Passageiro, categoria(string))
     public function __construct(){
         $this->_categorias[0]="Sem Categoria";
     } 
@@ -66,5 +66,8 @@ class ProgramaDeMilhagem{
     }
     public function setPassageiro(Vip $passageiro){
         array_push($this->_passageirosvip, array($passageiro,$this->getCategoria($passageiro->verificaPontos())));
+    }
+    public function getPassageiros(){
+        return array_keys($this->_passageirosvip);
     }
 }
