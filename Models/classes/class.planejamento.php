@@ -51,9 +51,22 @@ include_once "../Models/global.php";
 
             $this->_viagens_executadas [ $codigo ] = array('planejado' => $viagem,
                                                            'executado' => $viagem_exe);
-
-            
             unset($viagem);
+
+            //Verificação de Clientes VIP para contabilizar programa de milhagem.
+            $passageiros = $$this->_companhia->_milhagem->getPassageiros();
+            foreach($viagem_exe->getPassageiros() as $p){
+
+              if($p->IsVIP()){ // Apenas para não ser necessário fazer a verificação completa em não VIPs
+                if(in_array($p, $passageiros)){//Verifica se está presente no array de passageiros VIP (Desnecessário, mas evita lançar excessão)
+
+                  $passageiros = $$this->_companhia->_milhagem->Upgrade($p);
+
+                }
+
+              }
+
+            }
 
             break;
           }
@@ -110,6 +123,7 @@ include_once "../Models/global.php";
                         $this->_milhagem
                         );
             
+            $viagem->save();
             array_push($this->_viagens_planejadas, $viagem);
           }
           
@@ -283,7 +297,7 @@ include_once "../Models/global.php";
                         $this->_milhagem
                         );
 
-        return $viagem;
+        array_push($this->_viagens_planejadas, $viagem);
         
       }
     }

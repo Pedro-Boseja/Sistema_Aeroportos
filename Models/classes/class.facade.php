@@ -131,7 +131,7 @@ class Facade{
             }
 
             if(count($viagens) == 0){
-                echo "não há viagens disponíveis para o destino";
+                throw new Exception("não há viagens disponíveis para o destino");
             }else{
                 return $viagens;
             }
@@ -144,7 +144,8 @@ class Facade{
 
     }
 
-    public static function ComprarPassagem($viagens, Passageiro $passageiro){
+    public static function ComprarPassagem($viagens = array(), Passageiro $passageiro, $assentos = array(), $qnt_franquias){
+       $passagem = new Passagem(100, $passageiro, $qnt_franquias);
         
     }
 

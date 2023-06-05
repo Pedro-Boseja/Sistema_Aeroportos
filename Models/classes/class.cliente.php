@@ -4,13 +4,12 @@ include_once "../Models/global.php";
 
 class Cliente extends persist{
 
-    private Cadastro $_cadastro;
     private $_viagens_compradas = array();
     private $_passagens = array();
     static $local_filename = "clientes.txt";
 
-    public function __construct(Cadastro $cadastro) {
-        $this -> _cadastro = $cadastro;
+    public function __construct() {
+        
     }
   
     static public function getFilename() {
@@ -18,7 +17,6 @@ class Cliente extends persist{
     }
 
     public function getCadastro() {
-        return $this->_cadastro;
     }
   
     public function EscolherAssento (Viagem $viagem){

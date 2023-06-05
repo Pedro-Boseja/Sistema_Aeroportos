@@ -40,12 +40,25 @@
 
       static public function getFilename() {
         return get_called_class()::$local_filename;
+        
       }
 
+
+
       public function addPassagem (string $assento, Passagem $passagem) {
-        $nome_passageiro = $passagem->getPassageiro()->getCadastro()->getNome();
-        $as_passagem = array($assento => $nome_passageiro);
+        $passageiro = $passagem->getPassageiro();
+        $as_passagem = array($assento => $passageiro);
         $this->_assentos = array_replace($this->_assentos, $as_passagem);
+      }
+
+      public function getPassageiros(){
+        $passageiros = array();
+        foreach($this->_assentos as $a){
+          if(count($a) == 2){
+            array_push($passageiros, $a[1]);
+          }
+        }
+        return $passageiros;
       }
 
       public function getDataS () {
@@ -104,10 +117,10 @@
       }
 
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
-      public function TrocarAeronave(Aeronave $aeronave){
-        $this->_aeronave = $aeronave;
-        $this->_assentos = $aeronave->getAssentos(); 
-      }
+      // public function TrocarAeronave(Aeronave $aeronave){
+      //   $this->_aeronave = $aeronave;
+      //   $this->_assentos = $aeronave->getAssentos(); 
+      // }
 
       public function AddTripulaçao($tripulacao){
         $this->_tripulantes = $tripulacao;

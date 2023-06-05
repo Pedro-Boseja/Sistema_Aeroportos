@@ -1,32 +1,46 @@
 <?php
-    include_once "../global.php";
+    include_once "../Models/global.php";
     class Usuario extends persist{
-        private string $_login;
+        protected string $_login;
         private string $_senha;
         private string $_email;
-        private bool $logado = 0;
+        static public ?Usuario $logado = null;
         static $local_filename = "usuarios.txt";
 
-        public function __construct(){
 
+        public function __construct(){
+            if(Usuario::$logado != null){
+                throw new Exception("Já há usuário logado, é permitido apenas um por vez.");
+            }
         }
         static public function getFilename() {
             return get_called_class()::$local_filename;
         }
         public function Registrar ($login, $senha, $email){
-            if($this->Login($login, $senha) == "Usuário não encontrado"){
+            if(Usuario::$logado == null){
+                throw new Exception("não há usuário logado");
+            }
+            
+            
+            $temp = $this->getRecordsByField("_login", $login);
+            if($temp == null){
                 $this->_login = $login;
                 $this->_senha = $senha;
                 $this->_email = $email;
                 $this->save();
             }else{
-                return "Usuário já cadastrado";
+                throw new Exception("Usuário já cadastrado");
             }
+
+            $this->save();
         }
         public function Login ($login, $senha){
+            if(Usuario::$logado != null){
+                throw new Exception("já existe um usuario logado");
+            }
             $temp = $this->getRecordsByField("_login", $login);
             if($temp == null){
-                return "Usuário não encontrado";
+                throw new Exception("Usuário não encontrado");
             }
             if($temp[0]->getSenha() == $senha){
                 $this->setLogado();
@@ -34,14 +48,14 @@
                 $this->_senha = $temp[0]->getSenha();
                 $this->_email = $temp[0]->getEmail();
             }else{
-                return "Senha incorreta";
+                throw new Exception("Senha Incorreta");
             }
             
         }
         public function Sair(){
-            $this->_login = '';
-            $this->_senha = '';
-            $this->_email = '';
+            // $this->_login = '';
+            // $this->_senha = '';
+            // $this->_email = '';
             $this->setDeslogado();
         }
         public function getEmail(){
@@ -54,9 +68,9 @@
             return $this->_login;
         }
         private function setLogado(){
-            $this->logado = true;
+            Usuario::$logado = $this;
         }
         private function setDeslogado(){
-            $this->logado = false;
+            Usuario::$logado = null;
         }
     }

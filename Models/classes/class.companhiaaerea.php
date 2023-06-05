@@ -18,26 +18,36 @@ class CompanhiaAerea extends persist{
     static $local_filename = "companhias.txt";
 
 
-    public function __construct (string $nome, 
-                                int $codigo, 
-                                string $cnpj, 
-                                string $razao, 
+    public function __construct (string $nome, int $codigo,  string $cnpj, string $razao, 
                                 string $sigla,
                                 float $franquia){
+        
         $this->_nome = $nome;
         $this->_codigo = $codigo;
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
         $this->_franquia = $franquia;
+        if(Usuario::$logado == null){
+            throw new Exception("não há usuário logado");
+        }
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this));
+        $log->save();
     }
-
-    //Cadastrar nova milhagem ou nova categoria???
-    public function CadastrarMilhagem (string $nome, int $pnts) {
-        //$categoria = array($nome => $pnts);
-        //$this->_programa_de_milhagem->setCategorias($categoria);
+//Programa de Milhagem
+    //Cadastrar nova categoria;
+    public function CadastrarCategoria (string $nome, int $pnts) {
+        $this->_programa_de_milhagem->setCategoria($nome, $pnts);
     }
-
+    //Exclui uma categoria existente, com base no nome ou quantidade de pontos;
+    public function ExcluirCategoria ($parametro) {
+        $this->_programa_de_milhagem->excluirCategoria($parametro);//pts ou nome da categoria
+    }
+    //Cadastra o passageiro VIP no programa de milhagem;
+    public function CadastrarPassageiroMilhagem (Vip $passageiro){
+        $this->_programa_de_milhagem->setPassageiro($passageiro);
+    }
+//Outros
     public function CadastrarComissario(Comissario $comissario){
         array_push($this->_comissarios, $comissario);
     }
