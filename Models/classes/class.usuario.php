@@ -9,8 +9,8 @@
 
 
         public function __construct(){
-            if(Usuario::$logado == null){
-                throw new Exception("não há usuário logado");
+            if(Usuario::$logado != null){
+                throw new Exception("Já há usuário logado, é permitido apenas um por vez.");
             }
         }
         static public function getFilename() {
