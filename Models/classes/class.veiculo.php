@@ -1,6 +1,42 @@
 <?php
 
 include_once "../Models/global.php";
+include_once "class.viagem.php";
+include_once "class.apigooglemaps.php";
+
+ini_set('allow_url_fopen', true);
+ini_set('allow_url_include', true);
+
+
+//   // initialize services
+//   const geocoder = new google.maps.Geocoder();
+//   const service = new google.maps.DistanceMatrixService();
+
+//   // build request
+//   const origin1 = { lat: 55.93, lng: -3.118 };
+//   const origin2 = "Greenwich, England";
+//   const destinationA = "Stockholm, Sweden";
+//   const destinationB = { lat: 50.087, lng: 14.421 };
+
+//   const request = {
+//     origins: [origin1, origin2],
+//     destinations: [destinationA, destinationB],
+//     travelMode: google.maps.TravelMode.DRIVING,
+//     unitSystem: google.maps.UnitSystem.METRIC,
+//     avoidHighways: false,
+//     avoidTolls: false,
+//   };
+
+//   // put request on page
+//   (document.getElementById("request") as HTMLDivElement).innerText =
+//     JSON.stringify(request, null, 2);
+
+//   // get distance matrix response
+//   service.getDistanceMatrix(request).then((response) => {
+//     // put response
+//     (document.getElementById("response") as HTMLDivElement).innerText =
+//       JSON.stringify(response, null, 2);
+
 
     class Veiculo extends persist{
 
@@ -11,12 +47,18 @@ include_once "../Models/global.php";
         private $_viagem = array();
         private $_rota = array();
         private $_viagens_planejadas = array();
+        private GoogleMapAPI $_map;
         static $local_filename = "veiculos.txt";
         
         public function __construct (int $capacidade,
                                      float $v_media,) {
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
+            $this->_map = new GoogleMapAPI('map');
+            // setup database for geocode caching
+            //$map->setDSN('mysql://USER:PASS@localhost/GEOCODES');
+            // enter YOUR Google Map Key
+            $this->_map->setAPIKey('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
             //$this->_rota = $this->CalculaRota($viagem);
             //$this->_d_total = $this->CalculaDTotal();
             //$this->_t_percurso = $this->CalculaTempo();                           
@@ -78,9 +120,14 @@ include_once "../Models/global.php";
         }
 
         public function CalculaDistancia (string $endereço1, string $endereço2) {
-            $distancia = 0;
             //Usar a api do google maps pra pegar as coordenadas dos dois endereços
             //return 110.57 * sqrt( pow($x2-$x1,2) + pow($y2-$y1, 2));
+            $lat1 = $this->_map->geoGetCoords($endereço1)[0];
+            $lon1 = $this->_map->geoGetCoords($endereço1)[1];
+            $lat2 = $this->_map->geoGetCoords($endereço2)[0];
+            $lon2 = $this->_map->geoGetCoords($endereço2)[1];
+
+            $distancia = $this->_map->geoGetDistance($lat1, $lon1, $lat2, $lon2);
             return $distancia;
         }
 
@@ -98,30 +145,20 @@ include_once "../Models/global.php";
             array_push($this->_viagem, $viagem);
         }
 
-        public function addViagem( Viagem $viagem ){
-
+        public function addViagem (Viagem $viagem){
             array_push($this->_viagens_planejadas, $viagem);
-
         }
 
-        public function isAvaliable(Viagem $viagem){
+        public function isAvaliable (Viagem $viagem){
     
             if(count($this->_viagens_planejadas) == 0){
-        
               return true;
             }
-        
             foreach($this->_viagens_planejadas as $viplan){
-              
               if($viagem->IsIn($viplan)){
-        
                 return false;
-        
               }
-              
             }
-        
             return true;
-        
           }
     }
