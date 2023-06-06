@@ -8,7 +8,7 @@ class Log extends persist{
     protected $_usuario;
     protected $_data_hora;
 
-    static $local_filename = "logs.txt";
+    static $local_filename = "Logs.txt";
 
     static public function getFilename(){
         

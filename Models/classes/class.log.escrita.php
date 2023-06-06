@@ -20,8 +20,8 @@ class Log_escrita extends Log{
         $this->_usuario = Usuario::$logado;
         $this->_data_hora = $data_hora;
         $this->_entidade = $entidade;
-        $this->_obj_depois = $$obj_depois;
-        $this->_obj_antes = $$obj_antes;
+        $this->_obj_depois = $obj_depois;
+        $this->_obj_antes = $obj_antes;
 
     }
 

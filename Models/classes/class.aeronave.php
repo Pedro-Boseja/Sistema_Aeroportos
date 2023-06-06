@@ -34,8 +34,6 @@ class Aeronave extends persist{
     $log->save();
   }
   static public function getFilename() {
-    $log = new Log_leitura(new DateTime, "Aeronave", "filename");
-    $log->save();
     return get_called_class()::$local_filename;
 }
   public function getFabricante(){
