@@ -121,8 +121,11 @@
             $lat2 = $this->_map->geoGetCoords($endereço2)['lat'];
             $lon2 = $this->_map->geoGetCoords($endereço2)['lng'];
 
-            $distancia = $this->_map->geoGetDistance($lat1, $lon1, $lat2, $lon2);
-            return $distancia;
+            $a = array($endereço1);
+            $b = array($endereço2);
+
+            $distancia = $this->_map->geoGetDistance($a, $b);
+            return $distancia['distance'];
         }
 
         //Calcula as distâncias entre todos os pnts da rota e depois soma elas 

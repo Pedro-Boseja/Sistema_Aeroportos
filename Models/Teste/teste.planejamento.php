@@ -11,13 +11,21 @@ $freq = ['Tuesday', 'Thursday'];
 $aerop= new Aeroporto('GRU', 'São Paulo', 'SP');
 $aeroc = new Aeroporto('CNF', 'Belo Horizonte', 'MG');
 
+$comp = new CompanhiaAerea('TAM', 
+                            213 ,
+                            'CNPJ',
+                            'razao',
+                            'sigla',
+                            12.5);
+
 $plano = new Planejamento(  $freq,
                             "codplan",
-                            $aviao,
                             $aeroc,
                             $aerop,
                             $horarios,
-                            $horarioc, 300);
+                            $horarioc,
+                            300,
+                            $comp);
 
 $plano->ProgramaViagens();                       
 

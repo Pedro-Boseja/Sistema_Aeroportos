@@ -7,7 +7,7 @@ class Tripulante extends persist{
     protected Cadastro $_cadastro;
     private Aeroporto $_aeroporto_base;
     private CompanhiaAerea $_companhia;
-    private $viagens_planejadas = array();
+    private $_viagens_planejadas = array();
     static $local_filename = "tripulantes.txt";
 
     public function __construct(Cadastro $cadastro, $data_nascimento, $nacionalidade, $email, string $documento, string $endereco, CompanhiaAerea $companhia, Aeroporto $aeroporto, $numero_cpf = "VAZIO"){
@@ -42,4 +42,41 @@ class Tripulante extends persist{
         $this -> _companhia = $companhia;
     }
 
+    public function addViagem(Viagem $viagem){
+        if(Usuario::$logado == null){
+          throw new Exception("não há usuário logado");
+        }
+        
+        $obj_antes = serialize($this);
+        array_push($this->_viagens_planejadas, $viagem);
+        $obj_depois = serialize($this);
+        $log = new Log_escrita(new DateTime(), "tripulante", $obj_antes, $obj_depois);
+        $log->save();
+    
+      }
+    
+      public function isAvaliable(Viagem $viagem){
+        if(Usuario::$logado == null){
+          throw new Exception("não há usuário logado");
+        }
+        $log = new Log_leitura(new DateTime, serialize($this), "disponibilidade");
+        $log->save();
+        if(count($this->_viagens_planejadas) == 0){
+    
+          return true;
+        }
+    
+        foreach($this->_viagens_planejadas as $viplan){
+          
+          if($viagem->IsIn($viplan)){
+    
+            return false;
+    
+          }
+          
+        }
+    
+        return true;
+    
+      }
 }
