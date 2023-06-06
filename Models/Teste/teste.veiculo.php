@@ -12,4 +12,4 @@ $endereço2 = "Belo Horizonte, MG, Rua João Fernandes, 113";
 
 $distancia = $veiculo->CalculaDistancia($endereço1, $endereço2);
 
-echo "A distância entre os dois endereços dados é de " . $distancia . " metros\n";
+echo "A distância entre os dois endereços dados é de " . $distancia . " kilômetros\n";

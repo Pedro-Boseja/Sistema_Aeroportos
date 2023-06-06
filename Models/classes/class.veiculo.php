@@ -1,11 +1,9 @@
 <?php
 
-include_once "../Models/global.php";
-include_once "class.viagem.php";
-include_once "class.apigooglemaps.php";
-
-ini_set('allow_url_fopen', true);
-ini_set('allow_url_include', true);
+  include_once "../global.php";
+  
+  ini_set('allow_url_fopen', true);
+  ini_set('allow_url_include', true);
 
 
 //   // initialize services
@@ -47,18 +45,14 @@ ini_set('allow_url_include', true);
         private $_viagem = array();
         private $_rota = array();
         private $_viagens_planejadas = array();
-        private GoogleMapAPI $_map;
+        private apigooglemaps $_map;
         static $local_filename = "veiculos.txt";
         
         public function __construct (int $capacidade,
                                      float $v_media,) {
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
-            $this->_map = new GoogleMapAPI('map');
-            // setup database for geocode caching
-            //$map->setDSN('mysql://USER:PASS@localhost/GEOCODES');
-            // enter YOUR Google Map Key
-            $this->_map->setAPIKey('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
+            $this->_map = new apigooglemaps('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
             //$this->_rota = $this->CalculaRota($viagem);
             //$this->_d_total = $this->CalculaDTotal();
             //$this->_t_percurso = $this->CalculaTempo();                           
@@ -121,11 +115,10 @@ ini_set('allow_url_include', true);
 
         public function CalculaDistancia (string $endereço1, string $endereço2) {
             //Usar a api do google maps pra pegar as coordenadas dos dois endereços
-            //return 110.57 * sqrt( pow($x2-$x1,2) + pow($y2-$y1, 2));
-            $lat1 = $this->_map->geoGetCoords($endereço1)[0];
-            $lon1 = $this->_map->geoGetCoords($endereço1)[1];
-            $lat2 = $this->_map->geoGetCoords($endereço2)[0];
-            $lon2 = $this->_map->geoGetCoords($endereço2)[1];
+            $lat1 = $this->_map->geoGetCoords($endereço1)['lat'];
+            $lon1 = $this->_map->geoGetCoords($endereço1)['lng'];
+            $lat2 = $this->_map->geoGetCoords($endereço2)['lat'];
+            $lon2 = $this->_map->geoGetCoords($endereço2)['lng'];
 
             $distancia = $this->_map->geoGetDistance($lat1, $lon1, $lat2, $lon2);
             return $distancia;
