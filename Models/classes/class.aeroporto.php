@@ -9,6 +9,7 @@ include_once "../Models/global.php";
     static $local_filename = "aeroportos.txt";
 
     public function __construct (string $sigla, string $cidade, string $estado){
+      Usuario::ValidaLogado();
       $this -> _sigla = $sigla;
       $this -> _cidade = $cidade;
       $this -> _estado = $estado;

@@ -7,6 +7,7 @@ class Comissario extends Tripulante{
     static $local_filename = "comissarios.txt";
 
     public function __construct(Cadastro $cadastro){
+        Usuario::ValidaLogado();
         $this->_cadastro = $cadastro;
     }
 

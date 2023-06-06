@@ -11,7 +11,7 @@ class Log extends persist{
     static $local_filename = "logs.txt";
 
     static public function getFilename(){
-
+        
         return get_called_class()::$local_filename;
     }
 

@@ -13,6 +13,7 @@ class CartaodeEmbarque extends persist{
     static $local_filename = "cartaodeembarque.txt";
 
     public function __construct($nome, $sobrenome, $origemVoo, $destinoVoo, $horarioEmbarque, $horarioChegada, $assento){
+        Usuario::ValidaLogado();
         $this->_nome = $nome;
         $this->_sobrenome = $sobrenome;
         $this->_origemVoo = $origemVoo;

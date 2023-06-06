@@ -6,6 +6,7 @@ class ProgramaDeMilhagem{
     private $_categorias=array();
     private $_passageirosvip=array(); //array(Passageiro, categoria(string))
     public function __construct(){
+        Usuario::ValidaLogado();
         $this->_categorias[0]="Sem Categoria";
     } 
     //Pesquisa 

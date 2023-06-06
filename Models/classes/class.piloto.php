@@ -7,6 +7,7 @@ class Piloto extends Tripulante{
     static $local_filename = "pilotos.txt";
 
     public function __construct(Cadastro $cadastro){
+        Usuario::ValidaLogado();
         $this->_cadastro = $cadastro;
     }
 

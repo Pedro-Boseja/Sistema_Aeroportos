@@ -50,6 +50,7 @@
         
         public function __construct (int $capacidade,
                                      float $v_media,) {
+                                        Usuario::ValidaLogado();
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
             $this->_map = new apigooglemaps('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');

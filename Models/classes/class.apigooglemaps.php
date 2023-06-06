@@ -7,6 +7,7 @@ class apigooglemaps {
 	  private $lookup_server = array('GOOGLE' => 'maps.google.com', 'YAHOO' => 'api.local.yahoo.com');
         
     public function __construct($key){
+      Usuario::ValidaLogado();
       $this->setAPIKey($key);
     }
   

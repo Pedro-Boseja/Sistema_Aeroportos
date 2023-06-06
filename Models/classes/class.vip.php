@@ -13,6 +13,7 @@ include_once "../Models/global.php";
         static $local_filename = "passageirosVip.txt";
 
         public function __construct(Passageiro $passageiro){
+            Usuario::ValidaLogado();
             $this->_cadastro = $passageiro->getCadastro();
             $this->_viagens = $passageiro->getViagens();
         }

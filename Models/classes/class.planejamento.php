@@ -28,6 +28,7 @@ include_once "../Models/global.php";
                                   Aeroporto $chegada, Aeroporto $saida,
                                   DateTime $horarios, DateTime $horarioc,
                                   int $milhagem, CompanhiaAerea $companhia) {
+                                    Usuario::ValidaLogado();
         $this->_frequencia = $frequencia;
         $this->_codigo_plan = $codigo_plan;
         $this->_ae_chegada = $chegada;

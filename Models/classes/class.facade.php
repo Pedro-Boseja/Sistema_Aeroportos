@@ -8,7 +8,7 @@ class Facade{
     //Retorna um array com as viagens possíveis, um array de arrays de 2 dimensões,
     //no caso de haver conexão, ou 0 caso não hajam viagens;
     public static function SolicitarViagemCompanhia(string $aero_c, string $aero_s, DateTime $data, CompanhiaAerea $comp_aerea){
-
+        Usuario::ValidaLogado();
         $planejamentos = array();
         $viagens = array();//array a ser retornado com as possíveis viagens
 
@@ -85,6 +85,7 @@ class Facade{
 
     //retorna um array com as viagens possiveis, ou um array de array com as viagens com conexão
     public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, $quantidade_de_pessoas){
+        Usuario::ValidaLogado();
         $viagens_planejadas = Viagem::getRecords();
         $viagens = array();
 
@@ -147,8 +148,20 @@ class Facade{
 
     }
 
-    public static function ComprarPassagem($viagens = array(), Passageiro $passageiro, $assentos = array(), $qnt_franquias){
-       $passagem = new Passagem(100, $passageiro, $qnt_franquias);
+    public static function GetViagensByCod($codigos = array()){
+        $viagens = array();
+        foreach($codigos as $cd){
+           $v = Viagem::getRecordsByField("_codigo", $cd);
+           array_push($viagens, $v);
+        }
+        return $viagens;
+    }
+
+    public static function ComprarPassagem($codigos = array(), Passageiro $passageiro, $assentos = array(), $qnt_franquias){
+        Usuario::ValidaLogado();
+
+        $viagens = Facade::GetViagensByCod($codigos);
+        $passagem = new Passagem(100, $passageiro, $qnt_franquias);
        for($i = 0; $i<count($viagens); $i++){
             $passagem->addViagem($viagens[$i], $assentos[$i]);
        }

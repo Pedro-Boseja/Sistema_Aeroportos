@@ -13,10 +13,7 @@ class Log_leitura extends Log{
     public function __construct(DateTime $data_hora,
                                  string $entidade,
                                  string $info){
-        
-        if(Usuario::$logado == null){
-            throw new Exception("não há usuário logado");
-        }
+        Usuario::ValidaLogado();
         $this->_usuario = Usuario::$logado;
         $this->_data_hora = $data_hora;
         $this->_entidade = $entidade;

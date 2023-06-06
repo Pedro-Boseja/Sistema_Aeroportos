@@ -16,10 +16,7 @@ class Log_escrita extends Log{
                                  string $obj_antes,
                                  string $obj_depois){
 
-        if(Usuario::$logado == null){
-            throw new Exception("não há usuário logado");
-        }
-
+                                    Usuario::ValidaLogado();
         $this->_usuario = Usuario::$logado;
         $this->_data_hora = $data_hora;
         $this->_entidade = $entidade;

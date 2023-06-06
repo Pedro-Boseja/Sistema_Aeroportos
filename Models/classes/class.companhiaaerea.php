@@ -28,9 +28,7 @@ class CompanhiaAerea extends persist{
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
         $this->_franquia = $franquia;
-        if(Usuario::$logado == null){
-            throw new Exception("não há usuário logado");
-        }
+        Usuario::ValidaLogado();
         $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this));
         $log->save();
     }

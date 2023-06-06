@@ -14,7 +14,7 @@
       private int $_milhagem;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
-      private ?Aeronave $_aeronave;
+      private Aeronave $_aeronave;
       private ?CompanhiaAerea $_companhia;
       static $local_filename = "viagens.txt";
 
@@ -27,6 +27,7 @@
                                   int $milhagem = 0,
                                   bool $execucao = false
                                   ) { 
+                                    Usuario::ValidaLogado();
         $this->_data_s = $data_s;
         $this->_data_c = $data_c;
         $this->_duracao = $data_c->diff($data_s);

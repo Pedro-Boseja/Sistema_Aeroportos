@@ -14,7 +14,7 @@ class Passageiro extends persist{
                                 string $nacionalidade,
                                 string $email,
                                 string $numero_cpf = "VAZIO") {
-                                  
+                                  Usuario::ValidaLogado();
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
   }
@@ -57,6 +57,9 @@ class Passageiro extends persist{
   }
 
   public function CancelarPassagem () {
+    if($this->_passagem == null){
+      throw new Exception("Não há passagens para serem canceladas");
+    }
     $this->_passagem->setStatus(EnumStatus::Passagem_cancelada);
     $this->_passagem->CancelarPassagem();
     $this->_passagem = null;

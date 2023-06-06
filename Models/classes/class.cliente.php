@@ -36,7 +36,8 @@ class Cliente extends persist{
     }
 
     public function SolicitarViagem (string $aero_c, string $aero_s, DateTime $date, int $qnt) {
-        $viagens = Facade::SolicitarViagem($aero_c, $aero_s, $date, $qnt);
+      Usuario::ValidaLogado();  
+      $viagens = Facade::SolicitarViagem($aero_c, $aero_s, $date, $qnt);
         print_r($viagens);
     }
 
@@ -45,7 +46,7 @@ class Cliente extends persist{
     }
 
     public function CancelarViagem (Passagem $passagem){
-      //coisa de cliente
+      //coisa de passageiro
     }
   
 }

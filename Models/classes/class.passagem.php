@@ -23,6 +23,7 @@ class Passagem  {
     public function __construct(float $tarifa,  
                                 Passageiro $passageiro,
                                 float $qtde_franquias) {
+                                    Usuario::ValidaLogado();
         $this -> _tarifa = $tarifa;
         $this -> _passageiro = $passageiro;
         $this -> _qtde_franquias = $qtde_franquias;

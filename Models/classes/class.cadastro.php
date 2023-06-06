@@ -13,6 +13,7 @@ class Cadastro extends persist{
     static $local_filename = "cadastros.txt";
 
     public function __construct(string $nome, string $documento){
+        Usuario::ValidaLogado();
         $this -> _nome = $nome;
         $this -> SetDocumento($documento);
         $this->_data_nascimento = new DateTime('0002-02-02');
