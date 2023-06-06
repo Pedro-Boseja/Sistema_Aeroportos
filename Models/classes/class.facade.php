@@ -84,7 +84,7 @@ class Facade{
     }
 
     //retorna um array com as viagens possiveis, ou um array de array com as viagens com conexão
-    public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data){
+    public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, $quantidade_de_pessoas){
         $viagens_planejadas = Viagem::getRecords();
         $viagens = array();
 
@@ -92,7 +92,10 @@ class Facade{
         foreach($viagens_planejadas as $viagem){
             if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoChegada() == $aero_c && 
             $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
-                array_push($viagens, $viagem);
+                if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
+                    array_push($viagens, $viagem);
+                }
+                
             }
         }
         if(count($viagens) == 0){//busca voos com conexão
@@ -110,11 +113,11 @@ class Facade{
             }
 
             foreach($viagemS as $vs){
-                if(count($vs->getAssentosLivres()) == 0){
+                if(count($vs->getAssentosLivres()) < $quantidade_de_pessoas){
                     continue;
                 }
                 foreach($viagemC as $vc){
-                    if(count($vc->getAssentosLivres()) == 0){
+                    if(count($vc->getAssentosLivres()) < $quantidade_de_pessoas){
                         continue;
                     }
                     $diff = date_diff($vs->getDataC, $vc->getDataS);
