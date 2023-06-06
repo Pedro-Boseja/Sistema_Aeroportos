@@ -128,7 +128,22 @@
       // }
 
       public function AddTripulaçao($tripulacao){
-        $this->_tripulantes = $tripulacao;
+
+        foreach($tripulacao as $tripulante){
+
+          if(!$tripulante->isAvaiable($this)){
+            return false;
+          }
+
+        }
+
+        foreach($tripulacao as $tripulante){
+
+          array_push($this->_tripulantes, $tripulante);
+
+        }
+
+        return true;
       }
 
       public function TrocarVeículo(Veiculo $veiculo){
