@@ -6,7 +6,7 @@ class Passageiro extends persist{
 
   protected Cadastro $_cadastro;
   protected $_viagens = array();
-  protected $_passagens = array();
+  protected ?Passagem $_passagem;
   static $local_filename = "passageiros.txt";
 
   public function __construct (Cadastro $cadastro,
@@ -52,8 +52,14 @@ class Passageiro extends persist{
     return $vip;
   }
 
-  public function CancelarPassagem ($passagem) {
-    
+  public function addPassagem(Passagem $passagem){
+    $this->_passagem = $passagem;
+  }
+
+  public function CancelarPassagem () {
+    $this->_passagem->setStatus(EnumStatus::Passagem_cancelada);
+    $this->_passagem->CancelarPassagem();
+    $this->_passagem = null;
   }
 
   public function AlterarPassagem () {

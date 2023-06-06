@@ -43,7 +43,14 @@
         
       }
 
-
+      public function CancelarPassageiro(Passageiro $passageiro){
+        foreach($this->_assentos as $p){
+          if($passageiro->getCadastro()->getNome() == $p->getCadastro()->getNome()){
+            $key = array_search($p, $this->_assentos);
+            unset($this->_assentos[$key]);
+          }
+        }
+      }
 
       public function addPassagem (string $assento, Passagem $passagem) {
         $passageiro = $passagem->getPassageiro();
@@ -54,9 +61,7 @@
       public function getPassageiros(){
         $passageiros = array();
         foreach($this->_assentos as $a){
-          if(count($a) == 2){
-            array_push($passageiros, $a[1]);
-          }
+          array_push($passageiros, $a);
         }
         return $passageiros;
       }

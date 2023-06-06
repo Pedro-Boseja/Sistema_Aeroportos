@@ -21,7 +21,7 @@ class Passagem  {
     protected $_status = array();
 
     public function __construct(float $tarifa,  
-                                $passageiro,
+                                Passageiro $passageiro,
                                 float $qtde_franquias) {
         $this -> _tarifa = $tarifa;
         $this -> _passageiro = $passageiro;
@@ -45,6 +45,12 @@ class Passagem  {
             echo 'O periodo de Check-in ainda não começou. Tente mais tarde.';
         } else {
             echo 'O periodo de Check-in já foi encerrado hehehehehehe';
+        }
+    }
+
+    public function CancelarPassagem(){
+        foreach($this->_viagens as $v){
+            $v->CancelarPassageiro($this->_passageiro);
         }
     }
 
