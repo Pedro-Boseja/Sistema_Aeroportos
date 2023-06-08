@@ -5,37 +5,6 @@
   ini_set('allow_url_fopen', true);
   ini_set('allow_url_include', true);
 
-
-//   // initialize services
-//   const geocoder = new google.maps.Geocoder();
-//   const service = new google.maps.DistanceMatrixService();
-
-//   // build request
-//   const origin1 = { lat: 55.93, lng: -3.118 };
-//   const origin2 = "Greenwich, England";
-//   const destinationA = "Stockholm, Sweden";
-//   const destinationB = { lat: 50.087, lng: 14.421 };
-
-//   const request = {
-//     origins: [origin1, origin2],
-//     destinations: [destinationA, destinationB],
-//     travelMode: google.maps.TravelMode.DRIVING,
-//     unitSystem: google.maps.UnitSystem.METRIC,
-//     avoidHighways: false,
-//     avoidTolls: false,
-//   };
-
-//   // put request on page
-//   (document.getElementById("request") as HTMLDivElement).innerText =
-//     JSON.stringify(request, null, 2);
-
-//   // get distance matrix response
-//   service.getDistanceMatrix(request).then((response) => {
-//     // put response
-//     (document.getElementById("response") as HTMLDivElement).innerText =
-//       JSON.stringify(response, null, 2);
-
-
     class Veiculo extends persist{
 
         private int $_capacidade;
@@ -121,11 +90,16 @@
             $lat2 = $this->_map->geoGetCoords($endereço2)['lat'];
             $lon2 = $this->_map->geoGetCoords($endereço2)['lng'];
 
-            $a = array($endereço1);
-            $b = array($endereço2);
+            $distancia = 110.57 * sqrt(pow($lat2-$lat1, 2)+pow($lon2-$lon1, 2));
+            return $distancia;
+  
+            
+            //// Método alternativo para calcular distâcia usando a matrix de distância do api
+            // $a = array($endereço1);
+            // $b = array($endereço2);
 
-            $distancia = $this->_map->geoGetDistance($a, $b);
-            return $distancia['distance'];
+            // $distancia = $this->_map->geoGetDistance($a, $b);
+            // return $distancia['distance'];
         }
 
         //Calcula as distâncias entre todos os pnts da rota e depois soma elas 
