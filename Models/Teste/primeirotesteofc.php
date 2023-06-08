@@ -2,10 +2,6 @@
 
 include_once "../Models/global.php";
 
-
-
-
-
 // Cadastre duas companhias aéreas:
 
 // • Nome: Latam
@@ -14,7 +10,6 @@ include_once "../Models/global.php";
 // • CNPJ: 11.222.333/4444-55
 // • Sigla: LA
 $latam = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
-
 
 // • Nome: Azul
 // • Código: 002
@@ -34,7 +29,6 @@ $aviao = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 30);
 
 // Seu código deve validar a sigla e tratar a exceção. Em seguida a sigla deve ser corrigida para PP-RUZ.
 
-
 $companhia1->CadastrarAeronave($aviao1);
 
 // a segunda à Azul.
@@ -52,7 +46,6 @@ $curitiba = new Aeroporto('CWB', 'São José dos Pinhais', 'Paraná');
 $voo1 = new Viagem($a = new DateTime(), $b = new DateTime(), 'AC1329', $aeroporto2, $aeroporto1, $companhia2);
 
 //Seu código deve validar o código do voo, tratar a exceção e em seguida alterar o código para utilizar a sigla correta da companhia aérea.
-
 
 // Cadastre dois voos diários de ida e volta, sendo um pela manhã e outro pela tarde, entre os aeroportos abaixo:
 // • Confins – Guarulhos
