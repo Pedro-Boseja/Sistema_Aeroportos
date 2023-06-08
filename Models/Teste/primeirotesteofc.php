@@ -7,12 +7,13 @@ include_once "../Models/global.php";
 
 
 // Cadastre duas companhias aéreas:
+
 // • Nome: Latam
 // • Código: 001
 // • Razão Social: Latam Airlines do Brasil S.A.
 // • CNPJ: 11.222.333/4444-55
 // • Sigla: LA
-$companhia1 = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
+$latam = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
 
 
 // • Nome: Azul
@@ -20,7 +21,7 @@ $companhia1 = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airl
 // • Razão Social: Azul Linhas Aéreas Brasileiras S.A.
 // • CNPJ: 22.111.333/4444-55
 // • Sigla: AD
-$companhia2 = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD", 300);
+$azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD", 300);
 
 // Cadastre duas aeronaves 
 //modelo 175 
@@ -41,11 +42,11 @@ $aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 30);
 $companhia2->CadastrarAeronave($aviao2);
 
 // Cadastre os aeroportos de Confins, Guarulhos, Congonhas, Galeão e Afonso Pena. Os dados desse aeroporto podem ser encontrados na internet.
-$aeroporto1 = new Aeroporto('CNF', 'Confins', 'Minas Gerais');
-$aeroporto2 = new Aeroporto('GRU', 'Guarulhos', 'São Paulo');
-$aeroporto3 = new Aeroporto('CGH', 'São Paulo', 'São Paulo');
-$aeroporto4 = new Aeroporto('GIG', 'Rio de Janeiro', 'Rio de Janeiro');
-$aeroporto5 = new Aeroporto('CWB', 'São José dos Pinhais', 'Paraná');
+$confins = new Aeroporto('CNF', 'Confins', 'Minas Gerais');
+$guarulhos = new Aeroporto('GRU', 'Guarulhos', 'São Paulo');
+$congonhas = new Aeroporto('CGH', 'São Paulo', 'São Paulo');
+$galeao = new Aeroporto('GIG', 'Rio de Janeiro', 'Rio de Janeiro');
+$curitiba = new Aeroporto('CWB', 'São José dos Pinhais', 'Paraná');
 
 // Cadastre o voo AC1329 da Azul ligando os aeroportos de Confins e Guarulhos. 
 $voo1 = new Viagem($a = new DateTime(), $b = new DateTime(), 'AC1329', $aeroporto2, $aeroporto1, $companhia2);
@@ -58,6 +59,26 @@ $voo1 = new Viagem($a = new DateTime(), $b = new DateTime(), 'AC1329', $aeroport
 // • Confins – Congonhas
 // • Guarulhos – Galeão
 // • Congonhas – Afonso Pena
+$freq = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+$data1 = Datetime::createFromFormat('H:i', "11:00");
+$data2 = Datetime::createFromFormat('H:i', "13:00");
+$data3 = Datetime::createFromFormat('H:i', "09:00");
+$data4 = Datetime::createFromFormat('H:i', "20:00");
+$data5 = Datetime::createFromFormat('H:i', "22:00");
+$data6 = Datetime::createFromFormat('H:i', "08:00");
+$data7 = Datetime::createFromFormat('H:i', "19:00");
+
+//confins - congonhas
+$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $latam);
+//congonhas - confins 
+$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 30, $latam);
+
+//confins - guarulhos
+$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 50, $latam);
+//guarulhos - confins 
+$gru_cnf = new PLanejamento($freq, "GRU-CNF",$guarulhos ,$confins, $data7, $data5, 60, $latam);
+
 
 // Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
 //utilizando aeronaves previamente cadastradas no sistema.
