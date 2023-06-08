@@ -273,6 +273,16 @@ include_once "../Models/global.php";
 
       }
 
+      public function assignTripulante(Tripulante $tripulante, Viagem $viagem){
+
+        if( $tripulante->isAvaliable($viagem) ){
+
+          $tripulante->addViagem($viagem);
+
+        }
+
+      }
+
       public function createViagem(string $codigo, DateTime $dia_de_saida){
 
         $hora_partida = $this->_horario_s->format('h:i:s'); 
