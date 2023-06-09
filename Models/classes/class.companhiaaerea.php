@@ -163,5 +163,7 @@ class CompanhiaAerea extends persist{
     public function setFranquia (float $franquia) {
         $this->_franquia = $franquia;
     }
-    
+    public function getSigla(){
+        return $this->_sigla;
+    }
 }

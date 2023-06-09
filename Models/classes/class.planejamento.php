@@ -37,6 +37,7 @@ include_once "../Models/global.php";
         $this->_horario_c = $horarioc;
         $this->_milhagem = $milhagem;
         $this->_companhia = $companhia;
+        $this->_companhia->addPlanejamento($this);
       }
 
       //retorna a aeronave, veiculo e tripulação disponível da companhia aérea para criar viagens
@@ -112,7 +113,8 @@ include_once "../Models/global.php";
             $permint = "01234567890";
             
             //formação do código da viagem (número gerado aleatoriamente e iniciais da companhia aérea).
-            $codigo = $this->_companhia . substr(str_shuffle($permint), 0, 4);
+            $letras = $this->_companhia->getSigla();
+            $codigo = $letras . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
             $viagem = new Viagem($data_partida,
@@ -284,7 +286,12 @@ include_once "../Models/global.php";
       }
 
       public function createViagem(string $codigo, DateTime $dia_de_saida){
-
+        $letras = $this->_companhia->getSigla();
+        $comp = substr($codigo, 0, 2);
+        if($letras != $comp){
+          throw new Exception("Codigo inválido");
+        }  
+        
         $hora_partida = $this->_horario_s->format('h:i:s'); 
         $hora_chegada = $this->_horario_c->format('h:i:s');
 
@@ -307,7 +314,7 @@ include_once "../Models/global.php";
                         $this->_companhia,
                         $this->_milhagem
                         );
-
+        $viagem->save();
         array_push($this->_viagens_planejadas, $viagem);
         
       }

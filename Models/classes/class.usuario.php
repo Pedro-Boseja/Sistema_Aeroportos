@@ -64,7 +64,7 @@
 
         static public function ValidaLogado(){
             if(Usuario::$logado == null){
-                throw new Exception("Não há usuario logado");
+                throw new Exception("Não há usuario logado\n");
             }
         }
 
