@@ -14,6 +14,7 @@
         private $_viagem = array();
         private $_rota = array();
         private $_viagens_planejadas = array();
+        private $_horario_embarque = array(); //relaciona o tripulante com o horario de embarque
         private apigooglemaps $_map;
         static $local_filename = "veiculos.txt";
         
@@ -23,9 +24,9 @@
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
             $this->_map = new apigooglemaps('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
-            //$this->_rota = $this->CalculaRota($viagem);
-            //$this->_d_total = $this->CalculaDTotal();
-            //$this->_t_percurso = $this->CalculaTempo();                           
+            $this->_rota = $this->CalculaRota($viagem);
+            $this->_d_total = $this->CalculaDTotal();
+            $this->_t_percurso = $this->CalculaTempo();                           
         }
 
         static public function getFilename() {
@@ -79,21 +80,20 @@
               array_push($endereços, $t->getCadastro()->getEndereco());
             }
 
-            $n_enderecos = count($enderecos);
-            for ($i = 1; $i <= $n_enderecos; $i++) {
-                $distancia += $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i]));
+            $aeroporto_saida = $viagem->getAeroportoSaida();
+          
+            $endereco_aeroporto = sprintf($aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
+          
+            $distancias = array();
+
+            foreach ($endereco as $r) {
+              $distancias[$r] = $this->CalculaDistancia($endereco_aeroporto, $r);
             }
 
-            $aeroporto_saida = $viagem->getAeroportoSaida();
-            $aeroporto_chegada = $viagem->getAeroportoChegada();
-          
-            $enderecoAeroporto = sprintf($aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
-            $enderecoAeroporto = sprintf( $aeroporto_chegada->getSigla(),  $aeroporto_chegada->getCidade(),  $aeroporto_chegada->getEstado());
-
-            $rota = array();
-            array_push($rota, $endereço_saida);
+            $rota = $endereço_aeroporto;
+            $rota += array_flip(sort($distancias));
+            array_push($rota, $endereco_aeroporto);
     
-          
             return $rota;
         }
 
@@ -101,6 +101,12 @@
             $tempo = $this->_d_total / $this->_v_media;
             return $tempo;
         }
+
+        public function CalculaHorarioEmbarque ($rota) {
+          $horarios = array();
+          
+          return $horarios;
+        } 
 
         public function CalculaDistancia (string $endereço1, string $endereço2) {
             //Usar a api do google maps pra pegar as coordenadas dos dois endereços
