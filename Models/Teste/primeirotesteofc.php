@@ -85,9 +85,10 @@ $data4 = Datetime::createFromFormat('H:i', "20:00");
 $data5 = Datetime::createFromFormat('H:i', "22:00");
 $data6 = Datetime::createFromFormat('H:i', "08:00");
 $data7 = Datetime::createFromFormat('H:i', "19:00");
-
+$data8 = Datetime::createFromFormat('H:i', "15:20");
+$data9 = Datetime::createFromFormat('H:i', "18:30");
 //confins - congonhas
-$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $latam);
+$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $azul);
 // $cnf_cgh->ProgramaViagens();
 //congonhas - confins 
 $cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 30, $latam);
@@ -108,7 +109,7 @@ $gig_gru = new PLanejamento($freq, "GIG-CNF",$galeao, $guarulhos, $data7, $data5
 // $gig_gru->ProgramaViagens();
 
 //congonhas - afonso pena
-$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data4, $data5, 30, $azul);
+$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 30, $azul);
 // $cgh_cwb->ProgramaViagens();
 //afonso pena - congonhas
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $azul);
@@ -126,6 +127,7 @@ $azul->atualizaViagens();
 // vôos de ida devem ser da Azul.
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela.
+
 // Feito isto, simule a realização das viagens envolvidas.
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
@@ -162,6 +164,7 @@ $azul->CadastrarPiloto($piloto);
 $azul->CadastrarPiloto($copiloto);
 $azul->CadastrarComissario($comissario1);
 $azul->CadastrarComissario($comissario2);
+
 
 // A rota da van que vai buscar a tripulação para a realização da viagem
 // também deve ser planejada. Os horários em que cada tripulante embarca na van devem
