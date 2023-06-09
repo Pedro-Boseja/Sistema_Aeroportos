@@ -108,15 +108,16 @@ $gig_gru = new PLanejamento($freq, "GIG-CNF",$galeao, $guarulhos, $data7, $data5
 // $gig_gru->ProgramaViagens();
 
 //congonhas - afonso pena
-$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data4, $data5, 30, $latam);
+$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data4, $data5, 30, $azul);
 // $cgh_cwb->ProgramaViagens();
 //afonso pena - congonhas
-$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $latam);
+$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $azul);
 // $cwb_cgh->ProgramaViagens();
 
 // Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
 //utilizando aeronaves previamente cadastradas no sistema.
 $latam->atualizaViagens();
+$azul->atualizaViagens();
 
 // Um cliente deve realizar a compra da passagem somente de ida para um passageiro Vip
 // para amanhã (essa data deve ser um parâmetro no código de testes), entre os
@@ -130,8 +131,24 @@ $latam->atualizaViagens();
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
 // Logo após essa passagem deve ser cancelada. Os valores de ressarcimento devem ser
 // calculados e exibidos na tela.
+
 // Cadastre e planeje a tripulação que atuará na primeira viagem do vôo de ida do
-// passageiro. A rota da van que vai buscar a tripulação para a realização da viagem
+// passageiro.
+
+$cad1 = new Cadastro("José", "RG");
+$cad2 = new Cadastro("Maria", "RG");
+$cad3 = new Cadastro("Dalton", "RG");
+$cad3 = new Cadastro("Erica", "RG");
+
+
+$piloto = new Tripulante($cad1, "25/11/1982", "brasileiro", "jmaldade@gmail.com", 
+                        "RG", "Av. do Contorno", $azul, $confins, "000.000.070-67" );
+
+$copiloto = new Tripulante($cad1, "03/04/1983", "brasileira", "malvadeza@gmail.com", 
+                        "RG", "Av. Antonio Carlos", $azul, $confins, "100.000.090-98" );
+
+
+// A rota da van que vai buscar a tripulação para a realização da viagem
 // também deve ser planejada. Os horários em que cada tripulante embarca na van devem
 // ser exibidos.
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
