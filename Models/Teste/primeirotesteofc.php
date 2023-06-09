@@ -144,9 +144,24 @@ $cad3 = new Cadastro("Erica", "RG");
 $piloto = new Tripulante($cad1, "25/11/1982", "brasileiro", "jmaldade@gmail.com", 
                         "RG", "Av. do Contorno", $azul, $confins, "000.000.070-67" );
 
-$copiloto = new Tripulante($cad1, "03/04/1983", "brasileira", "malvadeza@gmail.com", 
+$copiloto = new Tripulante($cad2, "03/04/1983", "brasileira", "malvadeza@gmail.com", 
                         "RG", "Av. Antonio Carlos", $azul, $confins, "100.000.090-98" );
 
+$comissario1 = new Tripulante($cad3, "21/04/1995", "brasileiro", "dtca@gmail.com", 
+                        "RG", "Alameda das Falcatas", $azul, $confins, "970.030.100-08" );
+
+$comissario2 = new Tripulante($cad4, "15/09/1993", "brasileira", "ricare@gmail.com", 
+                        "RG", "Rua João Fernandes", $azul, $confins, "088.430.000-79" );
+
+
+$tripulacao = array ();
+
+$tripulacao = [$piloto, $copiloto, $comissario1, $comissario2];
+
+$azul->CadastrarPiloto($piloto);
+$azul->CadastrarPiloto($copiloto);
+$azul->CadastrarComissario($comissario1);
+$azul->CadastrarComissario($comissario2);
 
 // A rota da van que vai buscar a tripulação para a realização da viagem
 // também deve ser planejada. Os horários em que cada tripulante embarca na van devem
