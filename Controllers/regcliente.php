@@ -1,8 +1,8 @@
 <?php
   include_once "../Models/global.php";
 
-  
-
+  $nome = $_GET['nome'];
+  $documento = $_GET['documento'];
   //$i = $_GET['validar'] === '1';
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-    include_once "../global.php";
+    include_once "../Models/global.php";
     class Usuario extends persist{
         protected string $_login;
         private string $_senha;
@@ -23,7 +23,7 @@
             if($temp == null){
                 $user = new Usuario($login, $senha, $email);
                 $user->save();
-                echo "usuário ".$login." registrado com sucesso";
+                echo "Usuário ".$login." registrado com sucesso\n";
             }else{
                 throw new Exception("Usuário já cadastrado");
             }
