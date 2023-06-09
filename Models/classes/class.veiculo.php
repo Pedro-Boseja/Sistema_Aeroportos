@@ -19,7 +19,7 @@
         
         public function __construct (int $capacidade,
                                      float $v_media,) {
-                                        Usuario::ValidaLogado();
+            Usuario::ValidaLogado();
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
             $this->_map = new apigooglemaps('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
@@ -73,8 +73,27 @@
         }
 
         public function CalculaRota (Viagem $viagem) {
+            $tripulantes = $viagem->getTripulantes();
+            $endereços = array();
+            foreach ($tripulantes as $t){
+              array_push($endereços, $t->getCadastro()->getEndereco());
+            }
+
+            $n_enderecos = count($enderecos);
+            for ($i = 1; $i <= $n_enderecos; $i++) {
+                $distancia += $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i]));
+            }
+
+            $aeroporto_saida = $viagem->getAeroportoSaida();
+            $aeroporto_chegada = $viagem->getAeroportoChegada();
+          
+            $enderecoAeroporto = sprintf($aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
+            $enderecoAeroporto = sprintf( $aeroporto_chegada->getSigla(),  $aeroporto_chegada->getCidade(),  $aeroporto_chegada->getEstado());
+
             $rota = array();
-            //
+            array_push($rota, $endereço_saida);
+    
+          
             return $rota;
         }
 

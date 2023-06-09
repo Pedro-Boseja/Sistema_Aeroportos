@@ -13,13 +13,20 @@
 <body>
   <h1>Sistema de Aeroportos</h1>
 
-  <label>Selecione um dos perfis a seguir para ter acesso às funções do sistema:</label><br><br>
+  <label>Bem vindo ao nosso sistema!</label><br><br>
 
-  <form action="Views/companhia.html" method="post">
-    <button>Companhia</button>
+  <label>Faça login para ter acesso às funcionalidades.</label><br><br>
+
+  <form action="../Controllers/login.php" method="get">
+    
+      <label>Login:</label><input name="login" type="text" ></input><br>
+      <label>Senha:</label><input name="senha" type="text"></input><br>  
+    <button>Enviar</button>
+    <br><br>
   </form>
-  <form action="Views/usuario.html" method="post">
-    <button>Usuário</button>
+
+  <form action="../Views/usuario.html" method="get">
+    <button>Cadastrar usuário</button>
   </form>
   
 </body>
