@@ -1,34 +1,27 @@
-<?php
-  include_once "../Models/global.php";
-
-  Usuario::Login("Hugo Boss", "1234");
-
-  $login = $_GET['login'];
-  $senha = $_GET['senha'];
-  $email = $_GET['email'];
-?>
-
 <head>
-    <title>Cadastro Usuário</title>
+    <title>Página geral</title>
 </head>
 
 <body>
-
-  <br><br>
   
-</body>
+  <h1>Sistema de Aeroportos</h1>
+  
+  <?php
+  include_once "../Models/global.php";
 
-<?php
+  $login = $_GET['login'];
+  $senha = $_GET['senha'];
+
   try{
-    echo Usuario::Registrar($login, $senha, $email);
+    echo Usuario::Login($login, $senha);
   }catch(Exception $e){
     echo $e->getMessage();
   }
-  
-  //echo $usuario->Registrar($login, $senha, $email);
-  //$loginusuario = $usuario->getLogin();
-  ///$emailusuario = $usuario->getEmail();
-  //$senhausuario = $usuario->getSenha();
+  ?>
+
+</body>
+
+<?php
     
 ?>
 
@@ -36,8 +29,8 @@
 
   <br><br>
   
-  <form action="../Views/usuario.html" method="get">
-    <button>Voltar ao login</button>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
   </form>
   
 </body>
