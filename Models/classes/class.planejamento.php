@@ -38,6 +38,8 @@ include_once "../Models/global.php";
         $this->_milhagem = $milhagem;
         $this->_companhia = $companhia;
         $this->_companhia->addPlanejamento($this);
+        $log = new Log_escrita(new DateTime(), "Planejamento", "null", serialize($this));
+        $log->save();
       }
 
       //retorna a aeronave, veiculo e tripulação disponível da companhia aérea para criar viagens
@@ -77,6 +79,7 @@ include_once "../Models/global.php";
       }
       
       public function ProgramaViagens(){
+        $obj_antes = serialize($this);
         $data = new DateTime();
 
         for($i=0;$i<30;$i++){
@@ -132,7 +135,10 @@ include_once "../Models/global.php";
           
           //vai para o próximo dia.
           $data->setTimestamp($data->getTimestamp() + 86400);
-      }
+        }
+
+        $log = new Log_escrita(new DateTime(), "PLanejamento", $obj_antes, serialize($this));
+        $log->save();
       }
 
       public function RemoverViagem(string $codigo){
