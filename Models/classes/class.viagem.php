@@ -90,7 +90,7 @@
       }
 
       public function getAeroportoSaida () {
-        return $this->_aeroporto_saida;
+        return $this->_aeroporto_saida->getSigla();
       }
 
       public function getDuracao () {

@@ -130,6 +130,8 @@ include_once "../global.php";
                         $this->_milhagem
                         );
             
+            $aeronave = $this->_companhia->getAeronavesDisponiveis();
+            $this->assignAeronave($aeronave, $viagem);
             $viagem->save();
             array_push($this->_viagens_planejadas, $viagem);
           }
@@ -200,7 +202,7 @@ include_once "../global.php";
 
       public function showViagens(){
 
-        if(!$this->_viagens_planejadas) echo "opa \n";
+        // if(!$this->_viagens_planejadas) echo "opa \n";
         foreach ($this->_viagens_planejadas as $viagem){
 
           

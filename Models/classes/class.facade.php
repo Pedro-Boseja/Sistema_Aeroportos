@@ -85,18 +85,22 @@ class Facade{
     }
 
     //retorna um array com as viagens possiveis, ou um array de array com as viagens com conexão
-    public static function SolicitarViagem(string $aero_c, string $aero_s, DateTime $data, $quantidade_de_pessoas){
+    public static function SolicitarViagem(Aeroporto $AC, Aeroporto $AS, DateTime $data, $quantidade_de_pessoas){
         Usuario::ValidaLogado();
         $viagens_planejadas = Viagem::getRecords();
         $viagens = array();
 
+        $aero_c = $AC->getSigla();
+        $aero_s = $AS->getSigla();
+
+
         //verifica se há viagens diretas
         foreach($viagens_planejadas as $viagem){
-            if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoChegada() == $aero_c && 
+            if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoSaida() == $aero_s && 
             $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
-                if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
+                // if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
                     array_push($viagens, $viagem);
-                }
+                // }
                 
             }
         }
