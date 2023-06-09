@@ -59,7 +59,10 @@ class CompanhiaAerea extends persist{
     }
 
     public function CadastrarAeronave(Aeronave $aeronave){
+        $obj_antes = serialize($this);
         array_push($this->_aeronaves, $aeronave);
+        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this));
+        $log->save();
     }
 
     public function PromoverVIP (Passageiro $p_vip) {
@@ -73,8 +76,11 @@ class CompanhiaAerea extends persist{
     }
 
     public function addPlanejamento(Planejamento $plan){
+        $obj_antes = serialize($this);
         $plan->setCompanhia($this);
         array_push($this->_aeronaves, $plan);
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this));
+        $log->save();
     }
     
     static public function getFilename() {

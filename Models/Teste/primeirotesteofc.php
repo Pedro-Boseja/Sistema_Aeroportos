@@ -2,8 +2,6 @@
 
 include_once "../Models/global.php";
 
-<<<<<<< Updated upstream
-=======
 //Tentando usar funcionalidades sem estar logado
 try{
     new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
@@ -13,7 +11,6 @@ try{
 
 Usuario::Login("Hugo Boss", "1234");
 
->>>>>>> Stashed changes
 // Cadastre duas companhias aéreas:
 
 // • Nome: Latam
@@ -37,19 +34,17 @@ $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aére
 // 600 kg de carga. 
 // A primeira aeronave deve pertencer a Latam 
 // Defina a sigla da primeira aeronave como PX-RUZ.
+// Seu código deve validar a sigla e tratar a exceção. Em seguida a sigla deve ser corrigida para PP-RUZ.
 try{
     $aviao = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 30);
 }catch(Exception $e){
-    $aviao = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 30);
+    echo $e->getMessage();
 }
-// Seu código deve validar a sigla e tratar a exceção. Em seguida a sigla deve ser corrigida para PP-RUZ.
+$aviao = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 30);
 
-<<<<<<< Updated upstream
-$companhia1->CadastrarAeronave($aviao1);
-=======
+
 
 $latam->CadastrarAeronave($aviao1);
->>>>>>> Stashed changes
 
 // a segunda à Azul.
 $aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 30);
@@ -68,7 +63,6 @@ $freq = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Su
 $datas = Datetime::createFromFormat('H:i', "11:00");
 $datac = Datetime::createFromFormat('H:i', "13:00");
 $plano1 = new PLanejamento($freq, "CNF-GRU", $confins, $guarulhos, $datas, $datac, 60, $azul);
-$azul->addPlanejamento($plano1);
 
 try{
     $plano1->createViagem("AC1329", new DateTime());
@@ -119,11 +113,10 @@ $cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data4, $data5,
 //afonso pena - congonhas
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $latam);
 // $cwb_cgh->ProgramaViagens();
-$latam->atualizaViagens();
-
 
 // Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
 //utilizando aeronaves previamente cadastradas no sistema.
+$latam->atualizaViagens();
 
 // Um cliente deve realizar a compra da passagem somente de ida para um passageiro Vip
 // para amanhã (essa data deve ser um parâmetro no código de testes), entre os

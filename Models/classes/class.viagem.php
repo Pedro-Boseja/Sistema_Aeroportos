@@ -14,7 +14,7 @@
       private int $_milhagem;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
-      private Aeronave $_aeronave;
+      private ?Aeronave $_aeronave;
       private ?CompanhiaAerea $_companhia;
       static $local_filename = "viagens.txt";
 

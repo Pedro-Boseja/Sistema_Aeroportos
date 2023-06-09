@@ -42,7 +42,9 @@
                 // $this->_senha = $temp[0]->getSenha();
                 // $this->_email = $temp[0]->getEmail();
                 Usuario::$logado = $temp[0];
-                echo "usuário ".$login." logado com sucesso";
+                echo "usuário ".$login." logado com sucesso\n";
+                $log = new Log_leitura(new DateTime(), "usuario", "logado");
+                $log->save();
             }else{
                 throw new Exception("Senha Incorreta");
             }
