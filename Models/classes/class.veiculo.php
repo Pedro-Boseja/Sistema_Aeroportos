@@ -14,12 +14,13 @@
         private $_viagem = array();
         private $_rota = array();
         private $_viagens_planejadas = array();
-        private $_horario_embarque = array(); //relaciona o tripulante com o horario de embarque
+        private $_horarios_embarque = array(); //relaciona o tripulante com o horario de embarque
         private apigooglemaps $_map;
         static $local_filename = "veiculos.txt";
         
         public function __construct (int $capacidade,
-                                     float $v_media,) {
+                                     float $v_media,
+                                     $viagem) {
             Usuario::ValidaLogado();
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
@@ -91,20 +92,36 @@
             }
 
             $rota = $endereço_aeroporto;
-            $rota += array_flip(sort($distancias));
+            $rota += array_keys(sort($distancias));
             array_push($rota, $endereco_aeroporto);
     
             return $rota;
         }
 
         public function CalculaTempo () {
-            $tempo = $this->_d_total / $this->_v_media;
+            $tempo = ($this->_d_total / $this->_v_media)*3600;
             return $tempo;
         }
 
-        public function CalculaHorarioEmbarque ($rota) {
+        public function CalculaHorariosEmbarque () {
           $horarios = array();
-          
+
+          $n_enderecos = count($this->_rota);
+          $distancias = array();
+          for ($i = 1; $i <= $n_enderecos; $i++) {
+            array_push ($distancias, $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i])));
+          }
+
+          $distancias = array_reverse($distancias);
+
+          $horario_chegada = $this->_viagem->getDataS()->getTimestamp() - 5400;
+
+          $n_distancias = count($distancias);
+          $horarios = array();
+          for ($i = 0; $i <= $n_distancias; $i++) {
+            array_push ($horarios, (($horario_chegada->getTimestamp()-current($distancias[$i])/$this->_v_media)*3600));
+          }
+    
           return $horarios;
         } 
 
