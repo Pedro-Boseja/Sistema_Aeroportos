@@ -1,6 +1,7 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
+
 
   enum EnumDias{ //utilizado para determinar a frequencia de um voo
     case Sunday;
@@ -309,8 +310,10 @@ include_once "../Models/global.php";
           $dia_de_chegada->setTimestamp( $dia_de_chegada->getTimestamp() + 86400);
 
         }
-        $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_de_saida . " " . $hora_partida );
-        $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_de_chegada . " " . $hora_chegada );
+        $dias = $dia_de_saida->format('Y-m-d');
+        $diac = $dia_de_chegada->format('Y-m-d');
+        $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dias . " " . $hora_partida );
+        $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $diac . " " . $hora_chegada );
         
         $viagem = new Viagem($data_partida,
                         $data_chegada,

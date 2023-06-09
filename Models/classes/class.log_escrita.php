@@ -1,6 +1,7 @@
 <?php
 
-include_once "..global.php";
+include_once "../global.php";
+
 
 class Log_escrita extends Log{
 

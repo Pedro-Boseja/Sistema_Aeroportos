@@ -1,6 +1,7 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
+
 
 class CompanhiaAerea extends persist{
     private string $_nome;

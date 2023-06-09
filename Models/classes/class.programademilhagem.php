@@ -1,6 +1,7 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
+
 
 class ProgramaDeMilhagem{
     private $_categorias=array();

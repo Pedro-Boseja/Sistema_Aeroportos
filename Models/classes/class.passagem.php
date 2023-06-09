@@ -1,6 +1,7 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
+
 
 enum EnumStatus : string { //utilizado para determinar o status da passagem
   case Passagem_adquirida = "passagem adquirida";

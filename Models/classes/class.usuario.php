@@ -1,5 +1,6 @@
 <?php
-    include_once "../Models/global.php";
+  include_once "../global.php";
+
     class Usuario extends persist{
         protected string $_login;
         private string $_senha;

@@ -1,6 +1,7 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
+
 
   class Aeroporto extends persist{
     protected string $_sigla;
