@@ -24,6 +24,7 @@ class ProgramaDeMilhagem{
             throw new Exception("Passageiro não encontrado.");
         }
         $this->_passageirosvip[$chave][1] = $this->getCategoria($passageiro->verificaPontos());
+        $this->Downgrade(); //Atualização deve ser diária, mas nesse caso já serve
     }
     public function Downgrade(){
     //Realiza a atualização dos pontos de todos funcionários. (Deve ser execultada diariamente)
