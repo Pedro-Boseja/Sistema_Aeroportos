@@ -96,8 +96,12 @@ class Facade{
 
         //verifica se há viagens diretas
         foreach($viagens_planejadas as $viagem){
+
             if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoSaida() == $aero_s && 
             $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
+                
+                print_r($viagem->getAeronave());
+
                 if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
                     array_push($viagens, $viagem);
                 }
@@ -167,9 +171,10 @@ class Facade{
 
         $viagens = Facade::GetViagensByCod($codigos);
         $passagem = new Passagem(100, $passageiro, $qnt_franquias);
-       for($i = 0; $i<count($viagens); $i++){
-            $passagem->addViagem($viagens[$i], $assentos[$i]);
-       }
+        $passageiro->addPassagem($passagem);
+        for($i = 0; $i<count($viagens); $i++){
+                $passagem->addViagem($viagens[$i], $assentos[$i]);
+        }
     }
 
 

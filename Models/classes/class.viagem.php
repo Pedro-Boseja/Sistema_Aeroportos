@@ -25,6 +25,7 @@
                                   Aeroporto $aeroporto_chegada, 
                                   Aeroporto $aeroporto_saida,
                                   CompanhiaAerea $comp = null,
+                                  Aeronave $aeronave = null,
                                   int $milhagem = 0,
                                   bool $execucao = false
                                   ) { 
@@ -39,6 +40,7 @@
         $this->_executado = $execucao;
         $this->_milhagem = $milhagem;
         $this->_companhia = $comp;
+        $this->_aeronave = $aeronave;
       }
 
       static public function getFilename() {
