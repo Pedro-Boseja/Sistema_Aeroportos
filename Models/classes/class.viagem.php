@@ -46,6 +46,11 @@
         
       }
 
+      public function showAssentos(){
+        $assentos = $this->_aeronave->getAssentos();
+        print_r($assentos);
+      }
+
       public function CancelarPassageiro(Passageiro $passageiro){
         foreach($this->_assentos as $p){
           if($passageiro->getCadastro()->getNome() == $p->getCadastro()->getNome()){
@@ -119,12 +124,17 @@
 
       public function getAssentosLivres () {
         $assentos = $this->_aeronave->getAssentos();
+
+        if(count($this->_assentos) == 0){
+          return $assentos;
+        }
+
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
         return $assentos_livres;
       }
 
-      
+
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
       // public function TrocarAeronave(Aeronave $aeronave){
       //   $this->_aeronave = $aeronave;

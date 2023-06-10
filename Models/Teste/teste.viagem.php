@@ -1,12 +1,7 @@
 <?php
 
-include_once '../classes/persist.php';
-include_once '../classes/class.aeronave.php';
-include_once '../classes/class.aeroporto.php';
-include_once '../classes/class.passageiro.php';
-include_once '../classes/class.passagem.php';
-include_once '../classes/class.cadastro.php';
-include_once '../classes/class.viagem.php';
+include_once '../global.php';
+
 
 
 // criar um objeto da classe Viagem
@@ -26,11 +21,13 @@ $aeroporto_chegada = new Aeroporto ("GUA", "Guarulhos", "Sao Paulo");
 $aeroporto_saida1 = new Aeroporto ("CNF", "Bel Zonte", "Minas Gerais");
 $aeroporto_chegada1 = new Aeroporto ("GUA", "Gua", "Sao Paulo");
 
-$viagem = new Viagem($date_s, $date_c, $aeronave, "TA444", $aeroporto_saida, $aeroporto_chegada);
+$comp = new CompanhiaAerea("Enzo", 222, "220252121", "Aereo", "TA", 100);
+
+$viagem = new Viagem($date_s, $date_c, "TA1222", $aeroporto_saida, $aeroporto_chegada, $comp);
 
 $cadastro = new Cadastro ("Talita", "111.111.111-11");
 $passageiro = new Passageiro ($cadastro, new DateTime('1988-01-01'), 'bras', 'emacescsdc');
-$passagem = new Passagem (50.0, $viagem, "27D", $passageiro);
+$passagem = new Passagem (50.0, $passageiro, 2);
 
 // verificar os valores dos atributos do objeto
 echo 'Data de saída: ' . $viagem->getDataS()->format('d-m-y H:i') . "\n";
