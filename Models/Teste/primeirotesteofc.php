@@ -136,17 +136,16 @@ $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
 $azul->CadastrarPassageiroVip($vip);
 
+$datacliente = DateTime::createFromFormat("d/m/Y", "12/06/2023");
 
+$lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
 
+$viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 
-// Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
-// tela.
+$cliente->EscolherAssentos($viagem_escolhida);
 
-// Feito isto, simule a realização das viagens envolvidas.
-// Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
-// dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-// Logo após essa passagem deve ser cancelada. Os valores de ressarcimento devem ser
-// calculados e exibidos na tela.
+$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
+
 
 // Cadastre e planeje a tripulação que atuará na primeira viagem do vôo de ida do
 // passageiro.
@@ -179,8 +178,25 @@ $azul->CadastrarPiloto($copiloto);
 $azul->CadastrarComissario($comissario1);
 $azul->CadastrarComissario($comissario2);
 
+$viagem_escolhida[0]->setAeronave($aviao2);
+$viagem_escolhida[1]->setAeronave($aviao2);
+
+$viagem_escolhida[0]->AddTripulaçao($tripulacao);
+$viagem_escolhida[1]->AddTripulaçao($tripulacao);
+
 
 // A rota da van que vai buscar a tripulação para a realização da viagem
 // também deve ser planejada. Os horários em que cada tripulante embarca na van devem
 // ser exibidos.
+
+// Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
+// tela.
+
+// Feito isto, simule a realização das viagens envolvidas.
+// Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
+// dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
+// Logo após essa passagem deve ser cancelada. Os valores de ressarcimento devem ser
+// calculados e exibidos na tela.
+
+
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
