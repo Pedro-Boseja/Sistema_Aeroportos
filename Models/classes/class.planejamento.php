@@ -131,7 +131,7 @@ include_once "../global.php";
                         );
             
             $aeronave = $this->_companhia->getAeronavesDisponiveis();
-            $this->assignAeronave($aeronave, $viagem);
+            $viagem->setAeronave($aeronave);
             $viagem->save();
             array_push($this->_viagens_planejadas, $viagem);
           }
@@ -269,6 +269,7 @@ include_once "../global.php";
         if( $aeronave->isAvaliable($viagem) ){
 
           $aeronave->addViagem($viagem);
+          $viagem->setAeronave($aeronave);
 
         }
 

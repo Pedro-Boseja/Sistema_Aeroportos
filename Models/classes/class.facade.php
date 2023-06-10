@@ -98,9 +98,9 @@ class Facade{
         foreach($viagens_planejadas as $viagem){
             if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoSaida() == $aero_s && 
             $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
-                // if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
+                if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
                     array_push($viagens, $viagem);
-                // }
+                }
                 
             }
         }
