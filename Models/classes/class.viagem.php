@@ -13,7 +13,7 @@
       private bool $_executado;
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
       private int $_milhagem;
-      private int $multa = 100;
+      private int $_multa = 100;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
@@ -187,7 +187,13 @@
       public function ViagemExecutada(){
         $this->_executado = 1;
       }
+      public function getMulta(){
+        return $this->_multa;
+      }
 
+      public function setMulta($multa){
+        $this->_multa = $multa;
+      }
       public function IsIn(Viagem $viagem){
 
         $ok = false;

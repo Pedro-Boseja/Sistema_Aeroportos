@@ -57,7 +57,9 @@ class Passagem  {
         if($this->_passageiro->IsVIP() && in_array($this->_passageiro, $this->_viagens[0]->_companhia->_programa_de_milhagem->_passageirosvip)){
             echo "Sua passagem foi cancelada.";
         }else{
-            echo "Foi cobrado uma taxa do passageiro ". $this->_passageiro->_cadastro->getNome(). "." ;
+            foreach($this->_viagens as $v){
+                echo "Foi cobrado uma multa do passageiro ". $this->_passageiro->_cadastro->getNome()." de R$". $v->getMulta() . "." ;
+            }
             echo "Sua passagem foi cancelada.";
         }
         return;
