@@ -3,7 +3,7 @@
 include_once "../global.php";
 
 
-class CartaodeEmbarque{
+class CartaodeEmbarque extends persist{
     private string $_nome;
     private string $_sobrenome;
     private string $_origemVoo;
@@ -11,6 +11,7 @@ class CartaodeEmbarque{
     private DateTime $_horarioEmbarque;
     private DateTime $_horarioChegada;
     private string $_assento;
+    static $local_filename = "cartaodeembarque.txt";
 
     public function __construct($nome, $sobrenome, $origemVoo, $destinoVoo, $horarioEmbarque, $horarioChegada, $assento){
         Usuario::ValidaLogado();
@@ -21,6 +22,9 @@ class CartaodeEmbarque{
         $this->_horarioEmbarque = $horarioEmbarque;
         $this->_horarioChegada = $horarioChegada;
         $this->_assento = $assento;
+    }
+    static public function getFilename() {
+        return get_called_class()::$local_filename;
     }
 
     public function getNome (){

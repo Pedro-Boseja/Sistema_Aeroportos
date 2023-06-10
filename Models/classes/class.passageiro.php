@@ -68,22 +68,14 @@ class Passageiro extends persist{
 
   public function AlterarPassagem ($codigos = array(),$assentos=array(), $franquias) {
     if($this->_passagem->inicioDaViagem()<4){
-      throw new Exception("O tempo para alterar a passagem terminou.\n");
+      return "O tempo para alterar a passagem terminou.";
     }else{
       $this->CancelarPassagem();
       Facade::ComprarPassagem($codigos, $this, $assentos, $franquias);
     }
 
   }
-  
-  public function Embarcar(){
-    if($this->_passagem == null){
-      throw new Exception("Não há passagens para embarcar\n");
-    }
 
-    $this->_passagem->setStatus(EnumStatus::Embarque_realizado);
-
-  }
   public function IsVIP () {
     return false;
   }

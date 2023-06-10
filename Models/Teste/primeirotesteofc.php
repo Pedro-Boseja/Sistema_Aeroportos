@@ -78,8 +78,6 @@ $plano1->createViagem("AD1329", new DateTime());
 // • Confins – Congonhas
 // • Guarulhos – Galeão
 // • Congonhas – Afonso Pena
-// Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
-//utilizando aeronaves previamente cadastradas no sistema.
 $data1 = Datetime::createFromFormat('H:i', "11:00");
 $data2 = Datetime::createFromFormat('H:i', "13:00");
 $data3 = Datetime::createFromFormat('H:i', "09:00");
@@ -117,28 +115,14 @@ $cgh_cwb->ProgramaViagens();
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $azul);
 $cwb_cgh->ProgramaViagens();
 
+// Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
+//utilizando aeronaves previamente cadastradas no sistema.
 
 // Um cliente deve realizar a compra da passagem somente de ida para um passageiro Vip
 // para amanhã (essa data deve ser um parâmetro no código de testes), entre os
 // aeroportos de Confins (Belo Horizonte-MG) e Afonso Pena (Curitiba-PR). Esse passageiro
 // deve ser previamente cadastrado. Ele faz parte do Programa de Milhagem da Azul. Os
 // vôos de ida devem ser da Azul.
-$cliente = new Cliente("Enzo Magno", "02053702176");
-
-
-$cadPassageiro = new Cadastro("Enzoz Magico", "CPF");
-$nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
-$passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "enzo@magno.com", "02053702176");
-$vip = new Vip($passageiro);
-
-$azul->CadastrarCategoria("ouro", "1000");
-$azul->CadastrarCategoria("diamante", "2000");
-$azul->CadastrarCategoria("platina", "3000");
-$azul->CadastrarPassageiroVip($vip);
-
-
-
-
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela.
 
