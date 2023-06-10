@@ -36,18 +36,18 @@ $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aére
 // Defina a sigla da primeira aeronave como PX-RUZ.
 // Seu código deve validar a sigla e tratar a exceção. Em seguida a sigla deve ser corrigida para PP-RUZ.
 try{
-    $aviao1 = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 30);
+    $aviao1 = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 10);
 }catch(Exception $e){
     echo $e->getMessage();
 }
-$aviao1 = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 30);
+$aviao1 = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 10);
 
 
 
 $latam->CadastrarAeronave($aviao1);
 
 // a segunda à Azul.
-$aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 30);
+$aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 10);
 $azul->CadastrarAeronave($aviao2);
 
 // Cadastre os aeroportos de Confins, Guarulhos, Congonhas, Galeão e Afonso Pena. Os dados desse aeroporto podem ser encontrados na internet.

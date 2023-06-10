@@ -19,35 +19,84 @@ class Cliente extends persist{
 
     public function getCadastro() {
     }
-  
-    public function EscolherAssento (Viagem $viagem){
 
-      if(count($viagem->getAssentosLivres()) == 0) {
-          echo "Esta viagem já está lotada!\n";
-          return "x";
-      } else {
-          echo "Estes assentos estão disponíveis para a sua viagem: \n";
-          foreach($viagem->getAssentosLivres() as $as){
-            echo $as . "\n";
-          }
-          echo "Qual assento você deseja? \n";
-          $resposta = fgets(STDIN);
-          return $resposta;
-      }
-    }
-
-    public function SolicitarViagem (string $aero_c, string $aero_s, DateTime $date, int $qnt) {
+    public function SolicitarViagem (Aeroporto $aero_c, Aeroporto $aero_s, DateTime $date, int $qnt) {
       Usuario::ValidaLogado();  
       $viagens = Facade::SolicitarViagem($aero_c, $aero_s, $date, $qnt);
-        print_r($viagens);
+      $el = count($viagens);
+
+      try{
+        count($viagens[0]);
+        for($i = 0; $i < $el; $i++){
+          echo "Viagem " . $i. "\n";
+          $viagens[$i][0]->show();
+          $viagens[$i][1]->show();
+          echo "_________________\n";
+        }
+
+      }catch(TypeError $e){
+        for($i = 0; $i < $el; $i++){
+          echo "Viagem " . $i. "\n";
+          $viagens[$i]->show();
+          echo "_________________\n";
+        }
+      }
+      
+      return $viagens;
+
     }
 
-    public function ComprarPassagem ($codigos = array(), Passageiro $passageiro, int $qnt_franquias) {
+    public function EscolherViagem ($viagens = array(), int $numero_viagem){
+      $escolhidas = array();
+      try{
+        count($viagens[0]);
+        array_push($escolhidas, $viagens[$numero_viagem][0]);
+        array_push($escolhidas, $viagens[$numero_viagem][1]);
+        return $escolhidas;
+
+      }catch(TypeError $e){
+        return $viagens[$numero_viagem];
+      }
       
     }
 
-    public function CancelarViagem (Passagem $passagem){
-      //coisa de passageiro
+    public function EscolherAssentos($viagem){
+      try{
+        $el = count($viagem);
+        for($i = 0; $i<$el; $i++){
+          $assentos = $viagem[$i]->getAssentosLivres();
+          echo "Viagem ".$i."\n";
+          print_r($assentos);
+          echo "_________________\n";
+        }
+
+      }catch(TypeError $e){
+        $assentos = $viagem[$i]->getAssentosLivres();
+        print_r($assentos);
+        echo "_________________\n";
+      }
     }
+
+
+    public function ComprarPassagem ($viagem, Passageiro $passageiro, $assentos = array(), int $qnt_franquias) {
+      Usuario::ValidaLogado();
+      $codigos = array();
+      try{
+        $el = count($viagem);
+        for($i = 0; $i<$el; $i++){
+          array_push($codigos, $viagem[$i]->getCodigo());
+        }
+
+      }catch(TypeError $e){
+        array_push($codigos, $viagem->getCodigo());
+      }
+
+      Facade::ComprarPassagem($codigos, $passageiro, $assentos, $qnt_franquias);
+
+    }
+
+    // public function CancelarViagem (Passagem $passagem){
+    //   //coisa de passageiro
+    // }
   
 }

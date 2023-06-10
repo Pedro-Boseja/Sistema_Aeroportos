@@ -54,6 +54,21 @@
         print_r($assentos);
       }
 
+      public function Show(){
+          echo $this->getCodigo();
+          echo " -> \n";
+          echo $this->getAeroportoSaida();
+          echo ": ";
+          echo $this->getDataS()->format('d-m H:i');
+          echo "\n";
+
+          echo $this->getAeroportoChegada();
+          echo ": ";
+          echo $this->getDataC()->format('d-m H:i');
+          echo "\n";
+          echo "\n";
+      }
+
       public function CancelarPassageiro(Passageiro $passageiro){
         foreach($this->_assentos as $p){
           if($passageiro->getCadastro()->getNome() == $p->getCadastro()->getNome()){
