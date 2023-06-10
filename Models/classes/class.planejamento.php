@@ -125,8 +125,8 @@ include_once "../global.php";
             $viagem = new Viagem($data_partida,
                         $data_chegada,
                         $codigo,
-                        $this->_ae_chegada,
                         $this->_ae_saida,
+                        $this->_ae_chegada,
                         $this->_companhia,
                         $aeronave,
                         $this->_milhagem

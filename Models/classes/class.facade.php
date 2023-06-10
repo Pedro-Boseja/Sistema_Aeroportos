@@ -85,7 +85,7 @@ class Facade{
     }
 
     //retorna um array com as viagens possiveis, ou um array de array com as viagens com conexão
-    public static function SolicitarViagem(Aeroporto $AC, Aeroporto $AS, DateTime $data, $quantidade_de_pessoas){
+    public static function SolicitarViagem(Aeroporto $AS, Aeroporto $AC, DateTime $data, $quantidade_de_pessoas){
         Usuario::ValidaLogado();
         $viagens_planejadas = Viagem::getRecords();
         $viagens = array();
@@ -119,8 +119,36 @@ class Facade{
                 }
             }
 
-            echo count($viagemS)."\n";
-            echo count($viagemC)."\n";
+            foreach($viagemS as $vs){
+                echo $vs->getCodigo();
+                echo " -> \n";
+                echo $vs->getAeroportoSaida();
+                echo ": ";
+                echo $vs->getDataS()->format('m-d h:i');
+                echo "\n";
+
+                echo $vs->getAeroportoChegada();
+                echo ": ";
+                echo $vs->getDataC()->format('m-d h:i');
+                echo "\n";
+                echo "\n";
+            }
+
+            foreach($viagemC as $vs){
+                echo $vs->getCodigo();
+                echo " -> \n";
+                echo $vs->getAeroportoSaida();
+                echo ": ";
+                echo $vs->getDataS()->format('m-d h:i');
+                echo "\n";
+
+                echo $vs->getAeroportoChegada();
+                echo ": ";
+                echo $vs->getDataC()->format('m-d h:i');
+                echo "\n";
+                echo "\n";
+            }
+
             
             foreach($viagemS as $vs){
                 if(count($vs->getAssentosLivres()) < $quantidade_de_pessoas){
