@@ -1,5 +1,5 @@
 <?php
-    include_once "../Models/global.php";
+    include_once "../global.php";
     $master = new Usuario;
     $master->Registrar("GLC010", "gug12", "gustavolc@gmail.com");
     $master->Login("GLC010", "gug12");

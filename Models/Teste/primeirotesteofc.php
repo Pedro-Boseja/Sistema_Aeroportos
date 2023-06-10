@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 //Tentando usar funcionalidades sem estar logado
 try{
@@ -36,11 +36,11 @@ $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aére
 // Defina a sigla da primeira aeronave como PX-RUZ.
 // Seu código deve validar a sigla e tratar a exceção. Em seguida a sigla deve ser corrigida para PP-RUZ.
 try{
-    $aviao = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 30);
+    $aviao1 = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 30);
 }catch(Exception $e){
     echo $e->getMessage();
 }
-$aviao = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 30);
+$aviao1 = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 30);
 
 
 
