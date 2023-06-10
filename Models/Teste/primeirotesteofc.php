@@ -141,16 +141,16 @@ $cad3 = new Cadastro("Dalton", "RG");
 $cad3 = new Cadastro("Erica", "RG");
 
 
-$piloto = new Tripulante($cad1, "25/11/1982", "brasileiro", "jmaldade@gmail.com", 
+$piloto = new Piloto($cad1, "25/11/1982", "brasileiro", "jmaldade@gmail.com", 
                         "RG", "Av. do Contorno", $azul, $confins, "000.000.070-67" );
 
-$copiloto = new Tripulante($cad2, "03/04/1983", "brasileira", "malvadeza@gmail.com", 
+$copiloto = new Piloto($cad2, "03/04/1983", "brasileira", "malvadeza@gmail.com", 
                         "RG", "Av. Antonio Carlos", $azul, $confins, "100.000.090-98" );
 
-$comissario1 = new Tripulante($cad3, "21/04/1995", "brasileiro", "dtca@gmail.com", 
+$comissario1 = new Comissario($cad3, "21/04/1995", "brasileiro", "dtca@gmail.com", 
                         "RG", "Alameda das Falcatas", $azul, $confins, "970.030.100-08" );
 
-$comissario2 = new Tripulante($cad4, "15/09/1993", "brasileira", "ricare@gmail.com", 
+$comissario2 = new Comissario($cad4, "15/09/1993", "brasileira", "ricare@gmail.com", 
                         "RG", "Rua João Fernandes", $azul, $confins, "088.430.000-79" );
 
 
