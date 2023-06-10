@@ -202,7 +202,22 @@
         $this->_aeronave = $aeronave;
       }
       public function ViagemExecutada(){
-        $this->_executado = 1;
+        $this->_executado = true;
+        //Verificação de Clientes VIP para contabilizar programa de milhagem.
+        $passageiros = $$this->_companhia->_milhagem->getPassageiros();
+        foreach($this->getPassageiros() as $p){
+
+          //if($p->IsVIP()){ // Apenas para não ser necessário fazer a verificação completa em não VIPs
+
+            if(in_array($p->_cadastro, $passageiros->_cadastro)){//Verifica se está presente no array de passageiros VIP (Desnecessário, mas evita lançar excessão)
+
+              $passageiros = $$this->_companhia->_milhagem->Upgrade($p);
+
+            }
+
+          //}
+
+        }
       }
       public function getMulta(){
         return $this->_multa;
