@@ -12,7 +12,7 @@ include_once "../global.php";
         private float $_v_media;
         private float $_t_percurso;
         private float $_d_total;
-        private $_viagem = array();
+        private Viagem $_viagem;
         private $_rota = array();
         private $_viagens_planejadas = array();
         private $_horarios_embarque = array(); //relaciona o tripulante com o horario de embarque
@@ -93,7 +93,8 @@ include_once "../global.php";
             }
 
             $rota = $endereco_aeroporto;
-            $rota += array_keys(sort($distancias));
+            $a = sort($distancias);
+            $rota += array_keys($distancias);
             array_push($rota, $endereco_aeroporto);
     
             return $rota;
@@ -120,7 +121,7 @@ include_once "../global.php";
           $n_distancias = count($distancias);
           $horarios = array();
           for ($i = 0; $i <= $n_distancias; $i++) {
-            array_push ($horarios, (($horario_chegada->getTimestamp()-current($distancias[$i])/$this->_v_media)*3600));
+            array_push ($horarios, (($horario_chegada-(current($distancias[$i])/$this->_v_media))*3600));
           }
     
           return $horarios;
@@ -156,7 +157,7 @@ include_once "../global.php";
         }
 
         public function CadastraViagem ($viagem) {
-            array_push($this->_viagem, $viagem);
+            $this->_viagem = $viagem;
         }
 
         public function addViagem (Viagem $viagem){

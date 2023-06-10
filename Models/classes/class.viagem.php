@@ -94,11 +94,13 @@
       }
 
       public function getAeroportoChegada () {
-        return $this->_aeroporto_chegada->getSigla();
+        return $this->_aeroporto_chegada; 
+        //return $this->_aeroporto_chegada->getSigla();
       }
 
       public function getAeroportoSaida () {
-        return $this->_aeroporto_saida->getSigla();
+        return $this->_aeroporto_saida;
+        //return $this->_aeroporto_saida->getSigla();
       }
 
       public function getDuracao () {

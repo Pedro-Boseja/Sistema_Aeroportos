@@ -58,7 +58,7 @@ class Passagem  {
             echo "Sua passagem foi cancelada.";
         }else{
             foreach($this->_viagens as $v){
-                echo "Foi cobrado uma multa do passageiro ". $this->_passageiro->_cadastro->getNome()." de R$". $v->getMulta() . "." ;
+                echo "Foi cobrado uma multa do passageiro ". $this->_passageiro->getCadastro()->getNome()." de R$". $v->getMulta() . "." ;
             }
             echo "Sua passagem foi cancelada.";
         }
