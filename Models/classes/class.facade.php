@@ -164,7 +164,7 @@ class Facade{
                     $diff_horas = intval($diff->format('%R%h'));
 
                     if( $vc->getAeroportoSaida() == $vs->getAeroportoChegada() &&
-                        $sinal == '+' && $diff_dias < 0 && $diff_horas >= 1 && $diff_horas <= 3){
+                        $sinal == '+' && $diff_dias >= 0 && $diff_horas >= 1 && $diff_horas <= 3){
                             $arr = array($vs, $vc);
                             array_push($viagens, $arr);
                     }

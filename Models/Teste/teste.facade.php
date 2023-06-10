@@ -105,7 +105,7 @@ $data_partida = DateTime::createFromFormat('d/m/Y', '10/06/2023');
 $viagens = Facade::SolicitarViagem($confins, $afonso, $data_partida, 2);
 
 echo "________________________________________\n";
- foreach ($viagens as $viagem){
+ foreach ($viagens[0] as $viagem){
 
           
           echo $viagem->getCodigo();
