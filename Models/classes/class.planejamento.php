@@ -26,7 +26,7 @@ include_once "../global.php";
       private int $_milhagem;
 
       public function __construct ($frequencia, string $codigo_plan, 
-                                  Aeroporto $chegada, Aeroporto $saida,
+                                  Aeroporto $saida, Aeroporto $chegada,
                                   DateTime $horarios, DateTime $horarioc,
                                   int $milhagem, CompanhiaAerea $companhia) {
                                     Usuario::ValidaLogado();
@@ -299,7 +299,7 @@ include_once "../global.php";
         $letras = $this->_companhia->getSigla();
         $comp = substr($codigo, 0, 2);
         if($letras != $comp){
-          throw new Exception("Codigo inválido");
+          throw new Exception("Codigo inválido\n");
         }  
         
         $hora_partida = $this->_horario_s->format('h:i:s'); 

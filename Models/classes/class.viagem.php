@@ -23,8 +23,8 @@
       public function __construct (DateTime $data_s, 
                                   DateTime $data_c,  
                                   string $codigo, 
-                                  Aeroporto $aeroporto_chegada, 
                                   Aeroporto $aeroporto_saida,
+                                  Aeroporto $aeroporto_chegada, 
                                   CompanhiaAerea $comp = null,
                                   Aeronave $aeronave = null,
                                   int $milhagem = 0,
@@ -77,19 +77,19 @@
         return $passageiros;
       }
 
-      public function getDataS () {
+      public function getDataS() {
         return $this->_data_s;
       }
 
-      public function getDataC () {
+      public function getDataC() {
         return $this->_data_c;
       }
 
-      public function getAeronave () {
+      public function getAeronave() {
         return $this->_aeronave;
       }
 
-      public function getCodigo () {
+      public function getCodigo() {
         return $this->_codigo;
       }
 

@@ -85,16 +85,41 @@ $data4 = Datetime::createFromFormat('H:i', "20:00");
 $data5 = Datetime::createFromFormat('H:i', "22:00");
 $data6 = Datetime::createFromFormat('H:i', "08:00");
 $data7 = Datetime::createFromFormat('H:i', "19:00");
-
+$data8 = Datetime::createFromFormat('H:i', "15:20");
+$data9 = Datetime::createFromFormat('H:i', "16:30");
 
 //confins - guarulhos
-$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 50, $latam);
+$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $azul);
+$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 30, $azul);
 
-$cnf_gru->ProgramaViagens();
-$cnf_gru->showViagens();
+$cgh_cwb->ProgramaViagens();
+
+$cnf_cgh->ProgramaViagens();
+
+
 
 
 $data_partida = DateTime::createFromFormat('d/m/Y', '10/06/2023');
 
 
-$viagens = Facade::SolicitarViagem($confins, $guarulhos, $data_partida, 2);
+$viagens = Facade::SolicitarViagem($confins, $afonso, $data_partida, 2);
+
+echo "________________________________________\n";
+ foreach ($viagens as $viagem){
+
+          
+          echo $viagem->getCodigo();
+          echo " -> \n";
+          echo $viagem->getAeroportoSaida();
+          echo ": ";
+          echo $viagem->getDataS()->format('m-d h:i');
+          echo "\n";
+
+          echo $viagem->getAeroportoChegada();
+          echo ": ";
+          echo $viagem->getDataC()->format('m-d h:i');
+          echo "\n";
+          echo "\n";
+          
+        }
+

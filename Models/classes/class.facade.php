@@ -99,9 +99,6 @@ class Facade{
 
             if($viagem->getAeroportoChegada() == $aero_c && $viagem->getAeroportoSaida() == $aero_s && 
             $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
-                
-                print_r($viagem->getAeronave());
-
                 if(count($viagem->getAssentosLivres()) >= $quantidade_de_pessoas){
                     array_push($viagens, $viagem);
                 }
@@ -117,11 +114,14 @@ class Facade{
                     array_push($viagemS, $viagem);
                     continue;
                 }
-                if($viagem->getAeroportoChegada() == $aero_c){
+                if($viagem->getAeroportoChegada() == $aero_c && $data->format('d/m/Y') == $viagem->getDataS()->format('d/m/Y')){
                     array_push($viagemC, $viagem);
                 }
             }
 
+            echo count($viagemS)."\n";
+            echo count($viagemC)."\n";
+            
             foreach($viagemS as $vs){
                 if(count($vs->getAssentosLivres()) < $quantidade_de_pessoas){
                     continue;
@@ -130,7 +130,7 @@ class Facade{
                     if(count($vc->getAssentosLivres()) < $quantidade_de_pessoas){
                         continue;
                     }
-                    $diff = date_diff($vs->getDataC, $vc->getDataS);
+                    $diff = date_diff($vs->getDataC(), $vc->getDataS());
                     $sinal = $diff->format('%R');
                     $diff_dias = intval($diff->format('%R%a'));
                     $diff_horas = intval($diff->format('%R%h'));

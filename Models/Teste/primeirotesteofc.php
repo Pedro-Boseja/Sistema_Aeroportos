@@ -63,7 +63,7 @@ $freq = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Su
 $datas = Datetime::createFromFormat('H:i', "11:00");
 $datac = Datetime::createFromFormat('H:i', "13:00");
 $plano1 = new PLanejamento($freq, "CNF-GRU", $confins, $guarulhos, $datas, $datac, 60, $azul);
-
+$plano1->ProgramaViagens();
 try{
     $plano1->createViagem("AC1329", new DateTime());
 }catch(Exception $e){
@@ -89,36 +89,34 @@ $data8 = Datetime::createFromFormat('H:i', "15:20");
 $data9 = Datetime::createFromFormat('H:i', "18:30");
 //confins - congonhas
 $cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $azul);
-// $cnf_cgh->ProgramaViagens();
+$cnf_cgh->ProgramaViagens();
 //congonhas - confins 
-$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 30, $latam);
-// $cgh_cnf->ProgramaViagens();
+$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 30, $azul);
+$cgh_cnf->ProgramaViagens();
 
 //confins - guarulhos
-$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 50, $latam);
-// $cnf_gru->ProgramaViagens();
+$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 50, $azul);
+$cnf_gru->ProgramaViagens();
 //guarulhos - confins 
 $gru_cnf = new PLanejamento($freq, "GRU-CNF",$guarulhos ,$confins, $data7, $data5, 60, $latam);
-// $gru_cnf->ProgramaViagens();
+$gru_cnf->ProgramaViagens();
 
 //guarulhos - galeão
 $gru_gig = new PLanejamento($freq, "CNF-GIG",$guarulhos, $galeao, $data6, $data1, 50, $latam);
-// $gru_gig->ProgramaViagens();
+$gru_gig->ProgramaViagens();
 //galeão - guarulhos
 $gig_gru = new PLanejamento($freq, "GIG-CNF",$galeao, $guarulhos, $data7, $data5, 50, $latam);
-// $gig_gru->ProgramaViagens();
+$gig_gru->ProgramaViagens();
 
 //congonhas - afonso pena
 $cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 30, $azul);
-// $cgh_cwb->ProgramaViagens();
+$cgh_cwb->ProgramaViagens();
 //afonso pena - congonhas
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $azul);
-// $cwb_cgh->ProgramaViagens();
+$cwb_cgh->ProgramaViagens();
 
 // Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
 //utilizando aeronaves previamente cadastradas no sistema.
-$latam->atualizaViagens();
-$azul->atualizaViagens();
 
 // Um cliente deve realizar a compra da passagem somente de ida para um passageiro Vip
 // para amanhã (essa data deve ser um parâmetro no código de testes), entre os
