@@ -66,7 +66,13 @@ class Passageiro extends persist{
     $this->_passagem = null;
   }
 
-  public function AlterarPassagem () {
+  public function AlterarPassagem ($codigos = array(),$assentos=array(), $franquias) {
+    if($this->_passagem->inicioDaViagem()<4){
+      return "O tempo para alterar a passagem terminou.";
+    }else{
+      $this->CancelarPassagem();
+      Facade::ComprarPassagem($codigos, $this, $assentos, $franquias);
+    }
 
   }
 

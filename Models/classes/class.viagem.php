@@ -13,6 +13,7 @@
       private bool $_executado;
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
       private int $_milhagem;
+      private int $multa = 100;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
