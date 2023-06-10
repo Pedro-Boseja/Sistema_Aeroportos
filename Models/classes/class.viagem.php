@@ -14,7 +14,6 @@
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
       private int $_milhagem;
       private int $_multa = 100;
-      private float $_tarifa = 1000.00;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
@@ -48,10 +47,6 @@
       static public function getFilename() {
         return get_called_class()::$local_filename;
         
-      }
-
-      public function getTarifa(){
-        return $this->_tarifa;
       }
 
       public function showAssentos(){
@@ -207,7 +202,22 @@
         $this->_aeronave = $aeronave;
       }
       public function ViagemExecutada(){
-        $this->_executado = 1;
+        $this->_executado = true;
+        //Verificação de Clientes VIP para contabilizar programa de milhagem.
+        $passageiros = $$this->_companhia->_milhagem->getPassageiros();
+        foreach($this->getPassageiros() as $p){
+
+          //if($p->IsVIP()){ // Apenas para não ser necessário fazer a verificação completa em não VIPs
+
+            if(in_array($p->_cadastro, $passageiros->_cadastro)){//Verifica se está presente no array de passageiros VIP (Desnecessário, mas evita lançar excessão)
+
+              $passageiros = $$this->_companhia->_milhagem->Upgrade($p);
+
+            }
+
+          //}
+
+        }
       }
       public function getMulta(){
         return $this->_multa;

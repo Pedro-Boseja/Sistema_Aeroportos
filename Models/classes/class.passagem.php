@@ -13,18 +13,20 @@ enum EnumStatus : string { //utilizado para determinar o status da passagem
 
 class Passagem  {
     
-    protected float $_tarifa = 1000;
+    protected float $_tarifa;
     protected $_viagens = array();
     protected $_assentos = array();
     protected int $_qtde_franquias;
     protected float $_valorfranquia;
     protected Passageiro $_passageiro;
+    protected CartaodeEmbarque $_cartao;
     protected $_status = array();
 
-    public function __construct( Passageiro $passageiro,
+    public function __construct(float $tarifa,  
+                                Passageiro $passageiro,
                                 float $qtde_franquias) {
                                     Usuario::ValidaLogado();
-
+        $this -> _tarifa = $tarifa;
         $this -> _passageiro = $passageiro;
         $this -> _qtde_franquias = $qtde_franquias;
         $this -> _valorfranquia = 0.0;
@@ -32,16 +34,24 @@ class Passagem  {
     }
 
     public function CheckIn () {
-
+        if(in_array(EnumStatus::Checkin_realizado, $this->_status)){
+            $i = 1;
+        }else{
+            $i=0;
+        }
         $date_atual = new DateTime("now", new DateTimeZone('America/Bahia'));
         $t = $date_atual->getTimestamp();
     
-        $t1 = $this->_viagens[0]->getDataS()->getTimestamp() - 172800; //Data do voo - 2 dias
-        $t2 = $this->_viagens[0]->getDataS()->getTimestamp() - 1800; //Data do voo - 30 min
+        $t1 = $this->_viagens[$i]->getDataS()->getTimestamp() - 172800; //Data do voo - 2 dias
+        $t2 = $this->_viagens[$i]->getDataS()->getTimestamp() - 1800; //Data do voo - 30 min
       
         if ($t >= $t1 and $t <= $t2) {
             array_push($this -> _status, EnumStatus::Checkin_realizado);
             echo 'Seu check-in foi realizado com sucesso!';
+            $this->_cartao = new CartaodeEmbarque($this->getPassageiro()->getCadastro()->getNome(), 
+                    $this->getPassageiro()->getCadastro()->getNome(), $this->getViagens()[$i]->getAeroportoSaida(), 
+                    $this->getViagens()[$i]->getAeroportoChegada(), $this->getViagens()[$i]->getHorarioS() - 2400, 
+                    $this->getViagens()[$i]->getHorarioC(), $this->_assentos);//Subtrair 40 min do horário de saída no horário de embarque
         } else if ($t < $t1){
             echo 'O periodo de Check-in ainda não começou. Tente mais tarde.';
         } else {
@@ -136,7 +146,6 @@ class Passagem  {
     }
 
     public function addViagem (Viagem $viagem, string $assento) {
-        $this->_tarifa = $viagem->getTarifa();
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);

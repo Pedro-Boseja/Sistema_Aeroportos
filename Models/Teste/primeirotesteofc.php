@@ -78,8 +78,6 @@ $plano1->createViagem("AD1329", new DateTime());
 // • Confins – Congonhas
 // • Guarulhos – Galeão
 // • Congonhas – Afonso Pena
-// Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
-//utilizando aeronaves previamente cadastradas no sistema.
 $data1 = Datetime::createFromFormat('H:i', "11:00");
 $data2 = Datetime::createFromFormat('H:i', "13:00");
 $data3 = Datetime::createFromFormat('H:i', "09:00");
@@ -117,6 +115,8 @@ $cgh_cwb->ProgramaViagens();
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $azul);
 $cwb_cgh->ProgramaViagens();
 
+// Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
+//utilizando aeronaves previamente cadastradas no sistema.
 
 // Um cliente deve realizar a compra da passagem somente de ida para um passageiro Vip
 // para amanhã (essa data deve ser um parâmetro no código de testes), entre os

@@ -29,7 +29,6 @@ class CompanhiaAerea extends persist{
         $this->_razao_social = $razao;
         $this->_sigla = $sigla;
         $this->_franquia = $franquia;
-        $this->_programa_de_milhagem = new ProgramaDeMilhagem();
         Usuario::ValidaLogado();
         $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this));
         $log->save();
@@ -44,7 +43,7 @@ class CompanhiaAerea extends persist{
         $this->_programa_de_milhagem->excluirCategoria($parametro);//pts ou nome da categoria
     }
     //Cadastra o passageiro VIP no programa de milhagem;
-    public function CadastrarPassageiroVip (Vip $passageiro){
+    public function CadastrarPassageiroMilhagem (Vip $passageiro){
         $this->_programa_de_milhagem->setPassageiro($passageiro);
     }
 //Outros
