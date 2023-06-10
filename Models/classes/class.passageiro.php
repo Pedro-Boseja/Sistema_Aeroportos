@@ -76,6 +76,14 @@ class Passageiro extends persist{
 
   }
 
+  public function Embarcar(){
+    if($this->_passagem == null){
+      throw new Exception("Não há viagens para embarcar");
+    }
+
+    $this->_passagem->setStatus(EnumStatus::Embarque_realizado);
+  }
+
   public function IsVIP () {
     return false;
   }

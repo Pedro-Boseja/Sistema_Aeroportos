@@ -153,7 +153,7 @@
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-        
+      
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
         return $assentos_livres;
