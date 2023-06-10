@@ -84,15 +84,15 @@ include_once "../global.php";
 
             $aeroporto_saida = $viagem->getAeroportoSaida();
           
-            $endereco_aeroporto = sprintf($aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
+            $endereco_aeroporto = sprintf('%s, %s, %s', $aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
           
             $distancias = array();
 
-            foreach ($endereco as $r) {
+            foreach ($endereços as $r) {
               $distancias[$r] = $this->CalculaDistancia($endereco_aeroporto, $r);
             }
 
-            $rota = $endereço_aeroporto;
+            $rota = $endereco_aeroporto;
             $rota += array_keys(sort($distancias));
             array_push($rota, $endereco_aeroporto);
     

@@ -8,14 +8,13 @@ Usuario::Login("Hugo Boss", "1234");
 $date_s = new DateTime('11-09-2001 15:45', new DateTimeZone('America/Bahia'));
 $date_c = new DateTime('11-09-2023 15:46', new DateTimeZone('America/Bahia'));
 
-$aeronave = new Aeronave ("AvioesTalita", "AeroTalit3000", "TA-LIT", 180, 10000.7, 4, 6);
+$companhia = new CompanhiaAerea("Azul Linhas Aéreas", 123, "12.345.678/0001-01", "Azul S.A.", "AZL", 23.0);
+//$aeronave = new Aeronave ("AvioesTalita", "AeroTalit3000", "PT-TALITA", 180, 10000.7, 4, 6);
 
 $aeroporto_saida = new Aeroporto ("CNF", "Belo Horizonte", "Minas Gerais");
 $aeroporto_chegada = new Aeroporto ("GUA", "Guarulhos", "Sao Paulo");
 
-$viagem = new Viagem($date_s, $date_c, $aeronave, "TA444", $aeroporto_saida, $aeroporto_chegada);
-
-$companhia = new CompanhiaAerea("Azul Linhas Aéreas", 123, "12.345.678/0001-01", "Azul S.A.", "AZL");
+$viagem = new Viagem($date_s, $date_c, "TA444", $aeroporto_saida, $aeroporto_chegada, $companhia);
 
 $cadastro = new Cadastro('João da Silva', '12.244.876');
 
@@ -30,7 +29,7 @@ $tripulante4 = new Tripulante($cadastro, $DateTime = new DateTime(10/10/2010),'B
 $tripulação = array();
 array_push($tripulação, $tripulante1, $tripulante2, $tripulante3, $tripulante4);
 
-$viagem->addTripulacao($tripulacao);
+$viagem->addTripulaçao($tripulação);
 
 $veiculo = new Veiculo (12, 18.0, $viagem);
 
