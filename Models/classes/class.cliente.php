@@ -10,7 +10,10 @@ class Cliente extends persist{
     static $local_filename = "clientes.txt";
 
     public function __construct(string $nome, string $documento) {
-        $this->_cadastro = new Cadastro($nome, $documento);
+      Usuario::ValidaLogado();
+      $this->_cadastro = new Cadastro($nome, $documento);
+      $log = new Log_escrita(new DateTime(), "Cliente", "null", serialize($this));
+      $log->save();
     }
   
     static public function getFilename() {

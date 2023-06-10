@@ -123,6 +123,8 @@ $cwb_cgh->ProgramaViagens();
 // aeroportos de Confins (Belo Horizonte-MG) e Afonso Pena (Curitiba-PR). Esse passageiro
 // deve ser previamente cadastrado. Ele faz parte do Programa de Milhagem da Azul. Os
 // vôos de ida devem ser da Azul.
+$cliente = new Cliente("Enzo Magno", "02053702176");
+
 
 $cadPassageiro = new Cadastro("Enzoz Magico", "CPF");
 $nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
