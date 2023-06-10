@@ -13,7 +13,7 @@ enum EnumStatus : string { //utilizado para determinar o status da passagem
 
 class Passagem  {
     
-    protected float $_tarifa;
+    protected float $_tarifa = 1000;
     protected $_viagens = array();
     protected $_assentos = array();
     protected int $_qtde_franquias;
@@ -22,11 +22,10 @@ class Passagem  {
     protected CartaodeEmbarque $_cartao;
     protected $_status = array();
 
-    public function __construct(float $tarifa,  
-                                Passageiro $passageiro,
+    public function __construct( Passageiro $passageiro,
                                 float $qtde_franquias) {
                                     Usuario::ValidaLogado();
-        $this -> _tarifa = $tarifa;
+
         $this -> _passageiro = $passageiro;
         $this -> _qtde_franquias = $qtde_franquias;
         $this -> _valorfranquia = 0.0;
@@ -146,6 +145,7 @@ class Passagem  {
     }
 
     public function addViagem (Viagem $viagem, string $assento) {
+        $this->_tarifa = $viagem->getTarifa();
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);
