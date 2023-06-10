@@ -118,38 +118,7 @@ class Facade{
                     array_push($viagemC, $viagem);
                 }
             }
-
-            foreach($viagemS as $vs){
-                echo $vs->getCodigo();
-                echo " -> \n";
-                echo $vs->getAeroportoSaida();
-                echo ": ";
-                echo $vs->getDataS()->format('m-d h:i');
-                echo "\n";
-
-                echo $vs->getAeroportoChegada();
-                echo ": ";
-                echo $vs->getDataC()->format('m-d h:i');
-                echo "\n";
-                echo "\n";
-            }
-
-            foreach($viagemC as $vs){
-                echo $vs->getCodigo();
-                echo " -> \n";
-                echo $vs->getAeroportoSaida();
-                echo ": ";
-                echo $vs->getDataS()->format('m-d h:i');
-                echo "\n";
-
-                echo $vs->getAeroportoChegada();
-                echo ": ";
-                echo $vs->getDataC()->format('m-d h:i');
-                echo "\n";
-                echo "\n";
-            }
-
-            
+                
             foreach($viagemS as $vs){
                 if(count($vs->getAssentosLivres()) < $quantidade_de_pessoas){
                     continue;
