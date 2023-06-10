@@ -118,38 +118,7 @@ class Facade{
                     array_push($viagemC, $viagem);
                 }
             }
-
-            foreach($viagemS as $vs){
-                echo $vs->getCodigo();
-                echo " -> \n";
-                echo $vs->getAeroportoSaida();
-                echo ": ";
-                echo $vs->getDataS()->format('m-d h:i');
-                echo "\n";
-
-                echo $vs->getAeroportoChegada();
-                echo ": ";
-                echo $vs->getDataC()->format('m-d h:i');
-                echo "\n";
-                echo "\n";
-            }
-
-            foreach($viagemC as $vs){
-                echo $vs->getCodigo();
-                echo " -> \n";
-                echo $vs->getAeroportoSaida();
-                echo ": ";
-                echo $vs->getDataS()->format('m-d h:i');
-                echo "\n";
-
-                echo $vs->getAeroportoChegada();
-                echo ": ";
-                echo $vs->getDataC()->format('m-d h:i');
-                echo "\n";
-                echo "\n";
-            }
-
-            
+                
             foreach($viagemS as $vs){
                 if(count($vs->getAssentosLivres()) < $quantidade_de_pessoas){
                     continue;
@@ -198,10 +167,10 @@ class Facade{
         Usuario::ValidaLogado();
 
         $viagens = Facade::GetViagensByCod($codigos);
-        $passagem = new Passagem(100, $passageiro, $qnt_franquias);
+        $passagem = new Passagem($passageiro, $qnt_franquias);
         $passageiro->addPassagem($passagem);
         for($i = 0; $i<count($viagens); $i++){
-                $passagem->addViagem($viagens[$i], $assentos[$i]);
+            $passagem->addViagem($viagens[$i], $assentos[$i]);
         }
     }
 

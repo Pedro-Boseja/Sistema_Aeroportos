@@ -14,6 +14,7 @@
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
       private int $_milhagem;
       private int $_multa = 100;
+      private float $_tarifa = 1000.00;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
@@ -47,6 +48,10 @@
       static public function getFilename() {
         return get_called_class()::$local_filename;
         
+      }
+
+      public function getTarifa(){
+        return $this->_tarifa;
       }
 
       public function showAssentos(){
@@ -148,7 +153,7 @@
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-
+        
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
         return $assentos_livres;
