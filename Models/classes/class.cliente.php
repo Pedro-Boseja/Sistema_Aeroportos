@@ -5,6 +5,7 @@ include_once "../global.php";
 
 class Cliente extends persist{
     private $_cadastro;
+
     private $_viagens_compradas = array();
     private $_passagens = array();
     static $local_filename = "clientes.txt";
