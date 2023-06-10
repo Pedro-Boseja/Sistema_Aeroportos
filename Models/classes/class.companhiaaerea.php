@@ -43,8 +43,9 @@ class CompanhiaAerea extends persist{
         $this->_programa_de_milhagem->excluirCategoria($parametro);//pts ou nome da categoria
     }
     //Cadastra o passageiro VIP no programa de milhagem;
-    public function CadastrarPassageiroMilhagem (Vip $passageiro){
-        $this->_programa_de_milhagem->setPassageiro($passageiro);
+    public function CadastrarPassageiroVip (Passageiro $passageiro){
+        $vip  = new Vip($passageiro);
+        $this->_programa_de_milhagem->setPassageiro($vip);
     }
 //Outros
     public function CadastrarComissario(Comissario $comissario){

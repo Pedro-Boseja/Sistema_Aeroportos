@@ -15,10 +15,11 @@ include_once "../global.php";
 
         public function __construct(Passageiro $passageiro){
             Usuario::ValidaLogado();
+            // parent::__construct($passageiro->getCadastro(), )
             $this->_cadastro = $passageiro->getCadastro();
             $this->_viagens = $passageiro->getViagens();
         }
-
+        
         static public function getFilename() {
             return get_called_class()::$local_filename;
         }
