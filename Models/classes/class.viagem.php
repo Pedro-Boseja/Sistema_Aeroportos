@@ -153,13 +153,13 @@
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-        
+
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
         return $assentos_livres;
       }
 
-
+      
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
       // public function TrocarAeronave(Aeronave $aeronave){
       //   $this->_aeronave = $aeronave;

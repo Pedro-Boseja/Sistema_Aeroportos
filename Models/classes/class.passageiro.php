@@ -84,6 +84,7 @@ class Passageiro extends persist{
     $this->_passagem->setStatus(EnumStatus::Embarque_realizado);
 
   }
+  
   public function IsVIP () {
     return false;
   }

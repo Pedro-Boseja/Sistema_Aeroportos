@@ -136,6 +136,7 @@ $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
 $azul->CadastrarPassageiroVip($vip);
 
+$data = DateTime::createFromFormat("d/m/Y", "10/06/2023");
 
 
 
