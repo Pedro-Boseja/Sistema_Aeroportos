@@ -18,7 +18,7 @@ class Passagem  {
     protected $_assentos = array();
     protected int $_qtde_franquias;
     protected float $_valorfranquia;
-    protected $_passageiro;
+    protected Passageiro $_passageiro;
     protected $_status = array();
 
     public function __construct(float $tarifa,  
@@ -54,6 +54,15 @@ class Passagem  {
         foreach($this->_viagens as $v){
             $v->CancelarPassageiro($this->_passageiro);
         }
+        if($this->_passageiro->IsVIP() && in_array($this->_passageiro, $this->_viagens[0]->_companhia->_programa_de_milhagem->_passageirosvip)){
+            echo "Sua passagem foi cancelada.";
+        }else{
+            foreach($this->_viagens as $v){
+                echo "Foi cobrado uma multa do passageiro ". $this->_passageiro->_cadastro->getNome()." de R$". $v->getMulta() . "." ;
+            }
+            echo "Sua passagem foi cancelada.";
+        }
+        return;
     }
 
     public function getTarifa() {
@@ -131,5 +140,21 @@ class Passagem  {
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);
+    }
+
+    public function inicioDaViagem(){
+        $tempo=0;
+        $agora = new DateTime();
+        foreach($this->_viagens as $v){
+            $d = ($v->getDataS())->diff($agora); //Calcula o tempo que falta para iniciar primeira viagem
+            if($tempo==0){
+                $tempo=$d->h;
+            }else{
+                if($tempo>=$d->h){
+                    $tempo=$d->h;
+                }
+            }
+        }
+        return $tempo;
     }
 }

@@ -71,15 +71,15 @@ class CompanhiaAerea extends persist{
     }
     
     public function atualizaViagens(){
-        foreach($this->_planejamentos as $plan){
-            $plan->ProgramaViagens();
+        for($i = 0; $i<count($this->_planejamentos); $i++){
+            $this->_planejamentos[$i]->ProgramaViagens();
         }
     }
 
     public function addPlanejamento(Planejamento $plan){
         $obj_antes = serialize($this);
         $plan->setCompanhia($this);
-        array_push($this->_aeronaves, $plan);
+        array_push($this->_planejamentos, $plan);
         $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this));
         $log->save();
     }
@@ -148,6 +148,9 @@ class CompanhiaAerea extends persist{
     }
 
     public function getAeronavesDisponiveis(){
+        
+        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível");
+        return $this->_aeronaves[0];
 
     }
 

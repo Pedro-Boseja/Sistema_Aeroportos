@@ -85,35 +85,41 @@ $data4 = Datetime::createFromFormat('H:i', "20:00");
 $data5 = Datetime::createFromFormat('H:i', "22:00");
 $data6 = Datetime::createFromFormat('H:i', "08:00");
 $data7 = Datetime::createFromFormat('H:i', "19:00");
-
-//confins - congonhas
-$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $latam);
-// $cnf_cgh->ProgramaViagens();
-//congonhas - confins 
-$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 30, $latam);
-// $cgh_cnf->ProgramaViagens();
+$data8 = Datetime::createFromFormat('H:i', "15:20");
+$data9 = Datetime::createFromFormat('H:i', "16:30");
 
 //confins - guarulhos
-$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 50, $latam);
-// $cnf_gru->ProgramaViagens();
-//guarulhos - confins 
-$gru_cnf = new PLanejamento($freq, "GRU-CNF",$guarulhos ,$confins, $data7, $data5, 60, $latam);
-// $gru_cnf->ProgramaViagens();
+$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $azul);
+$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 30, $azul);
 
-//guarulhos - galeão
-$gru_gig = new PLanejamento($freq, "CNF-GIG",$guarulhos, $galeao, $data6, $data1, 50, $latam);
-// $gru_gig->ProgramaViagens();
-//galeão - guarulhos
-$gig_gru = new PLanejamento($freq, "GIG-CNF",$galeao, $guarulhos, $data7, $data5, 50, $latam);
-// $gig_gru->ProgramaViagens();
+$cgh_cwb->ProgramaViagens();
 
-//congonhas - afonso pena
-$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data4, $data5, 30, $latam);
-// $cgh_cwb->ProgramaViagens();
-//afonso pena - congonhas
-$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $latam);
-// $cwb_cgh->ProgramaViagens();
+$cnf_cgh->ProgramaViagens();
 
-// Com base nos voos cadastrados o sistema deve gerar todas as viagens disponíveis para compra pelos próximos 30 dias.
-//utilizando aeronaves previamente cadastradas no sistema.
-$latam->atualizaViagens();
+
+
+
+$data_partida = DateTime::createFromFormat('d/m/Y', '10/06/2023');
+
+
+$viagens = Facade::SolicitarViagem($confins, $afonso, $data_partida, 2);
+
+echo "________________________________________\n";
+ foreach ($viagens[0] as $viagem){
+
+          
+          echo $viagem->getCodigo();
+          echo " -> \n";
+          echo $viagem->getAeroportoSaida();
+          echo ": ";
+          echo $viagem->getDataS()->format('m-d h:i');
+          echo "\n";
+
+          echo $viagem->getAeroportoChegada();
+          echo ": ";
+          echo $viagem->getDataC()->format('m-d h:i');
+          echo "\n";
+          echo "\n";
+          
+        }
+

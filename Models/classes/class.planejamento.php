@@ -26,7 +26,7 @@ include_once "../global.php";
       private int $_milhagem;
 
       public function __construct ($frequencia, string $codigo_plan, 
-                                  Aeroporto $chegada, Aeroporto $saida,
+                                  Aeroporto $saida, Aeroporto $chegada,
                                   DateTime $horarios, DateTime $horarioc,
                                   int $milhagem, CompanhiaAerea $companhia) {
                                     Usuario::ValidaLogado();
@@ -90,16 +90,16 @@ include_once "../global.php";
             
             //coleta o dia e a hora da partida.
             $dia_partida = $data->format('Y-m-d');
-            $hora_partida = $this->_horario_s->format('h:i:s');
+            $hora_partida = $this->_horario_s->format('H:i:s');
             
             //coleta o dia e a hora da chegada.
             $dia_chegada = $data->format('Y-m-d');
-            $hora_chegada = $this->_horario_c->format('h:i:s');
+            $hora_chegada = $this->_horario_c->format('H:i:s');
             
             
             //transfomra os dados anteriores em uma variavel tipo DateTime.
-            $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dia_partida . " " . $hora_partida );
-            $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $dia_chegada . " " . $hora_chegada );
+            $data_partida = DateTime::createFromFormat('Y-m-d H:i:s', $dia_partida . " " . $hora_partida );
+            $data_chegada = DateTime::createFromFormat('Y-m-d H:i:s', $dia_chegada . " " . $hora_chegada );
             
             if($data_partida->getTimestamp() > $data_chegada->getTimestamp()){
 
@@ -121,12 +121,14 @@ include_once "../global.php";
             $codigo = $letras . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
+            $aeronave = $this->_companhia->getAeronavesDisponiveis();
             $viagem = new Viagem($data_partida,
                         $data_chegada,
                         $codigo,
-                        $this->_ae_chegada,
                         $this->_ae_saida,
+                        $this->_ae_chegada,
                         $this->_companhia,
+                        $aeronave,
                         $this->_milhagem
                         );
             
@@ -200,7 +202,7 @@ include_once "../global.php";
 
       public function showViagens(){
 
-        if(!$this->_viagens_planejadas) echo "opa \n";
+        // if(!$this->_viagens_planejadas) echo "opa \n";
         foreach ($this->_viagens_planejadas as $viagem){
 
           
@@ -208,12 +210,12 @@ include_once "../global.php";
           echo " -> \n";
           echo $viagem->getAeroportoSaida();
           echo ": ";
-          echo $viagem->getDataS()->format('m-d h:i');
+          echo $viagem->getDataS()->format('m-d H:i');
           echo "\n";
 
           echo $viagem->getAeroportoChegada();
           echo ": ";
-          echo $viagem->getDataC()->format('m-d h:i');
+          echo $viagem->getDataC()->format('m-d H:i');
           echo "\n";
           echo "\n";
           
@@ -267,6 +269,7 @@ include_once "../global.php";
         if( $aeronave->isAvaliable($viagem) ){
 
           $aeronave->addViagem($viagem);
+          $viagem->setAeronave($aeronave);
 
         }
 
@@ -296,11 +299,11 @@ include_once "../global.php";
         $letras = $this->_companhia->getSigla();
         $comp = substr($codigo, 0, 2);
         if($letras != $comp){
-          throw new Exception("Codigo inválido");
+          throw new Exception("Codigo inválido\n");
         }  
         
-        $hora_partida = $this->_horario_s->format('h:i:s'); 
-        $hora_chegada = $this->_horario_c->format('h:i:s');
+        $hora_partida = $this->_horario_s->format('H:i:s'); 
+        $hora_chegada = $this->_horario_c->format('H:i:s');
 
         $dia_de_chegada = $dia_de_saida;
 
@@ -312,15 +315,17 @@ include_once "../global.php";
         }
         $dias = $dia_de_saida->format('Y-m-d');
         $diac = $dia_de_chegada->format('Y-m-d');
-        $data_partida = DateTime::createFromFormat('Y-m-d h:i:s', $dias . " " . $hora_partida );
-        $data_chegada = DateTime::createFromFormat('Y-m-d h:i:s', $diac . " " . $hora_chegada );
+        $data_partida = DateTime::createFromFormat('Y-m-d H:i:s', $dias . " " . $hora_partida );
+        $data_chegada = DateTime::createFromFormat('Y-m-d H:i:s', $diac . " " . $hora_chegada );
         
+        $aeronave = $this->_companhia->getAeronavesDisponiveis();
         $viagem = new Viagem($data_partida,
                         $data_chegada,
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,
                         $this->_companhia,
+                        $aeronave,
                         $this->_milhagem
                         );
         $viagem->save();

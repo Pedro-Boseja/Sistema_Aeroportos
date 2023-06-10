@@ -13,6 +13,7 @@
       private bool $_executado;
       private $_assentos = array(); //array(numero do assento, nome do passageiro)
       private int $_milhagem;
+      private int $_multa = 100;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
@@ -22,9 +23,10 @@
       public function __construct (DateTime $data_s, 
                                   DateTime $data_c,  
                                   string $codigo, 
-                                  Aeroporto $aeroporto_chegada, 
                                   Aeroporto $aeroporto_saida,
+                                  Aeroporto $aeroporto_chegada, 
                                   CompanhiaAerea $comp = null,
+                                  Aeronave $aeronave = null,
                                   int $milhagem = 0,
                                   bool $execucao = false
                                   ) { 
@@ -39,11 +41,17 @@
         $this->_executado = $execucao;
         $this->_milhagem = $milhagem;
         $this->_companhia = $comp;
+        $this->_aeronave = $aeronave;
       }
 
       static public function getFilename() {
         return get_called_class()::$local_filename;
         
+      }
+
+      public function showAssentos(){
+        $assentos = $this->_aeronave->getAssentos();
+        print_r($assentos);
       }
 
       public function CancelarPassageiro(Passageiro $passageiro){
@@ -69,19 +77,19 @@
         return $passageiros;
       }
 
-      public function getDataS () {
+      public function getDataS() {
         return $this->_data_s;
       }
 
-      public function getDataC () {
+      public function getDataC() {
         return $this->_data_c;
       }
 
-      public function getAeronave () {
+      public function getAeronave() {
         return $this->_aeronave;
       }
 
-      public function getCodigo () {
+      public function getCodigo() {
         return $this->_codigo;
       }
 
@@ -90,7 +98,7 @@
       }
 
       public function getAeroportoSaida () {
-        return $this->_aeroporto_saida;
+        return $this->_aeroporto_saida->getSigla();
       }
 
       public function getDuracao () {
@@ -119,10 +127,16 @@
 
       public function getAssentosLivres () {
         $assentos = $this->_aeronave->getAssentos();
+
+        if(count($this->_assentos) == 0){
+          return $assentos;
+        }
+
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
         return $assentos_livres;
       }
+
 
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
       // public function TrocarAeronave(Aeronave $aeronave){
@@ -173,7 +187,13 @@
       public function ViagemExecutada(){
         $this->_executado = 1;
       }
+      public function getMulta(){
+        return $this->_multa;
+      }
 
+      public function setMulta($multa){
+        $this->_multa = $multa;
+      }
       public function IsIn(Viagem $viagem){
 
         $ok = false;

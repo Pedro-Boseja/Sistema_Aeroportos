@@ -6,9 +6,9 @@ include_once "../global.php";
 class Tripulante extends persist{
 
     protected Cadastro $_cadastro;
-    private Aeroporto $_aeroporto_base;
-    private CompanhiaAerea $_companhia;
-    private $_viagens_planejadas = array();
+    protected Aeroporto $_aeroporto_base;
+    protected CompanhiaAerea $_companhia;
+    protected $_viagens_planejadas = array();
     static $local_filename = "tripulantes.txt";
 
     public function __construct(Cadastro $cadastro, $data_nascimento, $nacionalidade, $email, string $documento, string $endereco, CompanhiaAerea $companhia, Aeroporto $aeroporto, $numero_cpf = "VAZIO"){

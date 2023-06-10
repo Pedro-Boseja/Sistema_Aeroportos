@@ -10,7 +10,6 @@ class Log_escrita extends Log{
     private string $_obj_antes;
     private string $_obj_depois;
 
-    static $local_filename = "logsEscrita.txt";
 
     public function __construct( DateTime $data_hora,
                                  string $entidade,
@@ -26,10 +25,6 @@ class Log_escrita extends Log{
 
     }
 
-    static public function getFilename(){
-
-        return get_called_class()::$local_filename;
-    }
 
 
 }
