@@ -1,178 +1,73 @@
 <?php
 
-include_once "../global.php";
+class apigooglemaps {
 
-  
-  ini_set('allow_url_fopen', true);
-  ini_set('allow_url_include', true);
-
-    class Veiculo extends persist{
-
-        private int $_capacidade;
-        private float $_v_media;
-        private float $_t_percurso;
-        private float $_d_total;
-        private $_viagem = array();
-        private $_rota = array();
-        private $_viagens_planejadas = array();
-        private $_horarios_embarque = array(); //relaciona o tripulante com o horario de embarque
-        private apigooglemaps $_map;
-        static $local_filename = "veiculos.txt";
+    private $api_key = '';
+    private $lookup_service = 'GOOGLE';
+	  private $lookup_server = array('GOOGLE' => 'maps.google.com', 'YAHOO' => 'api.local.yahoo.com');
         
-        public function __construct (int $capacidade,
-                                     float $v_media,
-                                     $viagem) {
-            Usuario::ValidaLogado();
-            $this->_capacidade = $capacidade;
-            $this->_v_media = $v_media;
-            $this->_map = new apigooglemaps('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
-            $this->_rota = $this->CalculaRota($viagem);
-            $this->_d_total = $this->CalculaDTotal();
-            $this->_t_percurso = $this->CalculaTempo();                           
-        }
-
-        static public function getFilename() {
-            return get_called_class()::$local_filename;
-        }
-
-        public function getCapacidade () {
-            return $this->_capacidade;
-        }
-
-        public function getVMedia () {
-            return $this->_v_media;
-        }
-
-        public function getTPercurso () {
-            return $this->_t_percurso;
-        }
-
-        public function getDTotal () {
-            return $this->_d_total;
-        }
-
-        public function getRota () {
-            return $this->_rota;
-        }
-
-        public function setCapacidade (int $capacidade) {
-            $this->_capacidade = $capacidade;
-        }
-
-        public function setVMedia (float $v_media) {
-            $this->_v_media = $v_media;
-        }
-
-        public function setTPercurso (float $t_percurso) {
-            $this->_t_percurso = $t_percurso;
-        }
-
-        public function setDTotal (float $distancia) {
-            $this->_d_total = $distancia;
-        }
-
-        public function setRota ($rota) {
-            $this->_rota = $rota;
-        }
-
-        public function CalculaRota (Viagem $viagem) {
-            $tripulantes = $viagem->getTripulantes();
-            $endereços = array();
-            foreach ($tripulantes as $t){
-              array_push($endereços, $t->getCadastro()->getEndereco());
-            }
-
-            $aeroporto_saida = $viagem->getAeroportoSaida();
-          
-            $endereco_aeroporto = sprintf('%s, %s, %s', $aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
-          
-            $distancias = array();
-
-            foreach ($endereços as $r) {
-              $distancias[$r] = $this->CalculaDistancia($endereco_aeroporto, $r);
-            }
-
-            $rota = $endereco_aeroporto;
-            $rota += array_keys(sort($distancias));
-            array_push($rota, $endereco_aeroporto);
-    
-            return $rota;
-        }
-
-        public function CalculaTempo () {
-            $tempo = ($this->_d_total / $this->_v_media)*3600;
-            return $tempo;
-        }
-
-        public function CalculaHorariosEmbarque () {
-          $horarios = array();
-
-          $n_enderecos = count($this->_rota);
-          $distancias = array();
-          for ($i = 1; $i <= $n_enderecos; $i++) {
-            array_push ($distancias, $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i])));
-          }
-
-          $distancias = array_reverse($distancias);
-
-          $horario_chegada = $this->_viagem->getDataS()->getTimestamp() - 5400;
-
-          $n_distancias = count($distancias);
-          $horarios = array();
-          for ($i = 0; $i <= $n_distancias; $i++) {
-            array_push ($horarios, (($horario_chegada->getTimestamp()-current($distancias[$i])/$this->_v_media)*3600));
-          }
-    
-          return $horarios;
-        } 
-
-        public function CalculaDistancia (string $endereço1, string $endereço2) {
-            //Usar a api do google maps pra pegar as coordenadas dos dois endereços
-            $lat1 = $this->_map->geoGetCoords($endereço1)['lat'];
-            $lon1 = $this->_map->geoGetCoords($endereço1)['lng'];
-            $lat2 = $this->_map->geoGetCoords($endereço2)['lat'];
-            $lon2 = $this->_map->geoGetCoords($endereço2)['lng'];
-
-            $distancia = 110.57 * sqrt(pow($lat2-$lat1, 2)+pow($lon2-$lon1, 2));
-            return $distancia;
-  
-            
-            //// Método alternativo para calcular distâcia usando a matrix de distância do api
-            // $a = array($endereço1);
-            // $b = array($endereço2);
-
-            // $distancia = $this->_map->geoGetDistance($a, $b);
-            // return $distancia['distance'];
-        }
-
-        //Calcula as distâncias entre todos os pnts da rota e depois soma elas 
-        public function CalculaDTotal () {
-            $n_enderecos = count($this->_rota);
-            $distancia = 0;
-            for ($i = 1; $i <= $n_enderecos; $i++) {
-                $distancia += $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i]));
-            }
-            return $distancia;
-        }
-
-        public function CadastraViagem ($viagem) {
-            array_push($this->_viagem, $viagem);
-        }
-
-        public function addViagem (Viagem $viagem){
-            array_push($this->_viagens_planejadas, $viagem);
-        }
-
-        public function isAvaliable (Viagem $viagem){
-    
-            if(count($this->_viagens_planejadas) == 0){
-              return true;
-            }
-            foreach($this->_viagens_planejadas as $viplan){
-              if($viagem->IsIn($viplan)){
-                return false;
-              }
-            }
-            return true;
-          }
+    public function __construct($key){
+      $this->setAPIKey($key);
     }
+  
+      private $_api_key = '';
+      private $_lookup_service = 'GOOGLE';
+  	  private $_lookup_server = array('GOOGLE' => 'maps.google.com', 'YAHOO' => 'api.local.yahoo.com');
+          
+    
+      //sets YOUR Google Map API key
+      public function setAPIKey($key) {
+          $this->_api_key = $key;   
+      }
+  
+      //set the lookup service to use for geocode lookups
+      //default is GOOGLE.
+      public function setLookupService($service) {
+          switch($service) {
+              case 'GOOGLE':
+                  $this->_lookup_service = 'GOOGLE';
+                  break;
+          }       
+      }
+   
+      //get geocode lat/lon points for given address from google
+      public function geoGetCoords($address,$depth=0) {      
+        $url = sprintf('https://%s/maps/api/geocode/json?&address=%s&output=csv&key=%s',$this->_lookup_server['GOOGLE'],rawurlencode($address),$this->_api_key);
+        //echo $url . "\n";
+  
+        $result = false;
+                  
+          if($result = $this->fetchURL($url)) {
+            $result_parts = explode(':',$result);
+
+        
+            $coords['lat'] = floatval($result_parts[27]);
+            $coords['lng'] = floatval($result_parts[28]);
+          }
+          return $coords;       
+      }
+      
+      //fetch a URL. Override this method to change the way URLs are fetched.
+      public function fetchURL($url) {
+          return file_get_contents($url);
+      }
+  
+      //get distance between to geocoords using great circle distance 
+      public function geoGetDistance($origens, $destinos) {
+
+        $url = sprintf('https://%s/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=driving&language=pt-BR&sensor=false&key=%s', $this->_lookup_server['GOOGLE'], rawurlencode($origens[0]), rawurlencode($destinos[0]), $this->_api_key);
+        
+        $result = false;
+                  
+          if($result = $this->fetchURL($url)) {
+            $result_parts = explode(':',$result);
+        
+            $matrix['distance'] = intval($result_parts[7]);
+            echo $matrix['distance'] . "\n";
+            $matrix['duration'] = intval($result_parts[10]);
+            echo $matrix['duration'] . "\n";
+          }
+        
+          return $matrix;      
+      }    
+  }
