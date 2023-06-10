@@ -1,5 +1,5 @@
 <?php
-  include_once "../global.php";
+include_once "../global.php";
 
     class Usuario extends persist{
         protected string $_login;

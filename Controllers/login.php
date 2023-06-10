@@ -28,7 +28,54 @@
 <body>
 
   <br><br>
+
+  <label>Selecione umas das funcionalidades a seguir:</label><br><br>
   
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
+  <form action="../index.html" method="get">
+    <button>Sair</button>
+  </form>
   <form action="../index.html" method="get">
     <button>Sair</button>
   </form>
