@@ -194,7 +194,7 @@
         $this->_data_c = $dataC;
         $this->_duracao = $dataC->diff($dataS);
       }
-
+      
       public function setAeroportoSaida(Aeroporto $aeroportoS){
         $this->_aeroporto_saida = $aeroportoS;
       }
