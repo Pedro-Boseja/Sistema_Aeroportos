@@ -210,19 +210,25 @@
         $this->_executado = true;
         //Verificação de Clientes VIP para contabilizar programa de milhagem.
         $passageiros = $$this->_companhia->_milhagem->getPassageiros();
+        
         foreach($this->getPassageiros() as $p){
 
-          //if($p->IsVIP()){ // Apenas para não ser necessário fazer a verificação completa em não VIPs
+          foreach($passageiros as $m){
 
-            if(in_array($p->_cadastro, $passageiros->_cadastro)){//Verifica se está presente no array de passageiros VIP (Desnecessário, mas evita lançar excessão)
+            //Verificação se faz parte;
+            if($p->_cadastro == $m->_cadastro){
 
-              $passageiros = $$this->_companhia->_milhagem->Upgrade($p);
+              //Adicionar Pontos
+              $m->addPontos($this->_milhagem);
 
+              //Upgrade de passageito;
+              $$this->_companhia->_milhagem->Upgrade($m);
+            
             }
-
-          //}
+          }
 
         }
+
       }
       public function getMulta(){
         return $this->_multa;
