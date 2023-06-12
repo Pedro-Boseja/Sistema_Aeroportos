@@ -28,7 +28,7 @@
                                   Aeroporto $aeroporto_chegada, 
                                   CompanhiaAerea $comp = null,
                                   Aeronave $aeronave = null,
-                                  int $milhagem = 0,
+                                  int $milhagem = 100,
                                   bool $execucao = false
                                   ) { 
 
