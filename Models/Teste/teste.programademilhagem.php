@@ -2,10 +2,6 @@
 
 include_once "../global.php";
 
-<?php
-
-include_once "../global.php";
-
 //Tentando usar funcionalidades sem estar logado
 try{
     new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
