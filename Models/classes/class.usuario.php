@@ -5,7 +5,7 @@ include_once "../global.php";
         protected string $_login;
         private string $_senha;
         private string $_email;
-        static public ?Usuario $logado = null;
+        static protected ?Usuario $logado = null;
         static $local_filename = "usuarios.txt";
 
 
@@ -17,6 +17,12 @@ include_once "../global.php";
         static public function getFilename() {
             return get_called_class()::$local_filename;
         }
+
+        static public function getLogado(){
+            Usuario::ValidaLogado();
+            return Usuario::$logado;
+        }
+
         static public function Registrar ($login, $senha, $email){
             Usuario::ValidaLogado();
 

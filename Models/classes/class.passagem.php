@@ -47,8 +47,10 @@ class Passagem  {
 
             //Parte Cartão de Embarque;
             foreach($this->_viagens as $v){
-                array_push($this->_cartao, new CartaodeEmbarque($this->getPassageiro()->getCadastro()->getNome(), 
-                    $this->getPassageiro()->getCadastro()->getNome(), $v->getAeroportoSaida(), 
+                $nomes = explode(" ", $this->_passageiro->getCadastro()->getNome());
+                $nome = $nomes[0];
+                $sobrenome = end($nomes);
+                array_push($this->_cartao, new CartaodeEmbarque($nome, $sobrenome, $v->getAeroportoSaida(), 
                     $v->getAeroportoChegada(), $v->getHorarioS() - 2400, $v->getHorarioC(), $this->_assentos));//Subtrair 40 min do horário de saída no horário de embarque
             }
 

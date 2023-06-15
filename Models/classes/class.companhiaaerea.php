@@ -31,7 +31,8 @@ class CompanhiaAerea extends persist{
         $this->_franquia = $franquia;
         $this->_programa_de_milhagem = new ProgramaDeMilhagem();
         Usuario::ValidaLogado();
-        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), "Companhia Aérea ".$razao." criada");
+        $mensagem = "Companhia Aérea ".$razao." criada";
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), $mensagem);
         $log->save();
     }
 //Programa de Milhagem
