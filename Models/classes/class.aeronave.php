@@ -30,51 +30,51 @@ class Aeronave extends persist{
     $this->_capacidade_c = $capacidade_c;
     $this->_assentos = $this->MontarAssentos($largura, $comprimento);
     Usuario::ValidaLogado();
-    $log = new Log_escrita(new DateTime(), "Aeronave", "null", serialize($this));
+    $log = new Log_escrita(new DateTime(), "Aeronave", "null", serialize($this), "Aeronave ".$registro." Criada");
     $log->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;
 }
   public function getFabricante(){
-    $log = new Log_leitura(new DateTime, serialize($this), "fabricante");
+    $log = new Log_leitura(new DateTime, serialize($this), "fabricante", "informação fabricante lida");
     $log->save();
     return $this->_fabricante;
   }
 
   public function getModelo(){
-    $log = new Log_leitura(new DateTime, serialize($this), "modelo");
+    $log = new Log_leitura(new DateTime, serialize($this), "modelo", "informação modelo lida");
     $log->save();
     return $this->_modelo;
   }
 
   public function getRegistro(){
-    $log = new Log_leitura(new DateTime, serialize($this), "registro");
+    $log = new Log_leitura(new DateTime, serialize($this), "registro", "informação registro lida");
     $log->save();
     return $this->_registro;
   }
 
   public function getCapacidadeP(){
-    $log = new Log_leitura(new DateTime, serialize($this), "capacidade passageiros");
+    $log = new Log_leitura(new DateTime, serialize($this), "capacidade passageiros", "informação capacidade lida");
     $log->save();
     return $this->_capacidade_p;
   }
 
   public function getCapacidadeC(){
-    $log = new Log_leitura(new DateTime, serialize($this), "capacidade carga");
+    $log = new Log_leitura(new DateTime, serialize($this), "capacidade carga", "informação capacidade lida");
     $log->save();
     return $this->_capacidade_c;
   }
 
   public function getAssentos(){
-    $log = new Log_leitura(new DateTime, serialize($this), "Assentos");
+    $log = new Log_leitura(new DateTime, serialize($this), "Assentos", "informação assentos lida");
     $log->save();
     return $this->_assentos;
   }
 
   public function MontarAssentos (int $largura, int $comprimento){
 
-    $log = new Log_leitura(new DateTime, serialize($this), "Construiu assentos");
+    $log = new Log_leitura(new DateTime, serialize($this), "Construiu assentos", "Montagem dos assentos");
     $log->save();
     $assentos = array();
     for($i = 1; $i <= $comprimento; $i++) {
@@ -90,7 +90,7 @@ class Aeronave extends persist{
   }
 
   public function isAvaliable(Viagem $viagem){
-    $log = new Log_leitura(new DateTime, serialize($this), "disponibilidade");
+    $log = new Log_leitura(new DateTime, serialize($this), "disponibilidade", "informação disponivel lida");
     $log->save();
     if(count($this->_viagens_planejadas) == 0){
 
@@ -115,7 +115,7 @@ class Aeronave extends persist{
     $obj_antes = serialize($this);
     array_push($this->_viagens_planejadas, $viagem);
     $obj_depois = serialize($this);
-    $log = new Log_escrita(new DateTime(), "aeronave", $obj_antes, $obj_depois);
+    $log = new Log_escrita(new DateTime(), "aeronave", $obj_antes, $obj_depois, "viagem marcada para aeronave");
     $log->save();
 
   }

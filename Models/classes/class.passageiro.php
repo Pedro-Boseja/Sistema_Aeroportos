@@ -18,6 +18,8 @@ class Passageiro extends persist{
                                   Usuario::ValidaLogado();
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
+    $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), "Passageiro ".$cadastro->getNome(). " Criado");
+    $log->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;
@@ -55,6 +57,11 @@ class Passageiro extends persist{
 
   public function addPassagem(Passagem $passagem){
     $this->_passagem = $passagem;
+
+    $mensagem = "Passagem adicionada ao Passageiro ".$this->_cadastro->getNome();
+
+    $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
+    $log->save();
   }
 
   public function CancelarPassagem () {

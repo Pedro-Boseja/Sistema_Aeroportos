@@ -168,10 +168,10 @@ class Facade{
 
         $viagens = Facade::GetViagensByCod($codigos);
         $passagem = new Passagem($passageiro, $qnt_franquias);
-        $passageiro->addPassagem($passagem);
         for($i = 0; $i<count($viagens); $i++){
             $passagem->addViagem($viagens[$i], $assentos[$i]);
         }
+        $passageiro->addPassagem($passagem);
     }
 
 

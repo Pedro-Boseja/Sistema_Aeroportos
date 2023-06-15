@@ -31,7 +31,7 @@ class CompanhiaAerea extends persist{
         $this->_franquia = $franquia;
         $this->_programa_de_milhagem = new ProgramaDeMilhagem();
         Usuario::ValidaLogado();
-        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this));
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), "Companhia Aérea ".$razao." criada");
         $log->save();
     }
 //Programa de Milhagem
@@ -63,7 +63,8 @@ class CompanhiaAerea extends persist{
     public function CadastrarAeronave(Aeronave $aeronave){
         $obj_antes = serialize($this);
         array_push($this->_aeronaves, $aeronave);
-        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this));
+        $mensagem ="Aeronave ". $aeronave->getRegistro()."Cadastrada em ".$this->_razao_social;
+        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this), "Aeronave Cadastrada");
         $log->save();
     }
 
@@ -81,7 +82,8 @@ class CompanhiaAerea extends persist{
         $obj_antes = serialize($this);
         $plan->setCompanhia($this);
         array_push($this->_planejamentos, $plan);
-        $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this));
+        $mensagem = "Planejamento entre ".$plan->getAeroportoS()." e ".$plan->getAeroportoC(). " adicionado";
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this), $mensagem);
         $log->save();
     }
     
@@ -150,7 +152,7 @@ class CompanhiaAerea extends persist{
 
     public function getAeronavesDisponiveis(){
         
-        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível");
+        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível", "Verificação de aeronaves disponíveis");
         return $this->_aeronaves[0];
 
     }

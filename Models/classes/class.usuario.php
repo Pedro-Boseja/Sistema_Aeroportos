@@ -28,6 +28,10 @@ include_once "../global.php";
             }else{
                 throw new Exception("Usuário já cadastrado\n");
             }
+            
+            $mensagem = "Usuário ".$login." Registrado";
+            $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", $login, $mensagem);
+            $log->save();
         }
         static public function Login ($login, $senha){
             if(Usuario::$logado != null){
@@ -44,8 +48,6 @@ include_once "../global.php";
                 // $this->_email = $temp[0]->getEmail();
                 Usuario::$logado = $temp[0];
                 echo "Usuário ".$login." logado com sucesso\n";
-                $log = new Log_leitura(new DateTime(), "usuario", "logado");
-                $log->save();
             }else{
                 throw new Exception("Senha Incorreta\n");
             }

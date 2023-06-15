@@ -13,7 +13,7 @@ class Cliente extends persist{
     public function __construct(string $nome, string $documento) {
       Usuario::ValidaLogado();
       $this->_cadastro = new Cadastro($nome, $documento);
-      $log = new Log_escrita(new DateTime(), "Cliente", "null", serialize($this));
+      $log = new Log_escrita(new DateTime(), "Cliente", "null", serialize($this), "Cliente". $nome ."cadastrado");
       $log->save();
     }
   
@@ -25,8 +25,12 @@ class Cliente extends persist{
       return $this->_cadastro;
     }
 
-    public function SolicitarViagem (Aeroporto $aero_c, Aeroporto $aero_s, DateTime $date, int $qnt) {
-      Usuario::ValidaLogado();  
+    public function SolicitarViagem (Aeroporto $aero_s, Aeroporto $aero_c, DateTime $date, int $qnt) {
+      Usuario::ValidaLogado();
+      $mensagem = "Viagens Solicitadas entre ".$aero_s->getSigla()." e ".$aero_c->getSigla();
+      $log = new Log_leitura(new DateTime(), "Cliente", "viagens", $mensagem);
+      $log->save();
+
       $viagens = Facade::SolicitarViagem($aero_c, $aero_s, $date, $qnt);
       $el = count($viagens);
 
@@ -52,20 +56,39 @@ class Cliente extends persist{
     }
 
     public function EscolherViagem ($viagens = array(), int $numero_viagem){
+      Usuario::ValidaLogado();
+
+      
+
       $escolhidas = array();
       try{
         count($viagens[0]);
         array_push($escolhidas, $viagens[$numero_viagem][0]);
         array_push($escolhidas, $viagens[$numero_viagem][1]);
+
+        $v1 = $viagens[$numero_viagem][0];
+        $v2 = $viagens[$numero_viagem][1];
+
+        $mensagem = "Viagens ".$v1->getCodigo(). " e ".$v2->getCodigo() . "Escolhidas";
+        $log = new Log_leitura(new DateTime(), "Cliente", "viagens", $mensagem);
+        $log->save();
         return $escolhidas;
 
       }catch(TypeError $e){
+        $v1 = $viagens[$numero_viagem];
+        $mensagem = "Viagem ".$v1->getCodigo()." Escolhidas";
+        $log = new Log_leitura(new DateTime(), "Cliente", "viagens", $mensagem);
+        $log->save();
         return $viagens[$numero_viagem];
       }
       
     }
 
     public function EscolherAssentos($viagem){
+      Usuario::ValidaLogado();
+
+      $log = new Log_leitura(new DateTime(), "Cliente", "viagens", "Assentos da viagem Escolhidos");
+      $log->save();
       try{
         $el = count($viagem);
         for($i = 0; $i<$el; $i++){
@@ -84,13 +107,19 @@ class Cliente extends persist{
 
 
     public function ComprarPassagem ($viagem, Passageiro $passageiro, $assentos = array(), int $qnt_franquias) {
+  
       Usuario::ValidaLogado();
+
+      $log = new Log_leitura(new DateTime(), "Cliente", "viagens", "Viagens Compradas");
+      $log->save();
       $codigos = array();
+      
       try{
         $el = count($viagem);
         for($i = 0; $i<$el; $i++){
           array_push($codigos, $viagem[$i]->getCodigo());
         }
+        
 
       }catch(TypeError $e){
         array_push($codigos, $viagem->getCodigo());

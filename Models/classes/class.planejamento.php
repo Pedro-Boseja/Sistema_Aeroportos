@@ -39,7 +39,7 @@ include_once "../global.php";
         $this->_milhagem = $milhagem;
         $this->_companhia = $companhia;
         $this->_companhia->addPlanejamento($this);
-        $log = new Log_escrita(new DateTime(), "Planejamento", "null", serialize($this));
+        $log = new Log_escrita(new DateTime(), "Planejamento", "null", serialize($this), "Planejamento criado");
         $log->save();
       }
 
@@ -126,7 +126,9 @@ include_once "../global.php";
           $data->setTimestamp($data->getTimestamp() + 86400);
         }
 
-        $log = new Log_escrita(new DateTime(), "PLanejamento", $obj_antes, serialize($this));
+        $mensagem = "Viagens Para os Próximos 30 dias entre ".$this->getAeroportoS()." e ".$this->getAeroportoC(). " Programadas";
+
+        $log = new Log_escrita(new DateTime(), "PLanejamento", $obj_antes, serialize($this), $mensagem);
         $log->save();
       }
 
@@ -282,6 +284,7 @@ include_once "../global.php";
       }
 
       public function createViagem(string $codigo, DateTime $dia_de_saida){
+        $obj_antes = serialize($this);
         $letras = $this->_companhia->getSigla();
         $comp = substr($codigo, 0, 2);
         if($letras != $comp){
@@ -316,6 +319,8 @@ include_once "../global.php";
                         );
         $viagem->save();
         array_push($this->_viagens_planejadas, $viagem);
-        
+        $mensagem = "Viagem ".$codigo."Entre ".$this->getAeroportoS()." e ".$this->getAeroportoC().", para o dia ".$dia_de_saida->format("Y-m-d H:i:s")." criada";
+        $log = new Log_escrita(new DateTime(), "Planejamento", $obj_antes, serialize($this), $mensagem);
+        $log->save();
       }
     }

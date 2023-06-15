@@ -24,6 +24,8 @@ class CartaodeEmbarque{
         $this->_horarioEmbarque = $horarioEmbarque;
         $this->_horarioChegada = $horarioChegada;
         $this->_assento = $assento;
+        $log = new Log_escrita(new DateTime(), "Cartao de Embarque", "null", serialize($this), "Cartão de embarque criado");
+        $log->save();
     }
 
     public function getNome (){

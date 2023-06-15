@@ -9,6 +9,8 @@ class ProgramaDeMilhagem{
     public function __construct(){
         Usuario::ValidaLogado();
         $this->_categorias[0]="Sem Categoria";
+        $log = new Log_escrita(new DateTime(), "Programa de MIlhagem", "null", serialize($this), "Companhia criou um programa de milhagem");
+        $log->save();
     } 
     //Pesquisa 
     public function Upgrade (Vip $passageiro){

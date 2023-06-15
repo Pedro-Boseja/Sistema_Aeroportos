@@ -13,6 +13,9 @@ class Piloto extends Tripulante{
         $this->_cadastro->fillTripulante($data_nascimento, $nacionalidade, $numero_cpf, $email, $documento, $endereco);
         $this->_companhia = $companhia;
         $this->_aeroporto_base = $aeroporto;
+        
+        $log = new Log_escrita(new DateTime(), "Piloto", "null", serialize($this), "Piloto Cadastrado");
+        $log->save();
     }
 
     static public function getFilename() {

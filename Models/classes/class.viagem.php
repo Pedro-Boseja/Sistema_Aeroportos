@@ -87,6 +87,9 @@
         $passageiro = $passagem->getPassageiro();
         $as_passagem = array($assento => $passageiro);
         $this->_assentos = array_replace($this->_assentos, $as_passagem);
+        
+        $log = new Log_escrita(new DateTime(), "Viagem", "null", serialize($this), "Passagem Cadastrada na Viagem");
+        $log->save();
       }
 
       public function getPassageiros(){
@@ -114,13 +117,13 @@
       }
 
       public function getAeroportoChegada () {
-        return $this->_aeroporto_chegada; 
-        //return $this->_aeroporto_chegada->getSigla();
+        // return $this->_aeroporto_chegada; 
+        return $this->_aeroporto_chegada->getSigla();
       }
 
       public function getAeroportoSaida () {
-        return $this->_aeroporto_saida;
-        //return $this->_aeroporto_saida->getSigla();
+        // return $this->_aeroporto_saida;
+        return $this->_aeroporto_saida->getSigla();
       }
 
       public function getDuracao () {
@@ -156,6 +159,7 @@
       
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
+
         return $assentos_livres;
       }
 

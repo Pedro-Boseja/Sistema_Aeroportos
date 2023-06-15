@@ -19,7 +19,7 @@ class Passagem  {
     protected int $_qtde_franquias;
     protected float $_valorfranquia;
     protected Passageiro $_passageiro;
-    protected CartaodeEmbarque $_cartao = array();
+    protected $_cartao = array();
     protected $_status = array();
 
     public function __construct( Passageiro $passageiro,
@@ -30,6 +30,8 @@ class Passagem  {
         $this -> _qtde_franquias = $qtde_franquias;
         $this -> _valorfranquia = 0.0;
         array_push($this -> _status, EnumStatus::Passagem_adquirida);
+        $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), "Passagem criada");
+        $log->save();
     }
 
     public function CheckIn () {
@@ -148,6 +150,12 @@ class Passagem  {
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);
+
+        $mensagem = "Viagem entre ".$viagem->getAeroportoSaida()." e ".$viagem->getAeroportoChegada()." adicionada a passagem do passageiro ". $this->_passageiro->getCadastro()->getNome();
+        $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
+        $log->save();
+
+
     }
 
     public function inicioDaViagem(){
