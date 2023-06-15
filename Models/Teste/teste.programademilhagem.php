@@ -3,6 +3,7 @@
 include_once "../global.php";
 
 //Tentando usar funcionalidades sem estar logado
+echo 'teste 1';
 try{
     new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
 }catch(Exception $e){
@@ -35,6 +36,7 @@ $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aére
 // A primeira aeronave deve pertencer a Latam 
 // Defina a sigla da primeira aeronave como PX-RUZ.
 // Seu código deve validar a sigla e tratar a exceção. Em seguida a sigla deve ser corrigida para PP-RUZ.
+echo 'teste 2';
 try{
     $aviao1 = new Aeronave('Embraer', '175', 'PX-RUZ', 180, 600, 6, 30);
 }catch(Exception $e){
@@ -63,7 +65,7 @@ $freq = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Su
 $datas = Datetime::createFromFormat('H:i', "11:00");
 $datac = Datetime::createFromFormat('H:i', "13:00");
 $plano1 = new PLanejamento($freq, "CNF-GRU", $confins, $guarulhos, $datas, $datac, 60, $azul);
-
+echo 'teste 3';
 try{
     $plano1->createViagem("AC1329", new DateTime());
 }catch(Exception $e){
@@ -95,10 +97,23 @@ $cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9,
 $cgh_cwb->ProgramaViagens();
 
 $cnf_cgh->ProgramaViagens();
+//Passageiro
+// cria um cadastro inicial
+$cadastro = new Cadastro(
+    'João da Silva', // nome
+    '12.244.876', //numero documento
+);
 
-
+$passageiro = new Passageiro(
+    $cadastro, // nome e documento
+    $DateTime = new DateTime(10/10/2010), // data de nascimento
+    'Brasileiro', // nacionalidade
+    'jaodasirva@orkut.com', // e-mail
+    '666.666.666-66' // cpf
+);
 //Progrma de Milhagem
-$latam->CadastrarPassageiroVip();
+$latam->PromoverVIP($passageiro);
+$latam->CadastrarPassageiroVip($passageiro);
 
 
 
