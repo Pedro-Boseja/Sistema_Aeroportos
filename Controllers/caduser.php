@@ -1,7 +1,11 @@
 <?php
   include_once "../Models/global.php";
 
+  ob_start();
+
   Usuario::Login("Hugo Boss", "1234");
+
+  ob_end_clean();
 
   $login = $_GET['login'];
   $senha = $_GET['senha'];

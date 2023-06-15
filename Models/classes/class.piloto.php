@@ -1,6 +1,6 @@
 <?php
 
-include_once "../global.php";
+include_once "../Models/global.php";
 
 
 class Piloto extends Tripulante{
