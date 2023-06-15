@@ -14,6 +14,7 @@ class CartaodeEmbarque{
 
     public function __construct($nome, $sobrenome, $origemVoo, $destinoVoo, $horarioEmbarque, $horarioChegada, $assento){
         Usuario::ValidaLogado();
+        
         $this->_nome = $nome;
         $this->_sobrenome = $sobrenome;
         $this->_origemVoo = $origemVoo;
@@ -64,5 +65,15 @@ class CartaodeEmbarque{
     }
     public function setAssento ($assento){
         $this->_assento = $assento;
+    }
+    public function PrintAll(){
+
+        echo $this->_nome ." " . $this->_sobrenome . "/n";
+        echo $this->_origemVoo . "/n";
+        echo $this->_destinoVoo . "/n";
+        echo $this->_horarioEmbarque->format("d M Y H:i:s") . "/n";
+        echo $this->_horarioChegada->format("d M Y H:i:s") . "/n";
+        echo $this->_assento . "/n";
+
     }
 }
