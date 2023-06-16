@@ -73,7 +73,7 @@ class Passageiro extends persist{
     $this->_passagem = null;
   }
 
-  public function AlterarPassagem ($codigos = array(),$assentos=array(), $franquias) {
+  public function AlterarPassagem ($codigos ,$assentos, $franquias) {//codigo = array e assentos=array
     if($this->_passagem->inicioDaViagem()<4){
       throw new Exception("O tempo para alterar a passagem terminou.\n");
     }else{

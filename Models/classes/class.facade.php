@@ -163,7 +163,7 @@ class Facade{
         return $viagens;
     }
 
-    public static function ComprarPassagem($codigos = array(), Passageiro $passageiro, $assentos = array(), $qnt_franquias){
+    public static function ComprarPassagem($codigos, Passageiro $passageiro, $assentos, $qnt_franquias){// codigos = array, assentos=array
         Usuario::ValidaLogado();
 
         $viagens = Facade::GetViagensByCod($codigos);

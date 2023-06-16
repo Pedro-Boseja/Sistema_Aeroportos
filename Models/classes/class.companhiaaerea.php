@@ -70,7 +70,7 @@ class CompanhiaAerea extends persist{
     }
 
     public function PromoverVIP (Passageiro $p_vip) {
-        $p_vip = new Vip($p_vip);
+        return new Vip($p_vip);
     }
     
     public function atualizaViagens(){

@@ -112,20 +112,27 @@ $passageiro = new Passageiro(
     '666.666.666-66' // cpf
 );
 //Progrma de Milhagem
-$latam->PromoverVIP($passageiro);
+$passageiro = $latam->PromoverVIP($passageiro);
+//$teste = new Vip($passageiro);
+//$passageiro = $teste;
+echo get_class($passageiro);
 $latam->CadastrarPassageiroVip($passageiro);
 
 
 
 
 //Fim
-$data_partida = DateTime::createFromFormat('d/m/Y', '10/06/2023');
+$data_partida = DateTime::createFromFormat('d/m/Y', '19/06/2023');
 
+try{
+    $viagens = Facade::SolicitarViagem($confins, $congonhas, $data_partida, 2);
+}catch(Exception $e){
+    echo $e->getMessage();
+}
 
-$viagens = Facade::SolicitarViagem($confins, $afonso, $data_partida, 2);
 
 echo "________________________________________\n";
- foreach ($viagens[0] as $viagem){
+ foreach ($viagens as $viagem){
 
           
           echo $viagem->getCodigo();
@@ -141,5 +148,5 @@ echo "________________________________________\n";
           echo "\n";
           echo "\n";
           
-        }
+        }//*/
 
