@@ -66,14 +66,15 @@
       }
 
       public function Show(){
-          echo $this->getCodigo();
-          echo " -> \n";
-          echo $this->getAeroportoSaida();
+          
+          echo "Código: ".$this->getCodigo();
+          echo " ==> \n";
+          echo "Aeroporto de Saída: ".$this->getAeroportoSaida();
           echo ": ";
           echo $this->getDataS()->format('d-m H:i');
           echo "\n";
 
-          echo $this->getAeroportoChegada();
+          echo "Aeroporto de Chegada: ".$this->getAeroportoChegada();
           echo ": ";
           echo $this->getDataC()->format('d-m H:i');
           echo "\n";
@@ -87,6 +88,12 @@
             unset($this->_assentos[$key]);
           }
         }
+        $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." cancelado na viagem de ".
+        $this->getAeroportoSaida() ." até ". $this->getAeroportoChegada();
+        $log = new Log_escrita(new DateTime(), "Viagem", "null", serialize($this), $mensagem);
+        $log->save();
+
+
       }
 
       public function addPassagem (string $assento, Passagem $passagem) {
@@ -182,14 +189,9 @@
       // }
 
       public function AddTripulaçao($tripulacao){
-
-        foreach($tripulacao as $tripulante){
-
-          if(!$tripulante->isAvaiable($this)){
-            return false;
-          }
-
-        }
+        $mensagem ="Tripulação Adicionada a viagem";
+        $log = new Log_escrita(new DateTime(), "companhia aerea", "Null", serialize($this), $mensagem);
+        $log->save();
 
         foreach($tripulacao as $tripulante){
 
@@ -219,7 +221,11 @@
       }
 
       public function setAeronave(Aeronave $aeronave){
+        $mensagem ="Aeronave ". $aeronave->getRegistro()." Confirmada na viagem";
+        $log = new Log_escrita(new DateTime(), "companhia aerea", "Null", serialize($this), $mensagem);
+        $log->save();
         $this->_aeronave = $aeronave;
+        $this->save();
       }
       public function ViagemExecutada(){
         $this->_executado = true;

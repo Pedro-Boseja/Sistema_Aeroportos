@@ -46,6 +46,10 @@ class Passageiro extends persist{
     return null;
   }
 
+  public function getPassagem(){
+    return $this->_passagem;
+  }
+
   public function getCadastro(){
     return $this->_cadastro;
   }

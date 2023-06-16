@@ -8,9 +8,9 @@ class ProgramaDeMilhagem{
     private $_passageirosvip=array(); //array(Passageiro, categoria(string))
     public function __construct(){
         Usuario::ValidaLogado();
-        $this->_categorias[0]="Sem Categoria";
-        $log = new Log_escrita(new DateTime(), "Programa de MIlhagem", "null", serialize($this), "Companhia criou um programa de milhagem");
-        $log->save();
+        // $this->_categorias[0]="Sem Categoria";
+        // $log = new Log_escrita(new DateTime(), "Programa de MIlhagem", "null", serialize($this), "Companhia criou um programa de milhagem");
+        // $log->save();
     } 
     //Pesquisa 
     private function localizaChave(Vip $passageiro){
@@ -43,7 +43,7 @@ class ProgramaDeMilhagem{
     }
     public function getCategoria(int $pontos){
         //Encontra a classe abaixo da pontuação, para os pontos como chave.
-        $c=''; //categoria (valor)
+        $c=0; //categoria (valor)
         $p=0; //pontuação (chave)
         foreach ($this->_categorias as $chave => $valor) {
             if($chave<=$pontos && $chave<=$p){

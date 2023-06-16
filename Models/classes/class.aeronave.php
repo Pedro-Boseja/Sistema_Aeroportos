@@ -49,8 +49,6 @@ class Aeronave extends persist{
   }
 
   public function getRegistro(){
-    $log = new Log_leitura(new DateTime, serialize($this), "registro", "informação registro lida");
-    $log->save();
     return $this->_registro;
   }
 

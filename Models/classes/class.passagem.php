@@ -1,4 +1,5 @@
 <?php
+use Vtiful\Kernel\Format;
 
 include_once "../global.php";
 
@@ -46,19 +47,41 @@ class Passagem  {
             echo 'Seu check-in foi realizado com sucesso!';
 
             //Parte Cartão de Embarque;
+            $i = 0;
             foreach($this->_viagens as $v){
                 $nomes = explode(" ", $this->_passageiro->getCadastro()->getNome());
                 $nome = $nomes[0];
                 $sobrenome = end($nomes);
+                $hora = DateTime::createFromFormat("d/M/Y H:i:s", $v->getDataS()->format("d/M/Y H:i:s"));//Subtrair 40 min do horário de saída no horário de embarque
+                $horaEmb = $hora->sub(new DateInterval('PT40M'));
                 array_push($this->_cartao, new CartaodeEmbarque($nome, $sobrenome, $v->getAeroportoSaida(), 
-                    $v->getAeroportoChegada(), $v->getHorarioS() - 2400, $v->getHorarioC(), $this->_assentos));//Subtrair 40 min do horário de saída no horário de embarque
+                    $v->getAeroportoChegada(), $horaEmb, $v->getDataC(), $this->_assentos[$i]));
+                $i++;
             }
 
         } else if ($t < $t1){
-            echo 'O periodo de Check-in ainda não começou. Tente mais tarde.';
+            throw new Exception("O periodo de Check-in ainda não começou. Tente mais tarde.\n");
         } else {
-            echo 'O periodo de Check-in já foi encerrado hehehehehehe';
+            $this->setStatus(EnumStatus::No_show);
+            throw new Exception("O periodo de Check-in já foi encerrado hehehehehehe");
         }
+
+        $mensagem = "CheckIn da Passagem do Passageiro ".$this->_passageiro->getCadastro()->getNome()." Realizada";
+        $log = new Log_leitura(new DateTime(), "Passagem", "checkIn", $mensagem);
+        $log->save();
+    }
+
+    public function PrintCartaoEmbarque(){
+        $i = 1;
+        foreach($this->_cartao as $c){
+            echo"\nCartão de embarque ".$i."\n";
+            $c->show();
+            $i++;
+        }
+
+        $mensagem = "Cartões de Embarque Imprimidos";
+        $log = new Log_leitura(new DateTime(), "Passagem", "checkIn", $mensagem);
+        $log->save();
     }
 
     public function CancelarPassagem(){
@@ -66,14 +89,21 @@ class Passagem  {
             $v->CancelarPassageiro($this->_passageiro);
         }
         if($this->_passageiro->IsVIP() && in_array($this->_passageiro, $this->_viagens[0]->_companhia->_programa_de_milhagem->_passageirosvip)){
-            echo "Sua passagem foi cancelada.";
+            echo "Sua passagem foi cancelada sem multas e o valor de ressarcimento foi de R$".$this->_tarifa*count($this->_viagens);
         }else{
+            $multa = 0.00;
             foreach($this->_viagens as $v){
-                echo "Foi cobrado uma multa do passageiro ". $this->_passageiro->getCadastro()->getNome()." de R$". $v->getMulta() . "." ;
+                $multa += $v->getMulta();
             }
-            echo "Sua passagem foi cancelada.";
+            echo "A passagem do Passageiro ".$this->_passageiro->getCadastro()->getNome()." foi cancelada e uma multa de R$".$multa." foi cobrada!\n";
+            $valor = ($this->_tarifa*count($this->_viagens)/2.0)-$multa;
+            echo "O valor pago foi de R$".$this->_tarifa*count($this->_viagens)." e o ressarcimento foi de R$".$valor."\n";
         }
-        return;
+        $this->setStatus(EnumStatus::Passagem_cancelada);
+
+        $mensagem = "Passagem do Passageiro ".$this->_passageiro->getCadastro()->getNome()." Cancelada";
+        $log = new Log_leitura(new DateTime(), "Passagem", "checkIn", $mensagem);
+        $log->save();
     }
 
     public function getTarifa() {

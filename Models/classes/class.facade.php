@@ -173,6 +173,8 @@ class Facade{
             $viagens[$i]->addPassagem($assentos[$i], $passagem);
         }
         $passageiro->addPassagem($passagem);
+        $valor = count($viagens)*$passagem->getTarifa();
+        echo "Passagem comprada no valor de R$".$valor."\n";
     }
 
 

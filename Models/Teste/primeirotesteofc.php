@@ -90,32 +90,35 @@ $data7 = Datetime::createFromFormat('H:i', "19:00");
 $data8 = Datetime::createFromFormat('H:i', "15:20");
 $data9 = Datetime::createFromFormat('H:i', "18:30");
 //confins - congonhas
-$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $azul);
+$cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 200, $azul);
 $cnf_cgh->ProgramaViagens();
 //congonhas - confins 
-$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 30, $azul);
+$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 300, $azul);
 $cgh_cnf->ProgramaViagens();
 
 //confins - guarulhos
-$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 50, $azul);
+$cnf_gru = new PLanejamento($freq, "CNF-GRU",$confins, $guarulhos, $data6, $data1, 500, $azul);
 $cnf_gru->ProgramaViagens();
 //guarulhos - confins 
-$gru_cnf = new PLanejamento($freq, "GRU-CNF",$guarulhos ,$confins, $data7, $data5, 60, $latam);
+$gru_cnf = new PLanejamento($freq, "GRU-CNF",$guarulhos ,$confins, $data7, $data5, 600, $azul);
 $gru_cnf->ProgramaViagens();
 
 //guarulhos - galeão
-$gru_gig = new PLanejamento($freq, "CNF-GIG",$guarulhos, $galeao, $data6, $data1, 50, $latam);
+$gru_gig = new PLanejamento($freq, "CNF-GIG",$guarulhos, $galeao, $data6, $data1, 500, $azul);
 $gru_gig->ProgramaViagens();
 //galeão - guarulhos
-$gig_gru = new PLanejamento($freq, "GIG-CNF",$galeao, $guarulhos, $data7, $data5, 50, $latam);
+$gig_gru = new PLanejamento($freq, "GIG-CNF",$galeao, $guarulhos, $data7, $data5, 500, $azul);
 $gig_gru->ProgramaViagens();
 
 //congonhas - afonso pena
-$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 30, $azul);
+$cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 300, $azul);
 $cgh_cwb->ProgramaViagens();
 //afonso pena - congonhas
-$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 30, $azul);
+$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 300, $azul);
 $cwb_cgh->ProgramaViagens();
+
+$cbw_cnf = new PLanejamento($freq, "CWB-CNF",$afonso,$confins, $data7, $data5, 300, $latam);
+$cbw_cnf->ProgramaViagens();
 
 
 // Um cliente deve realizar a compra da passagem somente de ida para um passageiro Vip
@@ -126,9 +129,9 @@ $cwb_cgh->ProgramaViagens();
 $cliente = new Cliente("Enzo Magno", "02053702176");
 
 
-$cadPassageiro = new Cadastro("Enzoz Magico", "CPF");
+$cadPassageiro = new Cadastro("Ramon Espanhol", "CPF");
 $nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
-$passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "enzo@magno.com", "02053702176");
+$passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "ramo@magno.com", "12314525877");
 
 
 $azul->CadastrarCategoria("ouro", "1000");
@@ -137,14 +140,16 @@ $azul->CadastrarCategoria("platina", "3000");
 $azul->PromoverVIP($passageiro);
 
 
-$datacliente = DateTime::createFromFormat("d/m/Y", "19/06/2023");
+$datacliente = DateTime::createFromFormat("d/m/Y", "17/06/2023");
 
 $lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
-$cliente->EscolherAssentos($viagem_escolhida);
+// $cliente->EscolherAssentos($viagem_escolhida);
 $cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
 
-Log::ImprimirLogs();
+//Logando com Outro Usuário:
+Usuario::Sair();
+Usuario::Login("Enzo Magico", "696969");
 
 // Cadastre e planeje a tripulação que atuará na primeira viagem do vôo de ida do
 // passageiro.
@@ -152,7 +157,7 @@ Log::ImprimirLogs();
 $cad1 = new Cadastro("José", "RG");
 $cad2 = new Cadastro("Maria", "RG");
 $cad3 = new Cadastro("Dalton", "RG");
-$cad3 = new Cadastro("Erica", "RG");
+$cad4 = new Cadastro("Erica", "RG");
 
 
 $piloto = new Piloto($cad1, DateTime::createFromFormat("d/m/Y","25/11/1982"), "brasileiro", "jmaldade@gmail.com", 
@@ -190,12 +195,33 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela.
+$passageiro->getPassagem()->CheckIn();
+$passageiro->getPassagem()->PrintCartaoEmbarque();
 
 // Feito isto, simule a realização das viagens envolvidas.
+
+
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
+$datacliente2 = DateTime::createFromFormat("d/m/Y", "19/06/2023");
+$lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
+$viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
+// $cliente->EscolherAssentos($viagem_escolhida);
+$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["10E"], 1);
+
+try{
+    $passageiro->getPassagem()->CheckIn();
+}catch(Exception $e){
+    echo $e->getMessage();
+}
+
+
 // Logo após essa passagem deve ser cancelada. Os valores de ressarcimento devem ser
 // calculados e exibidos na tela.
+$passageiro->getPassagem()->CancelarPassagem();
+
+
 
 
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
+Log::ImprimirLogs();

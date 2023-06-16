@@ -70,14 +70,14 @@ class CartaodeEmbarque{
     public function setAssento ($assento){
         $this->_assento = $assento;
     }
-    public function PrintAll(){
-
-        echo $this->_nome . " " . $this->_sobrenome . "\n";
-        echo $this->_origemVoo . "\n";
-        echo $this->_destinoVoo . "\n";
-        echo $this->_horarioEmbarque->format("d M Y H:i:s") . "\n";
-        echo $this->_horarioChegada->format("d M Y H:i:s") . "\n";
-        echo $this->_assento . "\n";
-
+    public function show(){
+        echo"______________________________\n";
+        echo "Passageiro: ".$this->_nome . " " . $this->_sobrenome . "\n";
+        echo "Origem: ".$this->_origemVoo . "\n";
+        echo "Destino: ".$this->_destinoVoo . "\n";
+        echo "Horario do Embarque: ".$this->_horarioEmbarque->format("d/M/Y H:i:s") . "\n";
+        echo "Horario de chegada: ".$this->_horarioChegada->format("d/M/Y H:i:s") . "\n";
+        echo "Assento: ".$this->_assento . "\n";
+        echo"______________________________\n";
     }
 }

@@ -66,6 +66,9 @@ include_once "../global.php";
       public function ProgramaViagens(){
         $obj_antes = serialize($this);
         $data = new DateTime();
+        $aeronave = $this->_companhia->getAeronavesDisponiveis();
+        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível", "Verificação de aeronaves disponíveis da companhia ". $this->_companhia->getRazao());
+        $log->save();
 
         for($i=0;$i<30;$i++){
 
@@ -105,7 +108,7 @@ include_once "../global.php";
             $codigo = $letras . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
-            $aeronave = $this->_companhia->getAeronavesDisponiveis();
+            
             $viagem = new Viagem($data_partida,
                         $data_chegada,
                         $codigo,

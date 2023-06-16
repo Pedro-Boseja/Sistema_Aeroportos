@@ -39,6 +39,9 @@ class CompanhiaAerea extends persist{
 //Programa de Milhagem
     //Cadastrar nova categoria;
     public function CadastrarCategoria (string $nome, int $pnts) {
+        $mensagem = "Categoria ".$nome." Cadastrada com valor de ".$pnts;
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), $mensagem);
+        $log->save();
         $this->_programa_de_milhagem->setCategoria($nome, $pnts);
     }
     //Exclui uma categoria existente, com base no nome ou quantidade de pontos;
@@ -48,6 +51,11 @@ class CompanhiaAerea extends persist{
     //Cadastra o passageiro VIP no programa de milhagem;
     private function CadastrarPassageiroVip (Vip $passageiro){
         $this->_programa_de_milhagem->setPassageiro($passageiro);
+
+
+        $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." Adicionado ao programa de milhagem de ".$this->_razao_social;
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), $mensagem);
+        $log->save();
     }
   //Promove passageiro para VIP, e cadastra no programa de Milhagem;
     public function PromoverVIP (Passageiro $p_vip) {
@@ -56,6 +64,10 @@ class CompanhiaAerea extends persist{
       return $vip;
     }
 //Outros
+
+    public function getRazao(){
+        return $this->_razao_social;
+    }
     public function CadastrarComissario(Comissario $comissario){
         array_push($this->_comissarios, $comissario);
     }
@@ -71,8 +83,8 @@ class CompanhiaAerea extends persist{
     public function CadastrarAeronave(Aeronave $aeronave){
         $obj_antes = serialize($this);
         array_push($this->_aeronaves, $aeronave);
-        $mensagem ="Aeronave ". $aeronave->getRegistro()."Cadastrada em ".$this->_razao_social;
-        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this), "Aeronave Cadastrada");
+        $mensagem ="Aeronave ". $aeronave->getRegistro()." Cadastrada em ".$this->_razao_social;
+        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this), $mensagem);
         $log->save();
     }
     
@@ -157,7 +169,6 @@ class CompanhiaAerea extends persist{
 
     public function getAeronavesDisponiveis(){
         
-        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível", "Verificação de aeronaves disponíveis");
         return $this->_aeronaves[0];
 
     }

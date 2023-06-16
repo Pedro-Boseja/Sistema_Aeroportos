@@ -34,9 +34,11 @@ class Cliente extends persist{
       $viagens = Facade::SolicitarViagem($aero_s, $aero_c, $date, $qnt);
       $el = count($viagens);
 
+      echo"\nAs viagens Possíveis são: \n";
       try{
         count($viagens[0]);
         for($i = 0; $i < $el; $i++){
+          echo "_________________\n";
           echo "Viagem " . $i. "\n";
           $viagens[$i][0]->show();
           $viagens[$i][1]->show();
@@ -45,6 +47,7 @@ class Cliente extends persist{
 
       }catch(TypeError $e){
         for($i = 0; $i < $el; $i++){
+          echo "_________________\n";
           echo "Viagem " . $i. "\n";
           $viagens[$i]->show();
           echo "_________________\n";
@@ -91,13 +94,17 @@ class Cliente extends persist{
         $el = count($viagem);
         for($i = 0; $i<$el; $i++){
           $assentos = $viagem[$i]->getAssentosLivres();
-          echo "Viagem ".$i."\n";
+          if($i == 0){
+            echo "Assentos Primeira Viagem: \n";
+          }else{
+            echo "Assentos Segunda Viagem: \n";
+          }
           print_r($assentos);
           echo "_________________\n";
         }
 
       }catch(TypeError $e){
-        $assentos = $viagem[$i]->getAssentosLivres();
+        $assentos = $viagem->getAssentosLivres();
         print_r($assentos);
         echo "_________________\n";
       }
