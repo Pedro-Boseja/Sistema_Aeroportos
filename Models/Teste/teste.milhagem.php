@@ -42,4 +42,5 @@ $m = $azul->getMilhagem();
 $azul->CadastrarCategoria("vERDE", 100);
 $m->Upgrade($passageiro);
 echo $m->imprimeCategoria(200)."\n";
-echo $m->getPassageiros()."\n";
+echo $m->getCategoriaPassageiro($passageiro)."\n";
+

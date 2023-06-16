@@ -13,18 +13,22 @@ class ProgramaDeMilhagem{
         $log->save();
     } 
     //Pesquisa 
+    private function localizaChave(Vip $passageiro){
+      $chave = -1;
+      foreach ($this->_passageirosvip as $key => $value) {
+          if($value[0] == $passageiro){
+              $chave = $key;
+              break;
+          }
+      }
+      if($chave == -1){
+          throw new Exception("Passageiro não encontrado.");
+      }
+      return $chave;
+    }
     public function Upgrade (Vip $passageiro){
     //Realiza a recontagem de pontos de um passageiro e determina sua nova Categoria
-        $chave = -1;
-        foreach ($this->_passageirosvip as $key => $value) {
-            if($value[0] == $passageiro){
-                $chave = $key;
-                break;
-            }
-        }
-        if($chave == -1){
-            throw new Exception("Passageiro não encontrado.");
-        }
+        $chave = $this->localizaChave($passageiro);
         $this->_passageirosvip[$chave][1] = $this->getCategoria($passageiro->verificaPontos());
         $this->Downgrade(); //Atualização deve ser diária, mas nesse caso já serve
     }
@@ -47,7 +51,7 @@ class ProgramaDeMilhagem{
                 $p = $valor;
             }
         }
-        return $c;
+        return $this->_categorias[$c];
     }
     public function setCategoria(string $nome, int $pontos){
         $this->_categorias[$pontos]=$nome;
@@ -71,14 +75,15 @@ class ProgramaDeMilhagem{
     }
     public function setPassageiro(Vip $passageiro){
         array_push($this->_passageirosvip, array($passageiro,$this->getCategoria($passageiro->verificaPontos())));
+      //$this->_passageirosvip = $this->getCategoria($passageiro->verificaPontos());
     }
     public function getPassageiros(){
         return array_keys($this->_passageirosvip);
     }
     public function imprimeCategoria(int $pts){
-        return $this->_categorias[$this->getCategoria($pts)];
+        return $this->getCategoria($pts);
     }
     public function getCategoriaPassageiro(Vip $passageiro){
-        return $this->_passageirosvip[$passageiro];
+        return $this->_passageirosvip[$this->localizaChave($passageiro)][1];
     }
 }

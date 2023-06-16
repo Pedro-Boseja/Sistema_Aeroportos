@@ -22,6 +22,7 @@ include_once "../global.php";
 
             parent::__construct($passageiro->getCadastro(), $nascimento, $nacio, $email, $cpf);
         }
+      
 
         static public function getFilename() {
             return get_called_class()::$local_filename;

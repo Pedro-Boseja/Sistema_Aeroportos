@@ -21,7 +21,11 @@ class Cadastro extends persist{
         $log = new Log_escrita(new DateTime(), "Cadastro", "null", serialize($this), "Cadastro criado");
         $log->save();
     }
-
+  
+    public function __toString(){
+        return $this->_nome;
+    }
+  
     public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $email, string $numero_cpf){
         $this -> _data_nascimento = $data_nascimento;
         $this -> _nacionalidade = strtoupper($nacionalidade);

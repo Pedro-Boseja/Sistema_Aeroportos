@@ -24,7 +24,11 @@ class Passageiro extends persist{
   static public function getFilename() {
     return get_called_class()::$local_filename;
   }
-
+  
+  public function __toString(){
+        return $this->_cadastro->__toString();
+  }
+  
   public function addViagem(Viagem $viagem){
     array_push($_viagens, $viagem);
   }
