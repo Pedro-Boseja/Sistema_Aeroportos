@@ -72,7 +72,7 @@ try{
     echo $e->getMessage();
 }
 $plano1->createViagem("AD1329", new DateTime());
-
+/*
 
 
 // Cadastre dois voos diários de ida e volta, sendo um pela manhã e outro pela tarde, entre os aeroportos abaixo:
@@ -94,11 +94,11 @@ $data9 = Datetime::createFromFormat('H:i', "16:30");
 $cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 20, $azul);
 $cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 30, $azul);
 
-$cgh_cwb->ProgramaViagens();
+#$cgh_cwb->ProgramaViagens();
 
 $cnf_cgh->ProgramaViagens();
 //Passageiro
-// cria um cadastro inicial
+// cria um cadastro inicial*/
 $cadastro = new Cadastro(
     'João da Silva', // nome
     '12.244.876', //numero documento
@@ -112,19 +112,24 @@ $passageiro = new Passageiro(
     '666.666.666-66' // cpf
 );
 //Progrma de Milhagem
-$passageiro = $latam->PromoverVIP($passageiro);
-//$teste = new Vip($passageiro);
-//$passageiro = $teste;
-echo get_class($passageiro);
-$latam->CadastrarPassageiroVip($passageiro);
+$passageiro = $azul->PromoverVIP($passageiro);
+echo get_class($passageiro)."\n";
+$azul->CadastrarPassageiroVip($passageiro);
 
+echo $passageiro->verificaPontos()."\n";
+$passageiro->addPontos(200, DateTime::createFromFormat('d/m/Y', '19/06/2024'));
+echo $passageiro->verificaPontos();
 
-
+$m = $azul->getMilhagem();
+$azul->CadastrarCategoria("vERDE", 100);
+$m->Upgrade($passageiro);
+echo $m->imprimeCategoria(200);
+echo $m->getPassageiros();
 
 //Fim
 $data_partida = DateTime::createFromFormat('d/m/Y', '19/06/2023');
 
-try{
+/*try{
     $viagens = Facade::SolicitarViagem($confins, $congonhas, $data_partida, 2);
 }catch(Exception $e){
     echo $e->getMessage();
@@ -148,5 +153,15 @@ echo "________________________________________\n";
           echo "\n";
           echo "\n";
           
-        }//*/
+    }*//*
+    $cliente = new Cliente('João da Silva','12.244.876');
+    $viagens = $cliente->SolicitarViagem($confins, $congonhas, $data_partida, 2);
+    $cliente->ComprarPassagem($viagens[0], $passageiro, 1, 2);
+    //$viagens[0]->getCodigo();
+    #echo strval($passageiro->verificaPontos());
+    Facade::ComprarPassagem($cod,$passageiro,8, 1);
+    
+    //$viagens[0]->ViagemExecutada();
+    $passageiro->verificaPontos();*/
+
 

@@ -75,4 +75,10 @@ class ProgramaDeMilhagem{
     public function getPassageiros(){
         return array_keys($this->_passageirosvip);
     }
+    public function imprimeCategoria(int $pts){
+        return $this->_categorias[$this->getCategoria($pts)];
+    }
+    public function getCategoriaPassageiro(Vip $passageiro){
+        return $this->_passageirosvip[$passageiro];
+    }
 }

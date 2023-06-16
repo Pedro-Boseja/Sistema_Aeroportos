@@ -50,7 +50,7 @@ include_once "../global.php";
             $data_limite = new DateTime;
             $data_limite->setTimestamp( $now->getTimestamp() + $validade->getTimestamp());
             $ponto = [ $valor_ponto , $data_limite];
-            array_push($_pontos_milhagem, $ponto);
+            array_push($this->_pontos_milhagem, $ponto);
         }
 
         public function IsVIP () {

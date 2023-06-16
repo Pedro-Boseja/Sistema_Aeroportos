@@ -180,4 +180,7 @@ class CompanhiaAerea extends persist{
     public function getSigla(){
         return $this->_sigla;
     }
+    public function getMilhagem(){
+        return $this->_programa_de_milhagem;
+    }
 }

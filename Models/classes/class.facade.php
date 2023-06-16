@@ -154,7 +154,7 @@ class Facade{
 
     }
 
-    public static function GetViagensByCod($codigos = array()){
+    public static function GetViagensByCod($codigos){//codigos=array()
         $viagens = array();
         foreach($codigos as $cd){
            $v = Viagem::getRecordsByField("_codigo", $cd);
