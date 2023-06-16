@@ -45,8 +45,14 @@ class CompanhiaAerea extends persist{
         $this->_programa_de_milhagem->excluirCategoria($parametro);//pts ou nome da categoria
     }
     //Cadastra o passageiro VIP no programa de milhagem;
-    public function CadastrarPassageiroVip (Vip $passageiro){
+    private function CadastrarPassageiroVip (Vip $passageiro){
         $this->_programa_de_milhagem->setPassageiro($passageiro);
+    }
+  //Promove passageiro para VIP, e cadastra no programa de Milhagem;
+    public function PromoverVIP (Passageiro $p_vip) {
+      $vip = new Vip($p_vip);
+      $this->CadastrarPassageiroVip($vip);
+      return $vip;
     }
 //Outros
     public function CadastrarComissario(Comissario $comissario){
@@ -67,10 +73,6 @@ class CompanhiaAerea extends persist{
         $mensagem ="Aeronave ". $aeronave->getRegistro()."Cadastrada em ".$this->_razao_social;
         $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this), "Aeronave Cadastrada");
         $log->save();
-    }
-
-    public function PromoverVIP (Passageiro $p_vip) {
-        return new Vip($p_vip);
     }
     
     public function atualizaViagens(){
