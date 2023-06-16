@@ -8,7 +8,7 @@ class ProgramaDeMilhagem{
     private $_passageirosvip=array(); //array(Passageiro, categoria(string))
     public function __construct(){
         Usuario::ValidaLogado();
-        // $this->_categorias[0]="Sem Categoria";
+        $this->_categorias[0]="Sem Categoria";
         // $log = new Log_escrita(new DateTime(), "Programa de MIlhagem", "null", serialize($this), "Companhia criou um programa de milhagem");
         // $log->save();
     } 
@@ -51,7 +51,7 @@ class ProgramaDeMilhagem{
                 $p = $valor;
             }
         }
-        return $this->_categorias[$c];
+        return $p[1];
     }
     public function setCategoria(string $nome, int $pontos){
         $this->_categorias[$pontos]=$nome;
