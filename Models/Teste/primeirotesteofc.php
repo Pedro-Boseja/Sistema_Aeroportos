@@ -19,14 +19,14 @@ Usuario::Login("Hugo Boss", "1234");
 // • CNPJ: 11.222.333/4444-55
 // • Sigla: LA
 $latam = new CompanhiaAerea("Latam", 001, "11.222.333/4444-55", "Latam Airlines do Brasil S.A.", "LA", 300);
-
+$latam->save();
 // • Nome: Azul
 // • Código: 002
 // • Razão Social: Azul Linhas Aéreas Brasileiras S.A.
 // • CNPJ: 22.111.333/4444-55
 // • Sigla: AD
 $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD", 300);
-
+$latam->save();
 // Cadastre duas aeronaves 
 //modelo 175 
 // fabricante Embraer, 
@@ -129,23 +129,22 @@ $cliente = new Cliente("Enzo Magno", "02053702176");
 $cadPassageiro = new Cadastro("Enzoz Magico", "CPF");
 $nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
 $passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "enzo@magno.com", "02053702176");
-$vip = new Vip($passageiro);
+
 
 $azul->CadastrarCategoria("ouro", "1000");
 $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
-$azul->CadastrarPassageiroVip($vip);
+$azul->PromoverVIP($passageiro);
 
-$datacliente = DateTime::createFromFormat("d/m/Y", "12/06/2023");
+
+$datacliente = DateTime::createFromFormat("d/m/Y", "19/06/2023");
 
 $lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
-
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
-
 $cliente->EscolherAssentos($viagem_escolhida);
-
 $cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
 
+Log::ImprimirLogs();
 
 // Cadastre e planeje a tripulação que atuará na primeira viagem do vôo de ida do
 // passageiro.
@@ -156,16 +155,16 @@ $cad3 = new Cadastro("Dalton", "RG");
 $cad3 = new Cadastro("Erica", "RG");
 
 
-$piloto = new Piloto($cad1, "25/11/1982", "brasileiro", "jmaldade@gmail.com", 
+$piloto = new Piloto($cad1, DateTime::createFromFormat("d/m/Y","25/11/1982"), "brasileiro", "jmaldade@gmail.com", 
                         "RG", "Av. do Contorno", $azul, $confins, "000.000.070-67" );
 
-$copiloto = new Piloto($cad2, "03/04/1983", "brasileira", "malvadeza@gmail.com", 
+$copiloto = new Piloto($cad2, DateTime::createFromFormat("d/m/Y","03/04/1983"), "brasileira", "malvadeza@gmail.com", 
                         "RG", "Av. Antonio Carlos", $azul, $confins, "100.000.090-98" );
 
-$comissario1 = new Comissario($cad3, "21/04/1995", "brasileiro", "dtca@gmail.com", 
+$comissario1 = new Comissario($cad3, DateTime::createFromFormat("d/m/Y","21/04/1995"), "brasileiro", "dtca@gmail.com", 
                         "RG", "Alameda das Falcatas", $azul, $confins, "970.030.100-08" );
 
-$comissario2 = new Comissario($cad4, "15/09/1993", "brasileira", "ricare@gmail.com", 
+$comissario2 = new Comissario($cad4, DateTime::createFromFormat("d/m/Y","15/09/1993"), "brasileira", "ricare@gmail.com", 
                         "RG", "Rua João Fernandes", $azul, $confins, "088.430.000-79" );
 
 

@@ -6,7 +6,7 @@
 
       private DateTime $_data_s;
       private DateTime $_data_c;
-      private string $_codigo;
+      protected string $_codigo;
       private Aeroporto $_aeroporto_chegada;
       private Aeroporto $_aeroporto_saida;
       private DateInterval $_duracao;
@@ -15,10 +15,11 @@
       private int $_milhagem;
       private int $_multa = 100;
       private float $_tarifa = 1000.00;
+      private float $_franquia;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
-      private ?CompanhiaAerea $_companhia;
+      private string $_companhia;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -26,8 +27,9 @@
                                   string $codigo, 
                                   Aeroporto $aeroporto_saida,
                                   Aeroporto $aeroporto_chegada, 
-                                  CompanhiaAerea $comp = null,
+                                  string $comp,
                                   Aeronave $aeronave = null,
+                                  float $franquia,
                                   int $milhagem = 100,
                                   bool $execucao = false
                                   ) { 
@@ -43,6 +45,7 @@
         $this->_milhagem = $milhagem;
         $this->_companhia = $comp;
         $this->_aeronave = $aeronave;
+        $this->_franquia = $franquia;
       }
 
       static public function getFilename() {
@@ -50,6 +53,9 @@
         
       }
 
+      public function getFranquia(){
+        return $this->_franquia;
+      }
       public function getTarifa(){
         return $this->_tarifa;
       }
@@ -88,7 +94,9 @@
         $as_passagem = array($assento => $passageiro);
         $this->_assentos = array_replace($this->_assentos, $as_passagem);
         
-        $log = new Log_escrita(new DateTime(), "Viagem", "null", serialize($this), "Passagem Cadastrada na Viagem");
+        $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." cadastrado na viagem de ".
+                    $this->getAeroportoSaida()." para ".$this->getAeroportoChegada()." no assento ".$assento;
+        $log = new Log_escrita(new DateTime(), "Viagem", "null", serialize($this), $mensagem);
         $log->save();
       }
 
@@ -159,6 +167,9 @@
       
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
+
+        $log = new Log_leitura(new DateTime(), serialize($this), "Assentos", "informação de assentos da viagem lida");
+        $log->save();
 
         return $assentos_livres;
       }

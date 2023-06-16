@@ -67,8 +67,6 @@ class Aeronave extends persist{
   }
 
   public function getAssentos(){
-    $log = new Log_leitura(new DateTime, serialize($this), "Assentos", "informação assentos lida");
-    $log->save();
     return $this->_assentos;
   }
 

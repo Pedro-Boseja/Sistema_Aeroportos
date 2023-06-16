@@ -158,7 +158,7 @@ class Facade{
         $viagens = array();
         foreach($codigos as $cd){
            $v = Viagem::getRecordsByField("_codigo", $cd);
-           array_push($viagens, $v);
+           array_push($viagens, $v[0]);
         }
         return $viagens;
     }
@@ -170,6 +170,7 @@ class Facade{
         $passagem = new Passagem($passageiro, $qnt_franquias);
         for($i = 0; $i<count($viagens); $i++){
             $passagem->addViagem($viagens[$i], $assentos[$i]);
+            $viagens[$i]->addPassagem($assentos[$i], $passagem);
         }
         $passageiro->addPassagem($passagem);
     }

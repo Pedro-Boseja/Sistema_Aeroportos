@@ -116,10 +116,11 @@ class Passagem  {
       $this -> _tarifa = $tarifa;
     }
 
-    public function setValorFranquia($viagem) {
+    public function setValorFranquia(Viagem $viagem) {
         
         if (!$this->_passageiro->IsVIP()) {
-            $this->_valorfranquia += $this->_qtde_franquias*$viagem->getCompanhia()->getFranquia();
+        
+            $this->_valorfranquia += $this->_qtde_franquias*$viagem->getFranquia();
             //fazer tratamendo exceção cajo hajam mais de 3 franquias
         }
         else {
@@ -127,10 +128,10 @@ class Passagem  {
                 //$this->_valorfranquia += 0;
             }
             else if ($this->_qtde_franquias == 2) {
-                $this->_valorfranquia += $viagem->getCompanhia()->getFranquia()/2.0;
+                $this->_valorfranquia += $viagem->getFranquia()/2.0;
             }
             else if ($this->_qtde_franquias == 3) {
-                $this->_valorfranquia += $viagem->getCompanhia()->getFranquia();
+                $this->_valorfranquia += $viagem->getFranquia();
             }
             else {
                 //mudar para tratamento de exceção
@@ -152,7 +153,6 @@ class Passagem  {
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);
-
         $mensagem = "Viagem entre ".$viagem->getAeroportoSaida()." e ".$viagem->getAeroportoChegada()." adicionada a passagem do passageiro ". $this->_passageiro->getCadastro()->getNome();
         $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
         $log->save();

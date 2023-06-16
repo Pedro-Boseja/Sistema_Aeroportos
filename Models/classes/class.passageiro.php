@@ -18,7 +18,7 @@ class Passageiro extends persist{
                                   Usuario::ValidaLogado();
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
-    $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), "Passageiro ".$cadastro->getNome(). " Criado");
+    $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), "Passageiro ".$cadastro->getNome(). " Cadastrado");
     $log->save();
   }
   static public function getFilename() {

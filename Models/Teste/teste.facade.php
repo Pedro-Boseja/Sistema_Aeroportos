@@ -99,10 +99,10 @@ $cnf_cgh->ProgramaViagens();
 
 
 
-$data_partida = DateTime::createFromFormat('d/m/Y', '10/06/2023');
+$data_partida = DateTime::createFromFormat('d/m/Y', '20/06/2023');
 
 
-$viagens = Facade::SolicitarViagem($confins, $afonso, $data_partida, 2);
+$viagens = Facade::SolicitarViagem($confins, $afonso, $data_partida, 1);
 
 echo "________________________________________\n";
  foreach ($viagens[0] as $viagem){
@@ -112,12 +112,12 @@ echo "________________________________________\n";
           echo " -> \n";
           echo $viagem->getAeroportoSaida();
           echo ": ";
-          echo $viagem->getDataS()->format('m-d h:i');
+          echo $viagem->getDataS()->format('m-d H:i');
           echo "\n";
 
           echo $viagem->getAeroportoChegada();
           echo ": ";
-          echo $viagem->getDataC()->format('m-d h:i');
+          echo $viagem->getDataC()->format('m-d H:i');
           echo "\n";
           echo "\n";
           

@@ -39,8 +39,6 @@ include_once "../global.php";
         $this->_milhagem = $milhagem;
         $this->_companhia = $companhia;
         $this->_companhia->addPlanejamento($this);
-        $log = new Log_escrita(new DateTime(), "Planejamento", "null", serialize($this), "Planejamento criado");
-        $log->save();
       }
 
       //retorna a aeronave, veiculo e tripulação disponível da companhia aérea para criar viagens
@@ -113,12 +111,13 @@ include_once "../global.php";
                         $codigo,
                         $this->_ae_saida,
                         $this->_ae_chegada,
-                        $this->_companhia,
+                        $this->_companhia->getSigla(),
                         $aeronave,
+                        $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
             
-            $viagem->save();
+            // $viagem->save();
             array_push($this->_viagens_planejadas, $viagem);
           }
           
@@ -313,8 +312,9 @@ include_once "../global.php";
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,
-                        $this->_companhia,
+                        $this->_companhia->getSigla(),
                         $aeronave,
+                        $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
         $viagem->save();

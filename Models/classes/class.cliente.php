@@ -13,7 +13,7 @@ class Cliente extends persist{
     public function __construct(string $nome, string $documento) {
       Usuario::ValidaLogado();
       $this->_cadastro = new Cadastro($nome, $documento);
-      $log = new Log_escrita(new DateTime(), "Cliente", "null", serialize($this), "Cliente". $nome ."cadastrado");
+      $log = new Log_escrita(new DateTime(), "Cliente", "null", serialize($this), "Cliente ". $nome ." cadastrado");
       $log->save();
     }
   
@@ -31,7 +31,7 @@ class Cliente extends persist{
       $log = new Log_leitura(new DateTime(), "Cliente", "viagens", $mensagem);
       $log->save();
 
-      $viagens = Facade::SolicitarViagem($aero_c, $aero_s, $date, $qnt);
+      $viagens = Facade::SolicitarViagem($aero_s, $aero_c, $date, $qnt);
       $el = count($viagens);
 
       try{
@@ -55,10 +55,8 @@ class Cliente extends persist{
 
     }
 
-    public function EscolherViagem ($viagens = array(), int $numero_viagem){
+    public function EscolherViagem ($viagens, int $numero_viagem){
       Usuario::ValidaLogado();
-
-      
 
       $escolhidas = array();
       try{
@@ -69,7 +67,7 @@ class Cliente extends persist{
         $v1 = $viagens[$numero_viagem][0];
         $v2 = $viagens[$numero_viagem][1];
 
-        $mensagem = "Viagens ".$v1->getCodigo(). " e ".$v2->getCodigo() . "Escolhidas";
+        $mensagem = "Viagens ".$v1->getCodigo(). " e ".$v2->getCodigo() . " Escolhidas";
         $log = new Log_leitura(new DateTime(), "Cliente", "viagens", $mensagem);
         $log->save();
         return $escolhidas;
@@ -106,11 +104,11 @@ class Cliente extends persist{
     }
 
 
-    public function ComprarPassagem ($viagem, Passageiro $passageiro, $assentos = array(), int $qnt_franquias) {
+    public function ComprarPassagem ($viagem, Passageiro $passageiro, $assentos, int $qnt_franquias) {
   
       Usuario::ValidaLogado();
 
-      $log = new Log_leitura(new DateTime(), "Cliente", "viagens", "Viagens Compradas");
+      $log = new Log_leitura(new DateTime(), "Cliente", "viagens", "Viagens Escolhidas Foram Compradas");
       $log->save();
       $codigos = array();
       

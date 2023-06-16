@@ -16,7 +16,7 @@ class Log extends persist{
         Usuario::ValidaLogado();
         $this->_data_hora = $data;
         $this->_usuario = Usuario::getLogado();
-        $this->_mensagem = "User: ". $this->_usuario->getLogin().". " . $mensagem;
+        $this->_mensagem = "User: ". $this->_usuario->getLogin().", em " .$data->format("d/m/Y H:i:s "). "=>".$mensagem;
     }
 
     static public function getFilename(){
@@ -29,7 +29,12 @@ class Log extends persist{
     }
 
     static public function ImprimirLogs(){
-        
+        $logs = Log::getRecords();
+
+        foreach($logs as $l){
+            echo $l->getMessage()."\n";
+        }
+
     }
     
 

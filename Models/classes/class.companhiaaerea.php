@@ -4,11 +4,12 @@ include_once "../global.php";
 
 
 class CompanhiaAerea extends persist{
-    private string $_nome;
-    private int $_codigo;
+    protected string $_nome;
+    protected int $_codigo;
     private string $_cnpj;
     private string $_razao_social;
-    private string $_sigla;
+    protected
+    string $_sigla;
     private $_planejamentos = array();
     private $_aeronaves = array();
     private float $_franquia;
@@ -85,7 +86,8 @@ class CompanhiaAerea extends persist{
         $obj_antes = serialize($this);
         $plan->setCompanhia($this);
         array_push($this->_planejamentos, $plan);
-        $mensagem = "Planejamento entre ".$plan->getAeroportoS()." e ".$plan->getAeroportoC(). " adicionado";
+        $mensagem = "Planejamento entre ".$plan->getAeroportoS()." e ".$plan->getAeroportoC(). " adicionado a ".
+        $this->_razao_social;
         $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this), $mensagem);
         $log->save();
     }
