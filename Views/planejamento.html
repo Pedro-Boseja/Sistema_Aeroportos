@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastrar Veículo</title>
+  <title>Cadastrar Planejamento</title>
 
   <!--<link href="Views/style.css" type="text/css" rel="stylesheet">-->
 
@@ -16,16 +16,14 @@
   <label>Preencha os dados abaixo:</label><br><br>
   
     <form action="../Controllers/planejamento.php" method="get">
-        <label>Viagens Planejadas: </label><br>
-        <label>Viagens Executadas: </label><br>
-        <label>Frequência: </label><br>
+        <label>Frequência: </label><input name="frequencia" type="text"></input><br>
         <label>Código: </label><input name="codigo" type="text"></input><br>
-        <label>Aeroporto de Chegada: </label><br>
-        <label>Aeroporto de Saída: </label><br>
-        <label>Horário de Chegada: </label><input name="chegada" type="date"></input><br>
-        <label>Horário de Saída: </label><input name="saida" type="date"></input><br>
-        <label>Companhia Aérea: </label><br>
+        <label>Aeroporto de Chegada (sigla): </label><input name="ac" type="text"></input><br>
+        <label>Aeroporto de Saída (sigla): </label><input name="as" type="text"></input><br>
+        <label>Horário de Chegada: </label><input name="chegada" type="time"></input><br>
+        <label>Horário de Saída: </label><input name="saida" type="time"></input><br>
         <label>Milhagem: </label><input name="milhagem" type="text"></input><br>
+        <label>Companhia Aérea: </label><input name="companhia" type="text"></input><br>
     <br><button>Enviar</button><br><br>
     </form>
 

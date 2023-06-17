@@ -22,9 +22,13 @@
 
         $aeronave=null;
         
-        $comps = CompanhiaAerea::getRecordsByField("_nome", $companhia);
+        //$comps = CompanhiaAerea::getRecordsByField("_nome", $companhia);
 
         try{
+          $comps = CompanhiaAerea::getRecordsByField("_nome", $companhia);
+          if($comps == null){
+            throw new Exception("Companhia inválida.");
+          }
           $aeronave = new Aeronave($fabricante, $modelo, $registro, $cap_p, $cap_c, 6, 30);
           $comps[0]->CadastrarAeronave($aeronave);
           $comps[0]->save();
