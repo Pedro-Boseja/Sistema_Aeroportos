@@ -246,7 +246,7 @@ include_once "../global.php";
 
           //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
           foreach($passageiros_voo as $p){
-
+            
             foreach($passageiros_milhagem as $m){
 
               //Verificação se faz parte;

@@ -148,10 +148,6 @@ $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
 $cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
 
-$viagens = $passageiro->getPassagem()->getViagens();
-$v = $viagens[0];
-
-
 //Logando com Outro Usuário:
 Usuario::Sair();
 Usuario::Login("Enzo Magico", "696969");
@@ -199,11 +195,10 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 // ser exibidos.
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
-// tela.
+// tela. Feito isto, simule a realização das viagens envolvidas.
 $passageiro->getPassagem()->CheckIn();
 $passageiro->getPassagem()->PrintCartaoEmbarque();
-
-// Feito isto, simule a realização das viagens envolvidas.
+$passageiro->getPassagem()->ExecutarViagens();
 
 
 

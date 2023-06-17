@@ -35,45 +35,15 @@ class Passagem  {
         $log->save();
     }
     public function ExecutarViagens(){
+        $this->_passageiro->Embarcar();
+
         foreach($this->_viagens as $v){
             if(!in_array(EnumStatus::Checkin_realizado, $this->_status)){
                 $v->ViagemExecutada(false);
             }else{
                 $v->ViagemExecutada(true);
             }
-          //$companhia = CompanhiaAerea::getRecordsByField('_sigla', $v->getCompanhia());
-          //$milhagem = end($companhia)->getMilhagem();
-         // $passageiros_milhagem = $milhagem->getPassageiros();
-          
-        //  $passageiros_voo = $v->getPassageiros();
-  
-          //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
-          //print_r($passageiros_voo);
-          //print_r($passageiros_milhagem);
-          /*foreach($passageiros_voo as $p){
-            echo "Passageiros da Viagem"."\n";
-            foreach($passageiros_milhagem as $m){
-              echo "Passageiros Milhagem\n";
-              $pc = $p->getCadastro();
-              $mc = $m->getCadastro();
-              print($pc);
-              print($mc);
-              //echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
-              //Verificação se faz parte;
-              echo $m->getNome();
-              echo $p->getNome();
-              if($p->getNome() == $m->getNome()){
-                echo "Encontrado\n";
-                //Adicionar Pontos
-                $m->addPontos($v->getMilhagem());
-  
-                //Upgrade de passageito;
-                $milhagem->Upgrade($m);
-              
-              }
-            }
-            
-          }*/
+         
         }
     }
     public function CheckIn () {
