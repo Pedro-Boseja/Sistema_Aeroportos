@@ -210,7 +210,7 @@ $viagens = $passageiro->getPassagem()->getViagens();*/
 // echo $passageiro->verificaPontos();
 echo $passageiro->verificaPontos();
 $pass = $passageiro->getPassagem();
-$pass->ExecutarViagens();
+$pass->ExecutarViagens($azul->getMilhagem());
 echo $passageiro->verificaPontos();
 
 

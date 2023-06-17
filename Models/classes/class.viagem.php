@@ -256,7 +256,7 @@ include_once "../global.php";
                 $m->addPontos($this->_milhagem);
   
                 //Upgrade de passageito;
-                $milhagem->Upgrade($m);
+                $milhagem->Upgrade($p);
               
               }
             }
