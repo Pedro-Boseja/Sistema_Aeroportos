@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar Planejamento</title>
+
+  <!--<link href="Views/style.css" type="text/css" rel="stylesheet">-->
+
+</head>
+
+<body>
+  <h1>Registar Planejamento</h1>
+  
+  <label>Preencha os dados abaixo:</label><br><br>
+  
+    <form action="../Controllers/planejamento.php" method="get">
+        <label>Frequência: </label><input name="frequencia" type="text"></input><br>
+        <label>Código: </label><input name="codigo" type="text"></input><br>
+        <label>Aeroporto de Chegada (sigla): </label><input name="ac" type="text"></input><br>
+        <label>Aeroporto de Saída (sigla): </label><input name="as" type="text"></input><br>
+        <label>Horário de Chegada: </label><input name="chegada" type="time"></input><br>
+        <label>Horário de Saída: </label><input name="saida" type="time"></input><br>
+        <label>Milhagem: </label><input name="milhagem" type="text"></input><br>
+        <label>Companhia Aérea: </label><input name="companhia" type="text"></input><br>
+    <br><button>Enviar</button><br><br>
+    </form>
+
+    <form action="sistema.html" method="get">
+        <button>Voltar</button>
+    </form>
+  
+</body>

@@ -1,5 +1,5 @@
 <?php
-include_once "../global.php";
+include_once "../Models/global.php";
 
     class Usuario extends persist{
         protected string $_login;
@@ -30,9 +30,9 @@ include_once "../global.php";
             if($temp == null){
                 $user = new Usuario($login, $senha, $email);
                 $user->save();
-                echo "Usuário ".$login." registrado com sucesso\n";
+                echo "Usuário ".$login." registrado com sucesso.\n";
             }else{
-                throw new Exception("Usuário já cadastrado\n");
+                throw new Exception("Usuário já cadastrado.\n");
             }
             
             $mensagem = "Usuário ".$login." Registrado";
@@ -41,11 +41,11 @@ include_once "../global.php";
         }
         static public function Login ($login, $senha){
             if(Usuario::$logado != null){
-                throw new Exception("Já existe um usuario logado\n");
+                throw new Exception("Já existe um usuario logado.\n");
             }
             $temp = Usuario::getRecordsByField("_login", $login);
             if($temp == null){
-                throw new Exception("Usuário não encontrado\n");
+                throw new Exception("Usuário não encontrado.\n");
             }
             if($temp[0]->getSenha() == $senha){
                 // $this->setLogado();
@@ -53,9 +53,11 @@ include_once "../global.php";
                 // $this->_senha = $temp[0]->getSenha();
                 // $this->_email = $temp[0]->getEmail();
                 Usuario::$logado = $temp[0];
-                echo "Usuário ".$login." logado com sucesso\n";
+                echo "Usuário ".$login." logado com sucesso.\n";
+                $log = new Log_leitura(new DateTime(), "usuario", "logado");
+                $log->save();
             }else{
-                throw new Exception("Senha Incorreta\n");
+                throw new Exception("Senha Incorreta.\n");
             }
             
         }
@@ -75,7 +77,7 @@ include_once "../global.php";
 
         static public function ValidaLogado(){
             if(Usuario::$logado == null){
-                throw new Exception("Não há usuario logado\n");
+                throw new Exception("Não há usuario logado.\n");
             }
         }
 

@@ -47,7 +47,7 @@ $aviao1 = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 10);
 $latam->CadastrarAeronave($aviao1);
 
 // a segunda à Azul.
-$aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 10);
+$aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 30);
 $azul->CadastrarAeronave($aviao2);
 
 // Cadastre os aeroportos de Confins, Guarulhos, Congonhas, Galeão e Afonso Pena. Os dados desse aeroporto podem ser encontrados na internet.

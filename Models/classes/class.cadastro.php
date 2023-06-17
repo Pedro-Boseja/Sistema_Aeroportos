@@ -1,10 +1,10 @@
 <?php
-include_once "../global.php";
+include_once "../Models/global.php";
 
 
 class Cadastro extends persist{
     private string $_nome;
-    private $_documento = array("RG" => "doc1", "PASSAPORTE" => "doc2", "CHT" => "doc3");
+    private $_documento = array("RG" => "", "PASSAPORTE" => "", "CHT" => "");
     private string $_nacionalidade = "VAZIO";
     private string $_numero_cpf = "VAZIO";
     private DateTime $_data_nascimento;
