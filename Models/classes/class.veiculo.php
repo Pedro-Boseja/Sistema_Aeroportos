@@ -89,7 +89,7 @@ include_once "../global.php";
             //$n = count($endereços);
             //echo "endereços: " . $n . "\n";
 
-            $aeroporto_saida = $viagem->getAeroportoSaida();
+            $aeroporto_saida = $viagem->getAeroportoSaida1();
           
             $endereco_aeroporto = sprintf('%s, %s, %s', $aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
             //echo "endereço aero: " . $endereco_aeroporto . "\n";

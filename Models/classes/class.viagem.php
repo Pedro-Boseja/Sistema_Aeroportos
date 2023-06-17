@@ -145,6 +145,10 @@ include_once "../global.php";
         return $this->_aeroporto_saida->getSigla();
       }
 
+      public function getAeroportoSaida1 () {
+        return $this->_aeroporto_saida;
+      }
+
       public function getDuracao () {
         return $this->_duracao;
       }
