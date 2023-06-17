@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar Tripulante</title>
+
+  <!--<link href="Views/style.css" type="text/css" rel="stylesheet">-->
+
+</head>
+
+<body>
+  <h1>Registar Tripulante</h1>
+  
+  <label>Preencha os dados abaixo:</label><br><br>
+  
+  <form action="../Controllers/tripulante.php" method="get">
+    <label>Nome Completo: </label><input name="nome" type="text"></input><br>
+    <label>Documento (RG ou Passaporte): </label><input name="documento" type="text"></input><br>
+    <label>Data de Nascimento: </label><input name="data" type="date"></input><br>
+    <label>Nacionalidade: </label><input name="nacionalidade" type="text"></input><br>
+    <label>CPF: </label><input name="cpf" type="text"></input><br>
+    <label>E-mail: </label><input name="email" type="text"></input><br>
+    <label>CHT: </label><input name="nome" type="text"></input><br>
+    <label>Endereço: </label><input name="endereco" type="text"></input><br>
+    <label>Aeroporto:</label><br>
+    <label>Companhia Aérea:</label><br>
+    <label>Viagens Planejadas:</label><br>
+    <br><button>Enviar</button>
+  </form>
+
+  <form action="sistema.html" method="get">
+    <button>Voltar</button>
+  </form>
+  
+</body>

@@ -4,7 +4,7 @@ include_once "../global.php";
 
 class Cadastro extends persist{
     private string $_nome;
-    private $_documento = array("RG" => "doc1", "PASSAPORTE" => "doc2", "CHT" => "doc3");
+    private $_documento = array("RG" => "", "PASSAPORTE" => "", "CHT" => "");
     private string $_nacionalidade = "VAZIO";
     private string $_numero_cpf = "VAZIO";
     private DateTime $_data_nascimento;
@@ -18,8 +18,14 @@ class Cadastro extends persist{
         $this -> _nome = $nome;
         $this -> SetDocumento($documento);
         $this->_data_nascimento = new DateTime('0002-02-02');
+        $log = new Log_escrita(new DateTime(), "Cadastro", "null", serialize($this), "Cadastro criado");
+        $log->save();
     }
-
+  
+    public function __toString(){
+        return $this->_nome;
+    }
+  
     public function fillPassageiro(DateTime $data_nascimento, string $nacionalidade, string $email, string $numero_cpf){
         $this -> _data_nascimento = $data_nascimento;
         $this -> _nacionalidade = strtoupper($nacionalidade);

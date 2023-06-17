@@ -26,7 +26,7 @@ $latam->save();
 // • CNPJ: 22.111.333/4444-55
 // • Sigla: AD
 $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD", 300);
-$latam->save();
+$azul->save();
 // Cadastre duas aeronaves 
 //modelo 175 
 // fabricante Embraer, 
@@ -47,7 +47,7 @@ $aviao1 = new Aeronave('Embraer', '175', 'PP-RUZ', 180, 600, 6, 10);
 $latam->CadastrarAeronave($aviao1);
 
 // a segunda à Azul.
-$aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 30);
+$aviao2 = new Aeronave('Azul', '175', 'PP-RUZ', 180, 600, 6, 10);
 $azul->CadastrarAeronave($aviao2);
 
 // Cadastre os aeroportos de Confins, Guarulhos, Congonhas, Galeão e Afonso Pena. Os dados desse aeroporto podem ser encontrados na internet.
@@ -117,7 +117,6 @@ $cgh_cwb->ProgramaViagens();
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 300, $azul);
 $cwb_cgh->ProgramaViagens();
 
-//afonso pena - confins
 $cbw_cnf = new PLanejamento($freq, "CWB-CNF",$afonso,$confins, $data7, $data5, 300, $latam);
 $cbw_cnf->ProgramaViagens();
 
@@ -135,11 +134,11 @@ $nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
 $passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "ramo@magno.com", "12314525877");
 
 
-$azul->CadastrarCategoria("ouro", "1000");
+$azul->CadastrarCategoria("ouro", "100");
 $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
-$azul->PromoverVIP($passageiro);
-$azul->save();
+$passageiro= $azul->PromoverVIP($passageiro);
+
 
 $datacliente = DateTime::createFromFormat("d/m/Y", "19/06/2023");
 
@@ -183,8 +182,6 @@ $azul->CadastrarPiloto($copiloto);
 $azul->CadastrarComissario($comissario1);
 $azul->CadastrarComissario($comissario2);
 
-$viagem_escolhida[0]->setAeronave($aviao2);
-$viagem_escolhida[1]->setAeronave($aviao2);
 
 $viagem_escolhida[0]->AddTripulaçao($tripulacao);
 $viagem_escolhida[1]->AddTripulaçao($tripulacao);
@@ -195,32 +192,35 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 // ser exibidos.
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
-// tela. Feito isto, simule a realização das viagens envolvidas.
+// tela.
 $passageiro->getPassagem()->CheckIn();
-$passageiro->getPassagem()->PrintCartaoEmbarque();
-$passageiro->getPassagem()->ExecutarViagens();
+//$passageiro->getPassagem()->PrintCartaoEmbarque();
+$viagens = $passageiro->getPassagem()->getViagens();
 
 
 
-// Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
-// dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "25/06/2023");
-$lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
-$viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
-// $cliente->EscolherAssentos($viagem_escolhida);
-$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["10E"], 1);
+// echo $passageiro->verificaPontos();
+// $assentos = $viagem_escolhida[0]->getPassageiros();
+// print_r($assentos);
+// //$azul->executaViagem($viagem_escolhida[0]);
+// //$azul->executaViagem($viagem_escolhida[1]);
+// echo $passageiro->verificaPontos();
+$pmil = $azul->getMilhagem();
+echo $passageiro->verificaPontos()." - " .$pmil->getCategoriaPassageiro($passageiro)."\n";
+$pass = $passageiro->getPassagem();
+$pass->ExecutarViagens();
+$pmil->UpgradeAll();
+echo $passageiro->verificaPontos()." - " .$pmil->getCategoriaPassageiro($passageiro)."\n";
 
-try{
-    $passageiro->getPassagem()->CheckIn();
-}catch(Exception $e){
-    echo $e->getMessage();
-}
+
 
 
 // Logo após essa passagem deve ser cancelada. Os valores de ressarcimento devem ser
 // calculados e exibidos na tela.
-$passageiro->getPassagem()->CancelarPassagem();
+//$passageiro->getPassagem()->CancelarPassagem();
+
+
 
 
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
-Log::ImprimirLogs();
+//Log::ImprimirLogs();

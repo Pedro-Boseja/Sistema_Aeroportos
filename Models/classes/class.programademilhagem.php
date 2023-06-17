@@ -9,22 +9,33 @@ class ProgramaDeMilhagem{
     public function __construct(){
         Usuario::ValidaLogado();
         $this->_categorias[0]="Sem Categoria";
+        // $log = new Log_escrita(new DateTime(), "Programa de MIlhagem", "null", serialize($this), "Companhia criou um programa de milhagem");
+        // $log->save();
     } 
     //Pesquisa 
+    private function localizaChave(Vip $passageiro){
+      $chave = -1;
+      foreach ($this->_passageirosvip as $key => $value) {
+          if($value[0]->getNome() == $passageiro->getNome()){
+              $chave = $key;
+              break;
+          }
+      }
+      if($chave == -1){
+          throw new Exception("Passageiro não encontrado.");
+      }
+      return $chave;
+    }
     public function Upgrade (Vip $passageiro){
     //Realiza a recontagem de pontos de um passageiro e determina sua nova Categoria
-        $chave = -1;
-        foreach ($this->_passageirosvip as $key => $value) {
-            if($value[0] == $passageiro){
-                $chave = $key;
-                break;
-            }
-        }
-        if($chave == -1){
-            throw new Exception("Passageiro não encontrado.");
-        }
+        $chave = $this->localizaChave($passageiro);
         $this->_passageirosvip[$chave][1] = $this->getCategoria($passageiro->verificaPontos());
         $this->Downgrade(); //Atualização deve ser diária, mas nesse caso já serve
+    }
+    public function UpgradeAll (){
+        foreach($this->getPassageiros() as $p){
+            $this->Upgrade($p);
+        }
     }
     public function Downgrade(){
     //Realiza a atualização dos pontos de todos funcionários. (Deve ser execultada diariamente)
@@ -37,7 +48,7 @@ class ProgramaDeMilhagem{
     }
     public function getCategoria(int $pontos){
         //Encontra a classe abaixo da pontuação, para os pontos como chave.
-        $c=''; //categoria (valor)
+        $c=0; //categoria (valor)
         $p=0; //pontuação (chave)
         foreach ($this->_categorias as $chave => $valor) {
             if($chave<=$pontos && $chave<=$p){
@@ -45,7 +56,7 @@ class ProgramaDeMilhagem{
                 $p = $valor;
             }
         }
-        return $c;
+        return $p;
     }
     public function setCategoria(string $nome, int $pontos){
         $this->_categorias[$pontos]=$nome;
@@ -69,8 +80,20 @@ class ProgramaDeMilhagem{
     }
     public function setPassageiro(Vip $passageiro){
         array_push($this->_passageirosvip, array($passageiro,$this->getCategoria($passageiro->verificaPontos())));
+      //$this->_passageirosvip = $this->getCategoria($passageiro->verificaPontos());
     }
     public function getPassageiros(){
-        return array_keys($this->_passageirosvip);
+        $retorno = array();
+        $passageiros = array_values($this->_passageirosvip);
+        foreach($passageiros as $p){
+            array_push($retorno, $p[0]);
+        }
+        return $retorno;
+    }
+    public function imprimeCategoria(int $pts){
+        return $this->getCategoria($pts);
+    }
+    public function getCategoriaPassageiro(Vip $passageiro){
+        return $this->_passageirosvip[$this->localizaChave($passageiro)][1];
     }
 }

@@ -14,6 +14,9 @@ class CartaodeEmbarque{
 
     public function __construct($nome, $sobrenome, $origemVoo, $destinoVoo, $horarioEmbarque, $horarioChegada, $assento){
         Usuario::ValidaLogado();
+        if($horarioEmbarque->getTimestamp() > $horarioChegada->getTimestamp()){
+            throw new Exception("Horários escolhidos inválidos\n");
+        }
         $this->_nome = $nome;
         $this->_sobrenome = $sobrenome;
         $this->_origemVoo = $origemVoo;
@@ -21,6 +24,8 @@ class CartaodeEmbarque{
         $this->_horarioEmbarque = $horarioEmbarque;
         $this->_horarioChegada = $horarioChegada;
         $this->_assento = $assento;
+        $log = new Log_escrita(new DateTime(), "Cartao de Embarque", "null", serialize($this), "Cartão de embarque criado");
+        $log->save();
     }
 
     public function getNome (){
@@ -64,5 +69,15 @@ class CartaodeEmbarque{
     }
     public function setAssento ($assento){
         $this->_assento = $assento;
+    }
+    public function show(){
+        echo"______________________________\n";
+        echo "Passageiro: ".$this->_nome . " " . $this->_sobrenome . "\n";
+        echo "Origem: ".$this->_origemVoo . "\n";
+        echo "Destino: ".$this->_destinoVoo . "\n";
+        echo "Horario do Embarque: ".$this->_horarioEmbarque->format("d/M/Y H:i:s") . "\n";
+        echo "Horario de chegada: ".$this->_horarioChegada->format("d/M/Y H:i:s") . "\n";
+        echo "Assento: ".$this->_assento . "\n";
+        echo"______________________________\n";
     }
 }

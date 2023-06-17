@@ -1,12 +1,12 @@
 <?php
- include_once "../global.php";
+include_once "../global.php";
 
 
   class Viagem extends persist{
 
       private DateTime $_data_s;
       private DateTime $_data_c;
-      private string $_codigo;
+      protected string $_codigo;
       private Aeroporto $_aeroporto_chegada;
       private Aeroporto $_aeroporto_saida;
       private DateInterval $_duracao;
@@ -15,10 +15,12 @@
       private int $_milhagem;
       private int $_multa = 100;
       private float $_tarifa = 1000.00;
+      private float $_franquia;
       private $_tripulantes = array();
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
-      private ?CompanhiaAerea $_companhia;
+      private string $_companhia;
+      //private string $_codigo_plan;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -26,9 +28,10 @@
                                   string $codigo, 
                                   Aeroporto $aeroporto_saida,
                                   Aeroporto $aeroporto_chegada, 
-                                  CompanhiaAerea $comp = null,
+                                  string $comp,
                                   Aeronave $aeronave = null,
-                                  int $milhagem = 0,
+                                  float $franquia,
+                                  int $milhagem = 100,
                                   bool $execucao = false
                                   ) { 
 
@@ -43,13 +46,22 @@
         $this->_milhagem = $milhagem;
         $this->_companhia = $comp;
         $this->_aeronave = $aeronave;
+        $this->_franquia = $franquia;
       }
 
       static public function getFilename() {
         return get_called_class()::$local_filename;
         
       }
-
+      /*public function getCodigoPlan(){
+        return $this->_codigo_plan;
+      }
+      public function setCodigoPlan(string $plan){
+        $this->_codigo_plan = $plan;
+      }*/
+      public function getFranquia(){
+        return $this->_franquia;
+      }
       public function getTarifa(){
         return $this->_tarifa;
       }
@@ -60,14 +72,15 @@
       }
 
       public function Show(){
-          echo $this->getCodigo();
-          echo " -> \n";
-          echo $this->getAeroportoSaida();
+          
+          echo "Código: ".$this->getCodigo();
+          echo " ==> \n";
+          echo "Aeroporto de Saída: ".$this->getAeroportoSaida();
           echo ": ";
           echo $this->getDataS()->format('d-m H:i');
           echo "\n";
 
-          echo $this->getAeroportoChegada();
+          echo "Aeroporto de Chegada: ".$this->getAeroportoChegada();
           echo ": ";
           echo $this->getDataC()->format('d-m H:i');
           echo "\n";
@@ -81,20 +94,29 @@
             unset($this->_assentos[$key]);
           }
         }
+        $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." cancelado na viagem de ".
+        $this->getAeroportoSaida() ." até ". $this->getAeroportoChegada();
+        $log = new Log_escrita(new DateTime(), "Viagem", "null", serialize($this), $mensagem);
+        $log->save();
+
+
       }
 
       public function addPassagem (string $assento, Passagem $passagem) {
+        // echo "Entrou add Passagem";
         $passageiro = $passagem->getPassageiro();
-        $as_passagem = array($assento => $passageiro);
-        $this->_assentos = array_replace($this->_assentos, $as_passagem);
+        // $as_passagem = array($assento => $passageiro);
+        // $this->_assentos = array_replace($this->_assentos, $as_passagem);
+        $this->_assentos[$assento]=$passageiro;
+        
+        $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." cadastrado na viagem de ".
+                    $this->getAeroportoSaida()." para ".$this->getAeroportoChegada()." no assento ".$assento;
+        $log = new Log_escrita(new DateTime(), "Viagem", "null", serialize($this), $mensagem);
+        $log->save();
       }
 
       public function getPassageiros(){
-        $passageiros = array();
-        foreach($this->_assentos as $a){
-          array_push($passageiros, $a);
-        }
-        return $passageiros;
+        return $this->_assentos;
       }
 
       public function getDataS() {
@@ -114,13 +136,13 @@
       }
 
       public function getAeroportoChegada () {
-        return $this->_aeroporto_chegada; 
-        //return $this->_aeroporto_chegada->getSigla();
+        // return $this->_aeroporto_chegada; 
+        return $this->_aeroporto_chegada->getSigla();
       }
 
       public function getAeroportoSaida () {
-        return $this->_aeroporto_saida;
-        //return $this->_aeroporto_saida->getSigla();
+        // return $this->_aeroporto_saida;
+        return $this->_aeroporto_saida->getSigla();
       }
 
       public function getDuracao () {
@@ -153,12 +175,14 @@
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-        
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
+
+        $log = new Log_leitura(new DateTime(), serialize($this), "Assentos", "informação de assentos da viagem lida");
+        $log->save();
+
         return $assentos_livres;
       }
-
       
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
       // public function TrocarAeronave(Aeronave $aeronave){
@@ -167,14 +191,9 @@
       // }
 
       public function AddTripulaçao($tripulacao){
-
-        foreach($tripulacao as $tripulante){
-
-          if(!$tripulante->isAvailable($this)){
-            return false;
-          }
-
-        }
+        $mensagem ="Tripulação Adicionada a viagem";
+        $log = new Log_escrita(new DateTime(), "companhia aerea", "Null", serialize($this), $mensagem);
+        $log->save();
 
         foreach($tripulacao as $tripulante){
 
@@ -194,7 +213,7 @@
         $this->_data_c = $dataC;
         $this->_duracao = $dataC->diff($dataS);
       }
-
+      
       public function setAeroportoSaida(Aeroporto $aeroportoS){
         $this->_aeroporto_saida = $aeroportoS;
       }
@@ -204,26 +223,45 @@
       }
 
       public function setAeronave(Aeronave $aeronave){
+        $mensagem ="Aeronave ". $aeronave->getRegistro()." Confirmada na viagem";
+        $log = new Log_escrita(new DateTime(), "companhia aerea", "Null", serialize($this), $mensagem);
+        $log->save();
         $this->_aeronave = $aeronave;
+        $this->save();
       }
-      public function ViagemExecutada(){
+      public function ViagemExecutada( $is){
+        //Execução da Viagem
         $this->_executado = true;
-        //Verificação de Clientes VIP para contabilizar programa de milhagem.
-        $passageiros = $$this->_companhia->_milhagem->getPassageiros();
-        foreach($this->getPassageiros() as $p){
+        $this->ContabilizaPontos($is);
+   
+      }
+      private function ContabilizaPontos($is){
+        if($is){
+        //Dados.
+          $companhia = CompanhiaAerea::getRecordsByField('_sigla', $this->_companhia);
+          $milhagem = end($companhia)->getMilhagem();
+          $passageiros_milhagem = $milhagem->getPassageiros();
 
-          //if($p->IsVIP()){ // Apenas para não ser necessário fazer a verificação completa em não VIPs
+          $passageiros_voo = $this->getPassageiros();
 
-            if(in_array($p->_cadastro, $passageiros->_cadastro)){//Verifica se está presente no array de passageiros VIP (Desnecessário, mas evita lançar excessão)
+          //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
+          foreach($passageiros_voo as $p){
+            
+            foreach($passageiros_milhagem as $m){
 
-              $passageiros = $$this->_companhia->_milhagem->Upgrade($p);
+              //Verificação se faz parte;
+              if($p->getNome() == $m->getNome()){
 
+                //Adicionar Pontos
+                $p->addPontos($this->_milhagem);
+                echo "Foram adicionados ".$this->_milhagem." pontos de milhagem para o passageiro ".$p->getNome()."\n";
+
+              }
             }
-
-          //}
-
+          }
         }
       }
+
       public function getMulta(){
         return $this->_multa;
       }

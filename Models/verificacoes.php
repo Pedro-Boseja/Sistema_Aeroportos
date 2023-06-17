@@ -46,7 +46,7 @@ function verifica_SiglaCompanhia($string) {
     if (strlen($string) == 2) {
         return true; // a string tem tamanho 2
     } else {
-        return false; // a string não tem tamanho 2
+        throw new Exception("Sigla inválida."); // a string não tem tamanho 2
     }
 }
 
