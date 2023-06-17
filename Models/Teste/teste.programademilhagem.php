@@ -182,8 +182,6 @@ $azul->CadastrarPiloto($copiloto);
 $azul->CadastrarComissario($comissario1);
 $azul->CadastrarComissario($comissario2);
 
-$viagem_escolhida[0]->setAeronave($aviao2);
-$viagem_escolhida[1]->setAeronave($aviao2);
 
 $viagem_escolhida[0]->AddTripulaçao($tripulacao);
 $viagem_escolhida[1]->AddTripulaçao($tripulacao);
@@ -197,30 +195,19 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 // tela.
 $passageiro->getPassagem()->CheckIn();
 $passageiro->getPassagem()->PrintCartaoEmbarque();
+$viagens = $passageiro->getPassagem()->getViagens();
 
-// Feito isto, simule a realização das viagens envolvidas.
-
-/*
-// Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
-// dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "19/06/2023");
-$lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
-$viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
-// $cliente->EscolherAssentos($viagem_escolhida);
-$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["10E"], 1);
-
-try{
-    $passageiro->getPassagem()->CheckIn();
-}catch(Exception $e){
-    echo $e->getMessage();
+foreach($viagens as $v){
+    print_r($v->getPassageiros());
 }
-*/
-echo $passageiro->verificaPontos();
-$assentos = $viagem_escolhida[0]->getPassageiros();
-print_r($assentos);
-//$azul->executaViagem($viagem_escolhida[0]);
-//$azul->executaViagem($viagem_escolhida[1]);
-echo $passageiro->verificaPontos();
+
+
+// echo $passageiro->verificaPontos();
+// $assentos = $viagem_escolhida[0]->getPassageiros();
+// print_r($assentos);
+// //$azul->executaViagem($viagem_escolhida[0]);
+// //$azul->executaViagem($viagem_escolhida[1]);
+// echo $passageiro->verificaPontos();
 
 
 

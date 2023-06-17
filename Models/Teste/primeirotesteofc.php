@@ -209,7 +209,7 @@ $passageiro->getPassagem()->PrintCartaoEmbarque();
 
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "21/06/2023");
+$datacliente2 = DateTime::createFromFormat("d/m/Y", "25/06/2023");
 $lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
@@ -228,4 +228,4 @@ $passageiro->getPassagem()->CancelarPassagem();
 
 
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
-// Log::ImprimirLogs();
+Log::ImprimirLogs();

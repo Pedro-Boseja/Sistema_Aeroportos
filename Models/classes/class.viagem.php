@@ -116,14 +116,7 @@ include_once "../global.php";
       }
 
       public function getPassageiros(){
-        // echo "Entrou add passageiro";
-         $passageiros = array();
-         foreach($this->_assentos as $a){
-           array_push($passageiros, $a);
-         }
-        //$passageiros = array_values($this->_assentos);
-        return $passageiros;
-        //return $this->_assentos;
+        return $this->_assentos;
       }
 
       public function getDataS() {
@@ -182,7 +175,6 @@ include_once "../global.php";
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-    
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
 
