@@ -103,9 +103,9 @@ include_once "../global.php";
             // }
 
             foreach ($endereços as $r) {
-              echo $r . "\n";
+              //echo $r . "\n";
               $distancias[$r] = $this->_map->geoGetDistance($endereco_aeroporto, $r)['distance'];
-              echo "distancia em metros: " . $distancias[$r] . "\n\n";
+              //echo "distancia em metros: " . $distancias[$r] . "\n\n";
             }
 
             $rota = array();
@@ -129,11 +129,11 @@ include_once "../global.php";
             }
             array_push($rota, $endereco_aeroporto);
 
-            foreach($rota as $r){
-              echo "Rota: " . $r . "\n";
-            }
+            //foreach($rota as $r){
+              //echo "Rota: " . $r . "\n";
+            //}
 
-            echo "\n";
+            //echo "\n";
     
             return $rota;
         }
@@ -161,7 +161,7 @@ include_once "../global.php";
           
           for ($i = 1; $i < $n_enderecos; $i++) {
             array_push($distancias, $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance']);
-            echo $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'] . "\n";
+            //echo $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'] . "\n";
           }
           $distancias = array_reverse($distancias);
 
@@ -175,9 +175,9 @@ include_once "../global.php";
             $i += 1;
           }
 
-          foreach($horarios as $h){
-            echo "horario: " . $h->format('d-m-y H:i') . "\n";
-          }
+          //foreach($horarios as $h){
+          //  echo "horario: " . $h->format('d-m-y H:i') . "\n";
+          //}
     
           return $horarios;
         } 
@@ -210,7 +210,7 @@ include_once "../global.php";
                 $distancia += $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'];
             }
 
-            echo "distancia total em metros: " . $distancia . "\n";
+            //echo "distancia total em metros: " . $distancia . "\n";
             
             return $distancia;
         }
