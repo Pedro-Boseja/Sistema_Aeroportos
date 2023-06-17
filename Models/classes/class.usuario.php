@@ -5,7 +5,7 @@ include_once "../global.php";
         protected string $_login;
         private string $_senha;
         private string $_email;
-        static protected ?Usuario $logado = null;
+        static public ?Usuario $logado = null;
         static $local_filename = "usuarios.txt";
 
 
