@@ -171,6 +171,7 @@ class Facade{
         for($i = 0; $i<count($viagens); $i++){
             $passagem->addViagem($viagens[$i], $assentos[$i]);
             $viagens[$i]->addPassagem($assentos[$i], $passagem);
+            $viagens[$i]->save();
         }
         $passageiro->addPassagem($passagem);
         $valor = count($viagens)*$passagem->getTarifa();

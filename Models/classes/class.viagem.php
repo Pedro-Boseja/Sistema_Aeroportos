@@ -103,7 +103,7 @@
       }
 
       public function addPassagem (string $assento, Passagem $passagem) {
-        echo "Entrou add Passagem";
+        // echo "Entrou add Passagem";
         $passageiro = $passagem->getPassageiro();
         // $as_passagem = array($assento => $passageiro);
         // $this->_assentos = array_replace($this->_assentos, $as_passagem);
@@ -116,8 +116,8 @@
       }
 
       public function getPassageiros(){
-        echo "Entrou add passageiro";
-        $passageiros = array();
+        // echo "Entrou add passageiro";
+        // $passageiros = array();
         // foreach($this->_assentos as $a){
         //   array_push($passageiros, $a);
         // }
@@ -182,7 +182,7 @@
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-      
+    
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
 

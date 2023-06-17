@@ -117,6 +117,7 @@ $cgh_cwb->ProgramaViagens();
 $cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 300, $azul);
 $cwb_cgh->ProgramaViagens();
 
+//afonso pena - confins
 $cbw_cnf = new PLanejamento($freq, "CWB-CNF",$afonso,$confins, $data7, $data5, 300, $latam);
 $cbw_cnf->ProgramaViagens();
 
@@ -138,14 +139,18 @@ $azul->CadastrarCategoria("ouro", "1000");
 $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
 $azul->PromoverVIP($passageiro);
+$azul->save();
 
-
-$datacliente = DateTime::createFromFormat("d/m/Y", "17/06/2023");
+$datacliente = DateTime::createFromFormat("d/m/Y", "18/06/2023");
 
 $lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
 $cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
+
+$viagens = $passageiro->getPassagem()->getViagens();
+$v = $viagens[0];
+
 
 //Logando com Outro Usuário:
 Usuario::Sair();
@@ -203,7 +208,7 @@ $passageiro->getPassagem()->PrintCartaoEmbarque();
 
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "19/06/2023");
+$datacliente2 = DateTime::createFromFormat("d/m/Y", "21/06/2023");
 $lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
@@ -224,4 +229,4 @@ $passageiro->getPassagem()->CancelarPassagem();
 
 
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
-Log::ImprimirLogs();
+// Log::ImprimirLogs();

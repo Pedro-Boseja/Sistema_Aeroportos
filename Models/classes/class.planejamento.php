@@ -70,7 +70,7 @@ include_once "../global.php";
       private function setPontos($passageiros){
         $milhagem = $this->_companhia->getMilhagem();
         $mpassageiros = $milhagem->getPassageiros();
-      echo "Passageiros: ".count($passageiros )."  Milhagem: ".count($mpassageiros);
+        echo "Passageiros: ".count($passageiros )."  Milhagem: ".count($mpassageiros);
         foreach($passageiros as $p){
           echo "Passageiros da Viagem";
           foreach($mpassageiros as $m){
@@ -87,7 +87,7 @@ include_once "../global.php";
             
             }
           }
-
+          
         }
         echo "Fim do loop";
       }
@@ -148,7 +148,7 @@ include_once "../global.php";
                         $this->_milhagem
                         );
             //$viagem->setCodigoPlan($this->_codigo_plan);
-             $viagem->save(); //comentar
+            //  $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           

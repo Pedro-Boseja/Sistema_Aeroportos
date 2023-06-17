@@ -44,7 +44,7 @@ class Passagem  {
       
         if ($t >= $t1 and $t <= $t2) {
             array_push($this -> _status, EnumStatus::Checkin_realizado);
-            echo 'Seu check-in foi realizado com sucesso!';
+            echo "Seu check-in foi realizado com sucesso!\n";
 
             //Parte Cartão de Embarque;
             $i = 0;
@@ -179,16 +179,16 @@ class Passagem  {
     }
 
     public function addViagem (Viagem $viagem, string $assento) {
-        echo "Entrou em addVigem";
+
         $this->_tarifa = $viagem->getTarifa();
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);
 
-        $viagem->addPassagem($assento, $this);
-        $viagem->save();
-        $assentos = $viagem->getPassageiros();
-        print_r($assentos);
+        // $viagem->addPassagem($assento, $this);
+        // $viagem->save();
+        // $assentos = $viagem->getPassageiros();
+        // print_r($assentos);
 
         $mensagem = "Viagem entre ".$viagem->getAeroportoSaida()." e ".$viagem->getAeroportoChegada()." adicionada a passagem do passageiro ". $this->_passageiro->getCadastro()->getNome();
         $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
