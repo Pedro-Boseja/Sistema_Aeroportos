@@ -193,6 +193,9 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 // A rota da van que vai buscar a tripulação para a realização da viagem
 // também deve ser planejada. Os horários em que cada tripulante embarca na van devem
 // ser exibidos.
+$veiculo = new Veiculo(12, 18, $viagem_escolhida[0]);
+print_r($veiculo->getRota());
+print_r($veiculo->CalculaHorariosEmbarque());
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela. Feito isto, simule a realização das viagens envolvidas.
@@ -204,7 +207,7 @@ $passageiro->getPassagem()->ExecutarViagens();
 
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "25/06/2023");
+$datacliente2 = DateTime::createFromFormat("d/m/Y", "26/06/2023");
 $lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);

@@ -179,6 +179,7 @@ include_once "../global.php";
         if(count($this->_assentos) == 0){
           return $assentos;
         }
+      
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
 
@@ -233,7 +234,7 @@ include_once "../global.php";
         $this->_aeronave = $aeronave;
         $this->save();
       }
-      public function ViagemExecutada( $is){
+      public function ViagemExecutada($is){
         //Execução da Viagem
         $this->_executado = true;
         $this->ContabilizaPontos($is);
@@ -243,21 +244,21 @@ include_once "../global.php";
         if($is){
         //Dados.
           $companhia = CompanhiaAerea::getRecordsByField('_sigla', $this->_companhia);
-          $milhagem = end($companhia)->getMilhagem();
+          $milhagem = $companhia[0]->getMilhagem();
           $passageiros_milhagem = $milhagem->getPassageiros();
 
-          $passageiros_voo = $this->getPassageiros();
+          $passageiros_voo = $this->_assentos;
 
           //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
           foreach($passageiros_voo as $p){
-            
+
             foreach($passageiros_milhagem as $m){
 
               //Verificação se faz parte;
               if($p->getNome() == $m->getNome()){
 
                 //Adicionar Pontos
-                $p->addPontos($this->_milhagem);
+                $m->addPontos($this->_milhagem);
                 echo "Foram adicionados ".$this->_milhagem." pontos de milhagem para o passageiro ".$p->getNome()."\n";
 
               }

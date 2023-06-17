@@ -35,16 +35,22 @@ class Passagem  {
         $log->save();
     }
     public function ExecutarViagens(){
-        $this->_passageiro->Embarcar();
-
         foreach($this->_viagens as $v){
             if(!in_array(EnumStatus::Checkin_realizado, $this->_status)){
                 $v->ViagemExecutada(false);
+                $this->_passageiro->Embarcar();
+                $msg = "Viagem entre ".$v->getAeroportoSaida()." e ".$v->getAeroportoChegada()." executada";
+                $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), $msg);
+                $log->save();
             }else{
                 $v->ViagemExecutada(true);
+                $this->_passageiro->Embarcar();
+                $msg = "Viagem entre ".$v->getAeroportoSaida()." e ".$v->getAeroportoChegada()." executada";
+                $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), $msg);
+                $log->save();
             }
-         
         }
+        
     }
     public function CheckIn () {
         $date_atual = new DateTime("now", new DateTimeZone('America/Bahia'));
