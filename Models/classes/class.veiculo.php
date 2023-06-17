@@ -83,66 +83,38 @@ include_once "../global.php";
             $endereços = array();
             foreach ($tripulantes as $t){
               array_push($endereços, $t->getCadastro()->getEndereco());
-              //echo "Endereço: " . $t->getCadastro()->getEndereco() . "\n";
             }
-
-            //$n = count($endereços);
-            //echo "endereços: " . $n . "\n";
 
             $aeroporto_saida = $viagem->getAeroportoSaida1();
           
             $endereco_aeroporto = sprintf('%s, %s, %s', $aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
-            //echo "endereço aero: " . $endereco_aeroporto . "\n";
           
             $distancias = array();
 
-            // foreach ($endereços as $r) {
-            //   echo $r . "\n";
-            //   $distancias[$r] = $this->CalculaDistancia($endereco_aeroporto, $r);
-            //   echo "distancia: " . $distancias[$r] . "\n\n";
-            // }
-
             foreach ($endereços as $r) {
-              //echo $r . "\n";
               $distancias[$r] = $this->_map->geoGetDistance($endereco_aeroporto, $r)['distance'];
-              //echo "distancia em metros: " . $distancias[$r] . "\n\n";
             }
 
             $rota = array();
             array_push($rota, $endereco_aeroporto);
           
             arsort($distancias);
-
-            //$dist = array_flip($distancias);
           
             $keys = array_keys($distancias);
             $values = array_values($distancias);
             $dist = array_combine($values, $keys);  
           
-            // foreach ($keys as $k){
-            //   echo 'key: ' . $k . "\n";
-            // }
-          
             foreach($dist as $k){
               array_push($rota, $k);
-              //echo "value: " . $k . "\n";
             }
             array_push($rota, $endereco_aeroporto);
-
-            //foreach($rota as $r){
-              //echo "Rota: " . $r . "\n";
-            //}
-
-            //echo "\n";
     
             return $rota;
         }
 
         public function CalculaTempo ($distancia) {
-            //a velocidade media dada é em km/h, enquando a distância está em metros, logo, vamos transformar a distância para kilômetros.
             $d = $distancia/1000;
             $tempo = ($d / $this->_v_media);
-            //echo "tempo do percurso em horas: " . $tempo . "\n";
             return $tempo;
         }
 
@@ -154,14 +126,11 @@ include_once "../global.php";
           $horario = new DateTimeImmutable('now', new DateTimeZone('America/Bahia'));
           $horario_chegada = $horario->setTimestamp($h_chegada);
           array_push($horarios, $horario_chegada);
-          
-          //echo "h chegada: " . $horario_chegada->format('d-m-y H:i') . "\n";
 
           $n_enderecos = count($this->_rota);
           
           for ($i = 1; $i < $n_enderecos; $i++) {
             array_push($distancias, $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance']);
-            //echo $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'] . "\n";
           }
           $distancias = array_reverse($distancias);
 
@@ -174,16 +143,13 @@ include_once "../global.php";
             array_push($horarios, $h2);
             $i += 1;
           }
-
-          //foreach($horarios as $h){
-          //  echo "horario: " . $h->format('d-m-y H:i') . "\n";
-          //}
     
-          return $horarios;
+          return array_reverse($horarios);
         } 
 
         public function CalculaDistancia (string $endereço1, string $endereço2) {
             //Usar a api do google maps pra pegar as coordenadas dos dois endereços
+            //Esse método não está sendo usado pala o calculo de distância e sim a 
             $lat1 = $this->_map->geoGetCoords($endereço1)['lat'];
             $lon1 = $this->_map->geoGetCoords($endereço1)['lng'];
             $lat2 = $this->_map->geoGetCoords($endereço2)['lat'];
@@ -191,14 +157,6 @@ include_once "../global.php";
 
             $distancia = 110.57 * sqrt(pow($lat2-$lat1, 2)+pow($lon2-$lon1, 2));
             return $distancia;
-  
-            
-            //// Método alternativo para calcular distâcia usando a matrix de distância do api
-            // $a = array($endereço1);
-            // $b = array($endereço2);
-
-            // $distancia = $this->_map->geoGetDistance($a, $b);
-            // return $distancia['distance'];
         }
 
         //Calcula as distâncias entre todos os pnts da rota e depois soma elas 
@@ -209,8 +167,6 @@ include_once "../global.php";
             for ($i = 1; $i < $n_enderecos; $i++) {
                 $distancia += $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'];
             }
-
-            //echo "distancia total em metros: " . $distancia . "\n";
             
             return $distancia;
         }
