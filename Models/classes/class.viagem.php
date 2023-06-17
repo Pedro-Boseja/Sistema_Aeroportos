@@ -233,36 +233,29 @@ include_once "../global.php";
           //Execução da Viagem
           $this->_executado = true;
   
-          //Verificação de Clientes VIP para contabilizar programa de milhagem.
+          //Dados.
           $companhia = CompanhiaAerea::getRecordsByField('_sigla', $this->_companhia);
           $milhagem = end($companhia)->getMilhagem();
           $passageiros_milhagem = $milhagem->getPassageiros();
           
           $passageiros_voo = $this->getPassageiros();
   
-          echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
+          //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
           foreach($passageiros_voo as $p){
-            echo "Passageiros da Viagem"."\n";
+
             foreach($passageiros_milhagem as $m){
-              echo "Passageiros Milhagem\n";
-              // $pc = $p->getCadastro();
-              // $mc = $m->getCadastro();
-              //echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
+
               //Verificação se faz parte;
-              $m->getNome();
               if($p->getNome() == $m->getNome()){
-                echo "Encontrado\n";
+
                 //Adicionar Pontos
-                $m->addPontos($this->_milhagem);
-  
-                //Upgrade de passageito;
-                $milhagem->Upgrade($p);
-              
+                $p->addPontos($this->_milhagem);
+                echo "Foram adicionados ".$this->_milhagem." pontos de milhagem para o passageiro ".$p->getNome()."\n";
+
               }
             }
             
           }
-          echo "Fim do loop\n";
   
           
    
