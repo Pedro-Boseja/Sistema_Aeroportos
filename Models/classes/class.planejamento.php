@@ -46,20 +46,24 @@ include_once "../global.php";
 
       }
 
-      public function ExecutarViagem (string $codigo, Viagem $viagem_exe) {
-        
+      public function ExecutarViagem (Viagem $viagem_exe) {
+
+        $codigo = $viagem_exe->getCodigo();
+
         foreach ($this->_viagens_planejadas as $viagem){
 
           if ($viagem->getCodigo() == $codigo){
 
-            $this->_viagens_executadas [ $codigo ] = array('planejado' => $viagem,
-                                                           'executado' => $viagem_exe);
+            $viagem_exe->ViagemExecutada($this->_companhia->getMilhagem());
+            $this->_viagens_executadas [ $codigo ] = $viagem_exe;
             unset($viagem);
+            return;
 
-
-            break;
           }
+
         }
+
+        throw new Exception("Essa viagem não foi encontrada no planejamento.");
 
       }
       
@@ -119,7 +123,7 @@ include_once "../global.php";
                         $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
-            
+            $viagem->setCodigoPlan($this->_codigo_plan);
             // $viagem->save();
             array_push($this->_viagens_planejadas, $viagem);
           }
@@ -320,6 +324,7 @@ include_once "../global.php";
                         $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
+        $viagem->setCodigoPlan($this->_codigo_plan);
         $viagem->save();
         array_push($this->_viagens_planejadas, $viagem);
         $mensagem = "Viagem ".$codigo."Entre ".$this->getAeroportoS()." e ".$this->getAeroportoC().", para o dia ".$dia_de_saida->format("Y-m-d H:i:s")." criada";

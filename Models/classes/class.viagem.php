@@ -20,6 +20,7 @@
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
       private string $_companhia;
+      private string $_codigo_plan;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -52,7 +53,12 @@
         return get_called_class()::$local_filename;
         
       }
-
+      public function getCodigoPlan(){
+        return $this->_codigo_plan;
+      }
+      public function setCodigoPlan(string $plan){
+        $this->_codigo_plan = $plan;
+      }
       public function getFranquia(){
         return $this->_franquia;
       }
@@ -227,30 +233,35 @@
         $this->_aeronave = $aeronave;
         $this->save();
       }
-      public function ViagemExecutada(){
+      public function ViagemExecutada(ProgramaDeMilhagem $milhagem){
+        echo "Entrou na func";
         $this->_executado = true;
         //Verificação de Clientes VIP para contabilizar programa de milhagem.
-        $passageiros = $$this->_companhia->_milhagem->getPassageiros();
-        
+        $milhagem = end($companhia)->getMilhagem();
+        $passageiros = $milhagem->getPassageiros();
+
+        echo "Antes entrar no loop";
         foreach($this->getPassageiros() as $p){
-
+          echo "Passageiros da Viagem";
           foreach($passageiros as $m){
-
+            echo "Passageiros Milhagem\n";
+            echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
             //Verificação se faz parte;
-            if($p->_cadastro == $m->_cadastro){
-
+            if($p->_cadastro->getNome() == $m->_cadastro->getNome()){
+              echo "Encontrado";
               //Adicionar Pontos
               $m->addPontos($this->_milhagem);
 
               //Upgrade de passageito;
-              $$this->_companhia->_milhagem->Upgrade($m);
+              $milhagem->Upgrade($m);
             
             }
           }
 
         }
-
+        echo "Fim do loop";
       }
+
       public function getMulta(){
         return $this->_multa;
       }

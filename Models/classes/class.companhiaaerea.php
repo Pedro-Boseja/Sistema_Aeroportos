@@ -59,7 +59,7 @@ class CompanhiaAerea extends persist{
     }
   //Promove passageiro para VIP, e cadastra no programa de Milhagem;
     public function PromoverVIP (Passageiro $p_vip) {
-      $vip = new Vip($p_vip);
+      $vip = $p_vip->generateVip();
       $this->CadastrarPassageiroVip($vip);
       return $vip;
     }
@@ -197,5 +197,13 @@ class CompanhiaAerea extends persist{
     }
     public function getMilhagem(){
         return $this->_programa_de_milhagem;
+    }
+    public function executaViagem(Viagem $v){
+        foreach($this->_planejamentos as $p){
+            if($v->getCodigoPlan()==$p->getCodigoPlan()){
+                $p->ExecutarViagem($v);
+            }
+        }
+
     }
 }
