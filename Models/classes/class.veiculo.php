@@ -23,12 +23,14 @@ include_once "../global.php";
                                      float $v_media,
                                      $viagem) {
             Usuario::ValidaLogado();
+            $this->_viagem = $viagem;
             $this->_capacidade = $capacidade;
             $this->_v_media = $v_media;
             $this->_map = new apigooglemaps('AIzaSyA_471Fs_O2mQ0XYyZ2jwhvcPT3g33EDVY');
             $this->_rota = $this->CalculaRota($viagem);
             $this->_d_total = $this->CalculaDTotal();
-            $this->_t_percurso = $this->CalculaTempo();                           
+            $this->_t_percurso = $this->CalculaTempo($this->_d_total);
+            $this->_horarios_embarque = $this->CalculaHorariosEmbarque();
         }
 
         static public function getFilename() {
@@ -77,51 +79,104 @@ include_once "../global.php";
 
         public function CalculaRota (Viagem $viagem) {
             $tripulantes = $viagem->getTripulantes();
+          
             $endereços = array();
             foreach ($tripulantes as $t){
               array_push($endereços, $t->getCadastro()->getEndereco());
+              //echo "Endereço: " . $t->getCadastro()->getEndereco() . "\n";
             }
+
+            //$n = count($endereços);
+            //echo "endereços: " . $n . "\n";
 
             $aeroporto_saida = $viagem->getAeroportoSaida();
           
             $endereco_aeroporto = sprintf('%s, %s, %s', $aeroporto_saida->getSigla(), $aeroporto_saida->getCidade(), $aeroporto_saida->getEstado());
+            //echo "endereço aero: " . $endereco_aeroporto . "\n";
           
             $distancias = array();
 
+            // foreach ($endereços as $r) {
+            //   echo $r . "\n";
+            //   $distancias[$r] = $this->CalculaDistancia($endereco_aeroporto, $r);
+            //   echo "distancia: " . $distancias[$r] . "\n\n";
+            // }
+
             foreach ($endereços as $r) {
-              $distancias[$r] = $this->CalculaDistancia($endereco_aeroporto, $r);
+              echo $r . "\n";
+              $distancias[$r] = $this->_map->geoGetDistance($endereco_aeroporto, $r)['distance'];
+              echo "distancia em metros: " . $distancias[$r] . "\n\n";
             }
 
-            $rota = $endereco_aeroporto;
-            $a = sort($distancias);
-            $rota += array_keys($distancias);
+            $rota = array();
             array_push($rota, $endereco_aeroporto);
+          
+            arsort($distancias);
+
+            //$dist = array_flip($distancias);
+          
+            $keys = array_keys($distancias);
+            $values = array_values($distancias);
+            $dist = array_combine($values, $keys);  
+          
+            // foreach ($keys as $k){
+            //   echo 'key: ' . $k . "\n";
+            // }
+          
+            foreach($dist as $k){
+              array_push($rota, $k);
+              //echo "value: " . $k . "\n";
+            }
+            array_push($rota, $endereco_aeroporto);
+
+            foreach($rota as $r){
+              echo "Rota: " . $r . "\n";
+            }
+
+            echo "\n";
     
             return $rota;
         }
 
-        public function CalculaTempo () {
-            $tempo = ($this->_d_total / $this->_v_media)*3600;
+        public function CalculaTempo ($distancia) {
+            //a velocidade media dada é em km/h, enquando a distância está em metros, logo, vamos transformar a distância para kilômetros.
+            $d = $distancia/1000;
+            $tempo = ($d / $this->_v_media);
+            //echo "tempo do percurso em horas: " . $tempo . "\n";
             return $tempo;
         }
 
         public function CalculaHorariosEmbarque () {
           $horarios = array();
+          $distancias = array();
+
+          $h_chegada = $this->_viagem->getDataS()->getTimestamp() - 5400;
+          $horario = new DateTimeImmutable('now', new DateTimeZone('America/Bahia'));
+          $horario_chegada = $horario->setTimestamp($h_chegada);
+          array_push($horarios, $horario_chegada);
+          
+          //echo "h chegada: " . $horario_chegada->format('d-m-y H:i') . "\n";
 
           $n_enderecos = count($this->_rota);
-          $distancias = array();
-          for ($i = 1; $i <= $n_enderecos; $i++) {
-            array_push ($distancias, $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i])));
+          
+          for ($i = 1; $i < $n_enderecos; $i++) {
+            array_push($distancias, $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance']);
+            echo $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'] . "\n";
           }
-
           $distancias = array_reverse($distancias);
 
-          $horario_chegada = $this->_viagem->getDataS()->getTimestamp() - 5400;
+          $i = 0;
+          foreach($distancias as $d){
+            $tempo = intval($this->CalculaTempo($d) * 3600);
+            $h = $horarios[$i]->getTimestamp() - $tempo;
+            $h1 = new DateTimeImmutable('now', new DateTimeZone('America/Bahia'));
+            $h2 = $h1->setTimestamp($h);
+            array_push($horarios, $h2);
+            $i += 1;
+          }
 
-          $n_distancias = count($distancias);
-          $horarios = array();
-          for ($i = 0; $i <= $n_distancias; $i++) {
-            array_push ($horarios, (($horario_chegada-(current($distancias[$i])/$this->_v_media))*3600));
+          foreach($horarios as $h){
+            echo "horario: " . $h->format('d-m-y H:i') . "\n";
           }
     
           return $horarios;
@@ -149,10 +204,14 @@ include_once "../global.php";
         //Calcula as distâncias entre todos os pnts da rota e depois soma elas 
         public function CalculaDTotal () {
             $n_enderecos = count($this->_rota);
+    
             $distancia = 0;
-            for ($i = 1; $i <= $n_enderecos; $i++) {
-                $distancia += $this->CalculaDistancia(current($this->_rota[$i-1]), current($this->_rota[$i]));
+            for ($i = 1; $i < $n_enderecos; $i++) {
+                $distancia += $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'];
             }
+
+            echo "distancia total em metros: " . $distancia . "\n";
+            
             return $distancia;
         }
 

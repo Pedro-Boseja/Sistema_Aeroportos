@@ -16,15 +16,18 @@ $aeroporto_chegada = new Aeroporto ("GUA", "Guarulhos", "Sao Paulo");
 
 $viagem = new Viagem($date_s, $date_c, "TA444", $aeroporto_saida, $aeroporto_chegada, $companhia);
 
-$cadastro = new Cadastro('João da Silva', '12.244.876');
+$cadastro1 = new Cadastro('João da Silva', '12.244.876');
+$cadastro2 = new Cadastro('João da Costa', '12.244.876');
+$cadastro3 = new Cadastro('Maria da Silva', '12.244.876');
+$cadastro4 = new Cadastro('Maria da Costa', '12.244.876');
 
-$tripulante1 = new Tripulante($cadastro, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua dos Piratas, 99 - Centro, Caribe-CA, Haiti', $companhia, $aeroporto_saida, '666.666.666-66'); 
+$tripulante1 = new Tripulante($cadastro1, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Antonio Abreu França, Sete Lagoas, MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
 
-$tripulante2 = new Tripulante($cadastro, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Antonino Abreu França, São Cristovao 2, Sete Lagoas - MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
+$tripulante2 = new Tripulante($cadastro2, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Maria Ferreira Saraiva, 57, Sete Lagoas, MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
 
-$tripulante3 = new Tripulante($cadastro, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Joao Fernandes, 113 - Liberdade, Belo Horizonte - MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
+$tripulante3 = new Tripulante($cadastro3, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Joao Fernandes, 113, Belo Horizonte, MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
 
-$tripulante4 = new Tripulante($cadastro, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Santo Antonio, 27, Itutinga - MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
+$tripulante4 = new Tripulante($cadastro4, $DateTime = new DateTime(10/10/2010),'Brasileiro', 'jaodasirva@orkut.com', '54321','Rua Santo Antonio, 27, Itutinga, MG, Brasil', $companhia, $aeroporto_saida, '666.666.666-66'); 
 
 $tripulação = array();
 array_push($tripulação, $tripulante1, $tripulante2, $tripulante3, $tripulante4);
@@ -34,17 +37,19 @@ $viagem->addTripulaçao($tripulação);
 $veiculo = new Veiculo (12, 18.0, $viagem);
 
 echo "\n";
-echo $veiculo->getCapacidade() . "\n";
-echo $veiculo->getVMedia() . "\n";
+echo "capacidade: " . $veiculo->getCapacidade() . "\n";
+echo "velocidade média: " . $veiculo->getVMedia() . "\n";
 
-$endereço1 = "Sete Lagoas, MG, Rua Maria Ferreira Saraiva, 57";
-$endereço2 = "Belo Horizonte, MG, Rua João Fernandes, 113";
+//$endereço1 = "Sete Lagoas, MG, Rua Maria Ferreira Saraiva, 57";
+//$endereço2 = "Belo Horizonte, MG, Rua João Fernandes, 113";
 
-$distancia = $veiculo->CalculaDistancia($endereço1, $endereço2);
+//$distancia = $veiculo->CalculaDistancia($endereço1, $endereço2);
 
-echo "A distância entre os dois endereços dados é de " . $distancia . " kilometros\n";
+//echo "A distância entre os dois endereços dados é de " . $distancia . " kilometros\n";
 
 $rota = $veiculo->CalculaRota($viagem);
 $dtotal = $veiculo->CalculaDTotal();
-$tempo = $veiculo->CalculaTempo();
+echo "Distancia total: " . $dtotal . "\n";
+$tempo = $veiculo->CalculaTempo($dtotal);
+echo "Tempo gasto: " . $tempo . "\n";
 $horarios = $veiculo->CalculaHorariosEmbarque();

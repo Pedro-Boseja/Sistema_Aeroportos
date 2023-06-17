@@ -33,6 +33,7 @@ class Cadastro extends persist{
         $this -> _nacionalidade = strtoupper($nacionalidade);
         $this -> _numero_cpf = $numero_cpf;
         $this -> _email = $email;
+        $this -> _endereco = $endereco;
     }    
 
     static public function getFilename() {

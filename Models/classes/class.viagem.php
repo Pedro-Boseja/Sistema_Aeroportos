@@ -170,7 +170,7 @@
 
         foreach($tripulacao as $tripulante){
 
-          if(!$tripulante->isAvaiable($this)){
+          if(!$tripulante->isAvailable($this)){
             return false;
           }
 
