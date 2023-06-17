@@ -191,7 +191,6 @@
 
         return $assentos_livres;
       }
-
       
       //E se trocar a aeronave mas os assentos delas já tiverem sido comprados?
       // public function TrocarAeronave(Aeronave $aeronave){
