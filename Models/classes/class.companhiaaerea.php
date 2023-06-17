@@ -20,13 +20,13 @@ class CompanhiaAerea extends persist{
 
 
     public function __construct (string $nome, int $codigo,  string $cnpj, string $razao, 
-                                string $sigla,
-                                float $franquia){
+                                string $sigla, float $franquia){
         
         $this->_nome = $nome;
         $this->_codigo = $codigo;
         $this->_cnpj = $cnpj;
         $this->_razao_social = $razao;
+        verifica_SiglaCompanhia($sigla);
         $this->_sigla = $sigla;
         $this->_franquia = $franquia;
         $this->_programa_de_milhagem = new ProgramaDeMilhagem();
@@ -169,6 +169,18 @@ class CompanhiaAerea extends persist{
 
     public function getFranquia () {
         return $this->_franquia;
+    }
+
+    public function getCodigo () {
+        return $this->_codigo;
+    }
+
+    public function getCNPJ () {
+        return $this->_cnpj;
+    }
+
+    public function getRazao () {
+        return $this->_razao_social;
     }
 
     public function setFranquia (float $franquia) {

@@ -1,6 +1,10 @@
 <?php
   include_once "../Models/global.php";
 
+  ob_start();
+  Usuario::Login("Hugo Boss", "1234");
+  ob_end_clean();
+
   $nome = $_GET['nome'];
   $documento = $_GET['documento'];
   //$i = $_GET['validar'] === '1';
@@ -16,7 +20,7 @@
   <input name="nome" type="text" placeholder="<?php echo $nome?>"></input><br>
   <input name="documento" type="text" placeholder="<?php echo $documento?>"></input><br><br>
   
-  <form action="regcliente.php" method="get">
+  <form action="cliente.php" method="get">
     <!--<input type="submit" name="validar" value='1'>Estão corretos</input>-->
   </form>
   
