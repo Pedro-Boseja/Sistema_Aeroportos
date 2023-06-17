@@ -23,6 +23,8 @@
         $companhia = $_GET['companhia'];
 
         $planejamento=null;
+        $aeroc=null;
+        $aeros=null;
         
         try{
             $comps = CompanhiaAerea::getRecordsByField("_nome", $companhia);

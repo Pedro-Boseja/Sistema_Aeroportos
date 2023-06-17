@@ -16,12 +16,20 @@
   <label>Preencha os dados abaixo:</label><br><br>
   
     <form action="../Controllers/planejamento.php" method="get">
-        <label>Frequência: </label><input name="frequencia" type="text"></input><br>
+        <label>Frequência (segure "ctrl" para selecionar mais de uma opção): </label><br><select name="frequencia[]" id="frequencia" multiple>
+    <option value="Sunday">Domingo</option>
+    <option value="Monday">Segunda</option>
+    <option value="Tuesday">Terça</option>
+    <option value="Wednesday">Quarta</option>
+    <option value="Thursday">Quinta</option>
+    <option value="Friday">Sexta</option>
+    <option value="Saturday">Sábado</option>
+  </select><br>
         <label>Código: </label><input name="codigo" type="text"></input><br>
-        <label>Aeroporto de Chegada (sigla): </label><input name="ac" type="text"></input><br>
         <label>Aeroporto de Saída (sigla): </label><input name="as" type="text"></input><br>
-        <label>Horário de Chegada: </label><input name="chegada" type="time"></input><br>
+        <label>Aeroporto de Chegada (sigla): </label><input name="ac" type="text"></input><br>
         <label>Horário de Saída: </label><input name="saida" type="time"></input><br>
+        <label>Horário de Chegada: </label><input name="chegada" type="time"></input><br>
         <label>Milhagem: </label><input name="milhagem" type="text"></input><br>
         <label>Companhia Aérea: </label><input name="companhia" type="text"></input><br>
     <br><button>Enviar</button><br><br>
