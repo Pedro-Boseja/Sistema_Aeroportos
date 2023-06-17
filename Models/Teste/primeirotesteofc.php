@@ -141,7 +141,7 @@ $azul->CadastrarCategoria("platina", "3000");
 $azul->PromoverVIP($passageiro);
 $azul->save();
 
-$datacliente = DateTime::createFromFormat("d/m/Y", "18/06/2023");
+$datacliente = DateTime::createFromFormat("d/m/Y", "19/06/2023");
 
 $lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
@@ -206,6 +206,7 @@ $passageiro->getPassagem()->PrintCartaoEmbarque();
 // Feito isto, simule a realização das viagens envolvidas.
 
 
+
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
 $datacliente2 = DateTime::createFromFormat("d/m/Y", "21/06/2023");
@@ -224,8 +225,6 @@ try{
 // Logo após essa passagem deve ser cancelada. Os valores de ressarcimento devem ser
 // calculados e exibidos na tela.
 $passageiro->getPassagem()->CancelarPassagem();
-
-
 
 
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.

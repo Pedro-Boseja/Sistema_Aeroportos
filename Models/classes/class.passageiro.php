@@ -97,6 +97,11 @@ class Passageiro extends persist{
     }
 
     $this->_passagem->setStatus(EnumStatus::Embarque_realizado);
+    $v = $this->_passagem->getViagens();
+    $mensagem = "Passageiro ".$this->_cadastro->getNome()." embarcou no voo ".$v[0]->getCodigo();
+    $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
+    $log->save();
+
   }
 
   public function IsVIP () {
