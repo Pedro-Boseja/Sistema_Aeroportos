@@ -32,6 +32,11 @@ class ProgramaDeMilhagem{
         $this->_passageirosvip[$chave][1] = $this->getCategoria($passageiro->verificaPontos());
         $this->Downgrade(); //Atualização deve ser diária, mas nesse caso já serve
     }
+    public function UpgradeAll (){
+        foreach($this->getPassageiros() as $p){
+            $this->Upgrade($p);
+        }
+    }
     public function Downgrade(){
     //Realiza a atualização dos pontos de todos funcionários. (Deve ser execultada diariamente)
         $this->_passageirosvip;
@@ -51,7 +56,7 @@ class ProgramaDeMilhagem{
                 $p = $valor;
             }
         }
-        return $p[1];
+        return $p;
     }
     public function setCategoria(string $nome, int $pontos){
         $this->_categorias[$pontos]=$nome;

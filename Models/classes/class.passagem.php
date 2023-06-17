@@ -36,8 +36,11 @@ class Passagem  {
     }
     public function ExecutarViagens(){
         foreach($this->_viagens as $v){
-           $v->ViagemExecutada();
-
+            if(!in_array(EnumStatus::Checkin_realizado, $this->_status)){
+                $v->ViagemExecutada(false);
+            }else{
+                $v->ViagemExecutada(true);
+            }
           //$companhia = CompanhiaAerea::getRecordsByField('_sigla', $v->getCompanhia());
           //$milhagem = end($companhia)->getMilhagem();
          // $passageiros_milhagem = $milhagem->getPassageiros();

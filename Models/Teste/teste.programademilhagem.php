@@ -134,7 +134,7 @@ $nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
 $passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "ramo@magno.com", "12314525877");
 
 
-$azul->CadastrarCategoria("ouro", "1000");
+$azul->CadastrarCategoria("ouro", "100");
 $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
 $passageiro= $azul->PromoverVIP($passageiro);
@@ -193,13 +193,10 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela.
-/*$passageiro->getPassagem()->CheckIn();
-$passageiro->getPassagem()->PrintCartaoEmbarque();
-$viagens = $passageiro->getPassagem()->getViagens();*/
+$passageiro->getPassagem()->CheckIn();
+//$passageiro->getPassagem()->PrintCartaoEmbarque();
+$viagens = $passageiro->getPassagem()->getViagens();
 
-/*foreach($viagens as $v){
-    print_r($v->getPassageiros());
-}*/
 
 
 // echo $passageiro->verificaPontos();
@@ -208,11 +205,12 @@ $viagens = $passageiro->getPassagem()->getViagens();*/
 // //$azul->executaViagem($viagem_escolhida[0]);
 // //$azul->executaViagem($viagem_escolhida[1]);
 // echo $passageiro->verificaPontos();
-echo $passageiro->verificaPontos();
+$pmil = $azul->getMilhagem();
+echo $passageiro->verificaPontos()." - " .$pmil->getCategoriaPassageiro($passageiro)."\n";
 $pass = $passageiro->getPassagem();
-$pass->ExecutarViagens($azul->getMilhagem());
-echo $passageiro->verificaPontos();
-
+$pass->ExecutarViagens();
+$pmil->UpgradeAll();
+echo $passageiro->verificaPontos()." - " .$pmil->getCategoriaPassageiro($passageiro)."\n";
 
 
 

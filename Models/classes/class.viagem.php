@@ -229,17 +229,21 @@ include_once "../global.php";
         $this->_aeronave = $aeronave;
         $this->save();
       }
-      public function ViagemExecutada( ){
-          //Execução da Viagem
-          $this->_executado = true;
-  
-          //Dados.
+      public function ViagemExecutada( $is){
+        //Execução da Viagem
+        $this->_executado = true;
+        $this->ContabilizaPontos($is);
+   
+      }
+      private function ContabilizaPontos($is){
+        if($is){
+        //Dados.
           $companhia = CompanhiaAerea::getRecordsByField('_sigla', $this->_companhia);
           $milhagem = end($companhia)->getMilhagem();
           $passageiros_milhagem = $milhagem->getPassageiros();
-          
+
           $passageiros_voo = $this->getPassageiros();
-  
+
           //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
           foreach($passageiros_voo as $p){
 
@@ -254,11 +258,8 @@ include_once "../global.php";
 
               }
             }
-            
           }
-  
-          
-   
+        }
       }
 
       public function getMulta(){
