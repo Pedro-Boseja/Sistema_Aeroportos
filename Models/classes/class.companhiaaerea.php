@@ -198,10 +198,11 @@ class CompanhiaAerea extends persist{
     public function getMilhagem(){
         return $this->_programa_de_milhagem;
     }
-    public function executaViagem(Viagem $v){
+    public function executaViagem($v){
         foreach($this->_planejamentos as $p){
-            if($v->getCodigoPlan()==$p->getCodigoPlan()){
+            if($v->getAeroportoChegada() ==$p->getAeroportoC() && $v->getAeroportoSaida() ==$p->getAeroportoS() ){
                 $p->ExecutarViagem($v);
+                break;
             }
         }
 

@@ -20,7 +20,7 @@
       private ?Veiculo $_veiculo;
       private ?Aeronave $_aeronave;
       private string $_companhia;
-      private string $_codigo_plan;
+      //private string $_codigo_plan;
       static $local_filename = "viagens.txt";
 
       public function __construct (DateTime $data_s, 
@@ -53,12 +53,12 @@
         return get_called_class()::$local_filename;
         
       }
-      public function getCodigoPlan(){
+      /*public function getCodigoPlan(){
         return $this->_codigo_plan;
       }
       public function setCodigoPlan(string $plan){
         $this->_codigo_plan = $plan;
-      }
+      }*/
       public function getFranquia(){
         return $this->_franquia;
       }
@@ -103,9 +103,11 @@
       }
 
       public function addPassagem (string $assento, Passagem $passagem) {
+        echo "Entrou add Passagem";
         $passageiro = $passagem->getPassageiro();
-        $as_passagem = array($assento => $passageiro);
-        $this->_assentos = array_replace($this->_assentos, $as_passagem);
+        // $as_passagem = array($assento => $passageiro);
+        // $this->_assentos = array_replace($this->_assentos, $as_passagem);
+        $this->_assentos[$assento]=$passageiro;
         
         $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." cadastrado na viagem de ".
                     $this->getAeroportoSaida()." para ".$this->getAeroportoChegada()." no assento ".$assento;
@@ -114,11 +116,14 @@
       }
 
       public function getPassageiros(){
+        echo "Entrou add passageiro";
         $passageiros = array();
-        foreach($this->_assentos as $a){
-          array_push($passageiros, $a);
-        }
-        return $passageiros;
+        // foreach($this->_assentos as $a){
+        //   array_push($passageiros, $a);
+        // }
+        //$passageiros = array_values($this->_assentos);
+        //return $passageiros;
+        return $this->_assentos;
       }
 
       public function getDataS() {
@@ -233,33 +238,13 @@
         $this->_aeronave = $aeronave;
         $this->save();
       }
-      public function ViagemExecutada(ProgramaDeMilhagem $milhagem){
-        echo "Entrou na func";
+      public function ViagemExecutada(){
+        echo "A viagem foi executada";
         $this->_executado = true;
         //Verificação de Clientes VIP para contabilizar programa de milhagem.
-        $milhagem = end($companhia)->getMilhagem();
-        $passageiros = $milhagem->getPassageiros();
+       // $milhagem = end($companhia)->getMilhagem();
 
-        echo "Antes entrar no loop";
-        foreach($this->getPassageiros() as $p){
-          echo "Passageiros da Viagem";
-          foreach($passageiros as $m){
-            echo "Passageiros Milhagem\n";
-            echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
-            //Verificação se faz parte;
-            if($p->_cadastro->getNome() == $m->_cadastro->getNome()){
-              echo "Encontrado";
-              //Adicionar Pontos
-              $m->addPontos($this->_milhagem);
-
-              //Upgrade de passageito;
-              $milhagem->Upgrade($m);
-            
-            }
-          }
-
-        }
-        echo "Fim do loop";
+        
       }
 
       public function getMulta(){

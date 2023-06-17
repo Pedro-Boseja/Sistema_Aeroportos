@@ -54,9 +54,10 @@ include_once "../global.php";
 
           if ($viagem->getCodigo() == $codigo){
 
-            $viagem_exe->ViagemExecutada($this->_companhia->getMilhagem());
+            $viagem_exe->ViagemExecutada();
             $this->_viagens_executadas [ $codigo ] = $viagem_exe;
-            unset($viagem);
+            $this->setPontos($viagem_exe->getPassageiros());
+            //unset($viagem);
             return;
 
           }
@@ -66,7 +67,30 @@ include_once "../global.php";
         throw new Exception("Essa viagem não foi encontrada no planejamento.");
 
       }
-      
+      private function setPontos($passageiros){
+        $milhagem = $this->_companhia->getMilhagem();
+        $mpassageiros = $milhagem->getPassageiros();
+      echo "Passageiros: ".count($passageiros )."  Milhagem: ".count($mpassageiros);
+        foreach($passageiros as $p){
+          echo "Passageiros da Viagem";
+          foreach($mpassageiros as $m){
+            echo "Passageiros Milhagem\n";
+            echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
+            //Verificação se faz parte;
+            if($p->_cadastro->getNome() == $m->_cadastro->getNome()){
+              echo "Encontrado";
+              //Adicionar Pontos
+              $m->addPontos($this->_milhagem);
+
+              //Upgrade de passageito;
+              $milhagem->Upgrade($m);
+            
+            }
+          }
+
+        }
+        echo "Fim do loop";
+      }
       public function ProgramaViagens(){
         $obj_antes = serialize($this);
         $data = new DateTime();
@@ -123,8 +147,8 @@ include_once "../global.php";
                         $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
-            $viagem->setCodigoPlan($this->_codigo_plan);
-            // $viagem->save();
+            //$viagem->setCodigoPlan($this->_codigo_plan);
+             $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           
@@ -324,7 +348,7 @@ include_once "../global.php";
                         $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
-        $viagem->setCodigoPlan($this->_codigo_plan);
+        //$viagem->setCodigoPlan($this->_codigo_plan);
         $viagem->save();
         array_push($this->_viagens_planejadas, $viagem);
         $mensagem = "Viagem ".$codigo."Entre ".$this->getAeroportoS()." e ".$this->getAeroportoC().", para o dia ".$dia_de_saida->format("Y-m-d H:i:s")." criada";
