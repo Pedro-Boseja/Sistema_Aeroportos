@@ -61,6 +61,7 @@ class CompanhiaAerea extends persist{
     public function PromoverVIP (Passageiro $p_vip) {
       $vip = $p_vip->generateVip();
       $this->CadastrarPassageiroVip($vip);
+      $this->save();
       return $vip;
     }
 //Outros
@@ -207,13 +208,13 @@ class CompanhiaAerea extends persist{
     public function getMilhagem(){
         return $this->_programa_de_milhagem;
     }
-    public function executaViagem($v){
-        foreach($this->_planejamentos as $p){
-            if($v->getAeroportoChegada() ==$p->getAeroportoC() && $v->getAeroportoSaida() ==$p->getAeroportoS() ){
-                $p->ExecutarViagem($v);
-                break;
-            }
-        }
+    // public function executaViagem($v){
+    //     foreach($this->_planejamentos as $p){
+    //         if($v->getAeroportoChegada() ==$p->getAeroportoC() && $v->getAeroportoSaida() ==$p->getAeroportoS() ){
+    //             $p->ExecutarViagem($v);
+    //             break;
+    //         }
+    //     }
 
-    }
+    // }
 }
