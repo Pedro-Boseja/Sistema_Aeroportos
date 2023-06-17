@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
   enum EnumDias{ //utilizado para determinar a frequencia de um voo
@@ -148,7 +148,7 @@ include_once "../Models/global.php";
                         $this->_milhagem
                         );
             //$viagem->setCodigoPlan($this->_codigo_plan);
-            //  $viagem->save(); //comentar
+            $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           
