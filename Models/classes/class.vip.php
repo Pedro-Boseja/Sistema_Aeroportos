@@ -63,5 +63,6 @@ include_once "../global.php";
         public function IsVIP () {
             return true;
           }
+        
     }
 

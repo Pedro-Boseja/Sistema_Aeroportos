@@ -34,7 +34,44 @@ class Passagem  {
         $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), "Passagem criada");
         $log->save();
     }
+    public function ExecutarViagens(){
+        foreach($this->_viagens as $v){
+            //$v->ViagemExecutada();
 
+          $companhia = CompanhiaAerea::getRecordsByField('_sigla', $v->getCompanhia());
+          $milhagem = end($companhia)->getMilhagem();
+          $passageiros_milhagem = $milhagem->getPassageiros();
+          
+          $passageiros_voo = $v->getPassageiros();
+  
+          echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
+          print_r($passageiros_voo);
+          print_r($passageiros_milhagem);/*
+          foreach($passageiros_voo as $p){
+            echo "Passageiros da Viagem"."\n";
+            foreach($passageiros_milhagem as $m){
+              echo "Passageiros Milhagem\n";
+              $pc = $p->getCadastro();
+              $mc = $m->getCadastro();
+              print($pc);
+              print($mc);
+              //echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
+              //Verificação se faz parte;
+              $m->getNome();
+              if($p->getNome() == $m->getNome()){
+                echo "Encontrado\n";
+                //Adicionar Pontos
+                $m->addPontos($v->_milhagem);
+  
+                //Upgrade de passageito;
+                $milhagem->Upgrade($m);
+              
+              }
+            }
+            
+          }*/
+        }
+    }
     public function CheckIn () {
         $date_atual = new DateTime("now", new DateTimeZone('America/Bahia'));
         $t = $date_atual->getTimestamp();

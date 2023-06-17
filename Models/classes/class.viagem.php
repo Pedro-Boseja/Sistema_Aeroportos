@@ -229,7 +229,7 @@ include_once "../global.php";
         $this->_aeronave = $aeronave;
         $this->save();
       }
-      public function ViagemExecutada(){
+      public function ViagemExecutada( ){
           //Execução da Viagem
           $this->_executado = true;
   
@@ -245,9 +245,12 @@ include_once "../global.php";
             echo "Passageiros da Viagem"."\n";
             foreach($passageiros_milhagem as $m){
               echo "Passageiros Milhagem\n";
-              echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
+              // $pc = $p->getCadastro();
+              // $mc = $m->getCadastro();
+              //echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
               //Verificação se faz parte;
-              if($p->_cadastro->getNome() == $m->_cadastro->getNome()){
+              $m->getNome();
+              if($p->getNome() == $m->getNome()){
                 echo "Encontrado\n";
                 //Adicionar Pontos
                 $m->addPontos($this->_milhagem);

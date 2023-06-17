@@ -148,7 +148,7 @@ include_once "../global.php";
                         $this->_milhagem
                         );
             //$viagem->setCodigoPlan($this->_codigo_plan);
-            // $viagem->save(); //comentar
+            $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           

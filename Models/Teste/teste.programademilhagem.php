@@ -140,7 +140,7 @@ $azul->CadastrarCategoria("platina", "3000");
 $passageiro= $azul->PromoverVIP($passageiro);
 
 
-$datacliente = DateTime::createFromFormat("d/m/Y", "18/06/2023");
+$datacliente = DateTime::createFromFormat("d/m/Y", "19/06/2023");
 
 $lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
@@ -193,13 +193,13 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela.
-$passageiro->getPassagem()->CheckIn();
+/*$passageiro->getPassagem()->CheckIn();
 $passageiro->getPassagem()->PrintCartaoEmbarque();
-$viagens = $passageiro->getPassagem()->getViagens();
+$viagens = $passageiro->getPassagem()->getViagens();*/
 
-foreach($viagens as $v){
+/*foreach($viagens as $v){
     print_r($v->getPassageiros());
-}
+}*/
 
 
 // echo $passageiro->verificaPontos();
@@ -208,10 +208,10 @@ foreach($viagens as $v){
 // //$azul->executaViagem($viagem_escolhida[0]);
 // //$azul->executaViagem($viagem_escolhida[1]);
 // echo $passageiro->verificaPontos();
-
-
-
-
+echo $passageiro->verificaPontos();
+$pass = $passageiro->getPassagem();
+$pass->ExecutarViagens();
+echo $passageiro->verificaPontos();
 
 
 
