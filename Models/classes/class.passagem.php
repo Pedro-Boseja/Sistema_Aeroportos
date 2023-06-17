@@ -34,7 +34,7 @@ class Passagem  {
         $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), "Passagem criada");
         $log->save();
     }
-    public function ExecutarViagens($milhagem){
+    public function ExecutarViagens(){
         foreach($this->_viagens as $v){
            $v->ViagemExecutada();
 
