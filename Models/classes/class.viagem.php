@@ -117,13 +117,13 @@ include_once "../global.php";
 
       public function getPassageiros(){
         // echo "Entrou add passageiro";
-        // $passageiros = array();
-        // foreach($this->_assentos as $a){
-        //   array_push($passageiros, $a);
-        // }
+         $passageiros = array();
+         foreach($this->_assentos as $a){
+           array_push($passageiros, $a);
+         }
         //$passageiros = array_values($this->_assentos);
-        //return $passageiros;
-        return $this->_assentos;
+        return $passageiros;
+        //return $this->_assentos;
       }
 
       public function getDataS() {
@@ -238,12 +238,39 @@ include_once "../global.php";
         $this->save();
       }
       public function ViagemExecutada(){
-        echo "A viagem foi executada";
-        $this->_executado = true;
-        //Verificação de Clientes VIP para contabilizar programa de milhagem.
-       // $milhagem = end($companhia)->getMilhagem();
-
-        
+          //Execução da Viagem
+          $this->_executado = true;
+  
+          //Verificação de Clientes VIP para contabilizar programa de milhagem.
+          $companhia = CompanhiaAerea::getRecordsByField('_sigla', $this->_companhia);
+          $milhagem = end($companhia)->getMilhagem();
+          $passageiros_milhagem = $milhagem->getPassageiros();
+          
+          $passageiros_voo = $this->getPassageiros();
+  
+          echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
+          foreach($passageiros_voo as $p){
+            echo "Passageiros da Viagem"."\n";
+            foreach($passageiros_milhagem as $m){
+              echo "Passageiros Milhagem\n";
+              echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
+              //Verificação se faz parte;
+              if($p->_cadastro->getNome() == $m->_cadastro->getNome()){
+                echo "Encontrado\n";
+                //Adicionar Pontos
+                $m->addPontos($this->_milhagem);
+  
+                //Upgrade de passageito;
+                $milhagem->Upgrade($m);
+              
+              }
+            }
+            
+          }
+          echo "Fim do loop\n";
+  
+          
+   
       }
 
       public function getMulta(){

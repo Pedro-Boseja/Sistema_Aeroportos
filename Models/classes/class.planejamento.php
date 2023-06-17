@@ -46,7 +46,7 @@ include_once "../global.php";
 
       }
 
-      public function ExecutarViagem (Viagem $viagem_exe) {
+     /* public function ExecutarViagem (Viagem $viagem_exe) {
 
         $codigo = $viagem_exe->getCodigo();
 
@@ -90,7 +90,7 @@ include_once "../global.php";
           
         }
         echo "Fim do loop";
-      }
+      }*/
       public function ProgramaViagens(){
         $obj_antes = serialize($this);
         $data = new DateTime();
