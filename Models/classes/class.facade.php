@@ -154,24 +154,28 @@ class Facade{
 
     }
 
-    public static function GetViagensByCod($codigos = array()){
+    public static function GetViagensByCod($codigos){//codigos=array()
         $viagens = array();
         foreach($codigos as $cd){
            $v = Viagem::getRecordsByField("_codigo", $cd);
-           array_push($viagens, $v);
+           array_push($viagens, $v[0]);
         }
         return $viagens;
     }
 
-    public static function ComprarPassagem($codigos = array(), Passageiro $passageiro, $assentos = array(), $qnt_franquias){
+    public static function ComprarPassagem($codigos, Passageiro $passageiro, $assentos, $qnt_franquias){// codigos = array, assentos=array
         Usuario::ValidaLogado();
 
         $viagens = Facade::GetViagensByCod($codigos);
         $passagem = new Passagem($passageiro, $qnt_franquias);
-        $passageiro->addPassagem($passagem);
         for($i = 0; $i<count($viagens); $i++){
             $passagem->addViagem($viagens[$i], $assentos[$i]);
+            $viagens[$i]->addPassagem($assentos[$i], $passagem);
+            $viagens[$i]->save();
         }
+        $passageiro->addPassagem($passagem);
+        $valor = count($viagens)*$passagem->getTarifa();
+        echo "Passagem comprada no valor de R$".$valor."\n";
     }
 
 

@@ -1,4 +1,5 @@
 <?php
+use Vtiful\Kernel\Format;
 
 include_once "../Models/global.php";
 
@@ -19,7 +20,7 @@ class Passagem  {
     protected int $_qtde_franquias;
     protected float $_valorfranquia;
     protected Passageiro $_passageiro;
-    protected CartaodeEmbarque $_cartao = array();
+    protected $_cartao = array();
     protected $_status = array();
 
     public function __construct( Passageiro $passageiro,
@@ -30,6 +31,8 @@ class Passagem  {
         $this -> _qtde_franquias = $qtde_franquias;
         $this -> _valorfranquia = 0.0;
         array_push($this -> _status, EnumStatus::Passagem_adquirida);
+        $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), "Passagem criada");
+        $log->save();
     }
 
     public function CheckIn () {
@@ -41,20 +44,44 @@ class Passagem  {
       
         if ($t >= $t1 and $t <= $t2) {
             array_push($this -> _status, EnumStatus::Checkin_realizado);
-            echo 'Seu check-in foi realizado com sucesso!';
+            echo "Seu check-in foi realizado com sucesso!\n";
 
             //Parte Cartão de Embarque;
+            $i = 0;
             foreach($this->_viagens as $v){
-                array_push($this->_cartao, new CartaodeEmbarque($this->getPassageiro()->getCadastro()->getNome(), 
-                    $this->getPassageiro()->getCadastro()->getNome(), $v->getAeroportoSaida(), 
-                    $v->getAeroportoChegada(), $v->getHorarioS() - 2400, $v->getHorarioC(), $this->_assentos));//Subtrair 40 min do horário de saída no horário de embarque
+                $nomes = explode(" ", $this->_passageiro->getCadastro()->getNome());
+                $nome = $nomes[0];
+                $sobrenome = end($nomes);
+                $hora = DateTime::createFromFormat("d/M/Y H:i:s", $v->getDataS()->format("d/M/Y H:i:s"));//Subtrair 40 min do horário de saída no horário de embarque
+                $horaEmb = $hora->sub(new DateInterval('PT40M'));
+                array_push($this->_cartao, new CartaodeEmbarque($nome, $sobrenome, $v->getAeroportoSaida(), 
+                    $v->getAeroportoChegada(), $horaEmb, $v->getDataC(), $this->_assentos[$i]));
+                $i++;
             }
 
         } else if ($t < $t1){
-            echo 'O periodo de Check-in ainda não começou. Tente mais tarde.';
+            throw new Exception("O periodo de Check-in ainda não começou. Tente mais tarde.\n");
         } else {
-            echo 'O periodo de Check-in já foi encerrado hehehehehehe';
+            $this->setStatus(EnumStatus::No_show);
+            throw new Exception("O periodo de Check-in já foi encerrado hehehehehehe");
         }
+
+        $mensagem = "CheckIn da Passagem do Passageiro ".$this->_passageiro->getCadastro()->getNome()." Realizada";
+        $log = new Log_leitura(new DateTime(), "Passagem", "checkIn", $mensagem);
+        $log->save();
+    }
+
+    public function PrintCartaoEmbarque(){
+        $i = 1;
+        foreach($this->_cartao as $c){
+            echo"\nCartão de embarque ".$i."\n";
+            $c->show();
+            $i++;
+        }
+
+        $mensagem = "Cartões de Embarque Imprimidos";
+        $log = new Log_leitura(new DateTime(), "Passagem", "checkIn", $mensagem);
+        $log->save();
     }
 
     public function CancelarPassagem(){
@@ -62,14 +89,21 @@ class Passagem  {
             $v->CancelarPassageiro($this->_passageiro);
         }
         if($this->_passageiro->IsVIP() && in_array($this->_passageiro, $this->_viagens[0]->_companhia->_programa_de_milhagem->_passageirosvip)){
-            echo "Sua passagem foi cancelada.";
+            echo "Sua passagem foi cancelada sem multas e o valor de ressarcimento foi de R$".$this->_tarifa*count($this->_viagens);
         }else{
+            $multa = 0.00;
             foreach($this->_viagens as $v){
-                echo "Foi cobrado uma multa do passageiro ". $this->_passageiro->getCadastro()->getNome()." de R$". $v->getMulta() . "." ;
+                $multa += $v->getMulta();
             }
-            echo "Sua passagem foi cancelada.";
+            echo "A passagem do Passageiro ".$this->_passageiro->getCadastro()->getNome()." foi cancelada e uma multa de R$".$multa." foi cobrada!\n";
+            $valor = ($this->_tarifa*count($this->_viagens)/2.0)-$multa;
+            echo "O valor pago foi de R$".$this->_tarifa*count($this->_viagens)." e o ressarcimento foi de R$".$valor."\n";
         }
-        return;
+        $this->setStatus(EnumStatus::Passagem_cancelada);
+
+        $mensagem = "Passagem do Passageiro ".$this->_passageiro->getCadastro()->getNome()." Cancelada";
+        $log = new Log_leitura(new DateTime(), "Passagem", "checkIn", $mensagem);
+        $log->save();
     }
 
     public function getTarifa() {
@@ -112,10 +146,11 @@ class Passagem  {
       $this -> _tarifa = $tarifa;
     }
 
-    public function setValorFranquia($viagem) {
+    public function setValorFranquia(Viagem $viagem) {
         
         if (!$this->_passageiro->IsVIP()) {
-            $this->_valorfranquia += $this->_qtde_franquias*$viagem->getCompanhia()->getFranquia();
+        
+            $this->_valorfranquia += $this->_qtde_franquias*$viagem->getFranquia();
             //fazer tratamendo exceção cajo hajam mais de 3 franquias
         }
         else {
@@ -123,10 +158,10 @@ class Passagem  {
                 //$this->_valorfranquia += 0;
             }
             else if ($this->_qtde_franquias == 2) {
-                $this->_valorfranquia += $viagem->getCompanhia()->getFranquia()/2.0;
+                $this->_valorfranquia += $viagem->getFranquia()/2.0;
             }
             else if ($this->_qtde_franquias == 3) {
-                $this->_valorfranquia += $viagem->getCompanhia()->getFranquia();
+                $this->_valorfranquia += $viagem->getFranquia();
             }
             else {
                 //mudar para tratamento de exceção
@@ -144,10 +179,22 @@ class Passagem  {
     }
 
     public function addViagem (Viagem $viagem, string $assento) {
+
         $this->_tarifa = $viagem->getTarifa();
         array_push($this->_viagens, $viagem);
         array_push($this->_assentos, $assento);
         $this->setValorFranquia($viagem);
+
+        // $viagem->addPassagem($assento, $this);
+        // $viagem->save();
+        // $assentos = $viagem->getPassageiros();
+        // print_r($assentos);
+
+        $mensagem = "Viagem entre ".$viagem->getAeroportoSaida()." e ".$viagem->getAeroportoChegada()." adicionada a passagem do passageiro ". $this->_passageiro->getCadastro()->getNome();
+        $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
+        $log->save();
+
+
     }
 
     public function inicioDaViagem(){

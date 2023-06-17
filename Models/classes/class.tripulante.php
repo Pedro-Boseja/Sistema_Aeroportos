@@ -51,7 +51,7 @@ class Tripulante extends persist{
         $obj_antes = serialize($this);
         array_push($this->_viagens_planejadas, $viagem);
         $obj_depois = serialize($this);
-        $log = new Log_escrita(new DateTime(), "tripulante", $obj_antes, $obj_depois);
+        $log = new Log_escrita(new DateTime(), "tripulante", $obj_antes, $obj_depois, "Viagem programada");
         $log->save();
     
       }
@@ -60,7 +60,7 @@ class Tripulante extends persist{
         if(Usuario::$logado == null){
           throw new Exception("não há usuário logado");
         }
-        $log = new Log_leitura(new DateTime, serialize($this), "disponibilidade");
+        $log = new Log_leitura(new DateTime, serialize($this), "disponibilidade", "Disponibilidade verificada");
         $log->save();
         if(count($this->_viagens_planejadas) == 0){
     

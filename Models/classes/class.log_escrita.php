@@ -14,15 +14,14 @@ class Log_escrita extends Log{
     public function __construct( DateTime $data_hora,
                                  string $entidade,
                                  string $obj_antes,
-                                 string $obj_depois){
+                                 string $obj_depois, string $mensagem){
 
-                                    Usuario::ValidaLogado();
-        $this->_usuario = Usuario::$logado;
-        $this->_data_hora = $data_hora;
+        Usuario::ValidaLogado();
+        parent::__construct($data_hora, $mensagem);
+
         $this->_entidade = $entidade;
         $this->_obj_depois = $obj_depois;
-        $this->_obj_antes = $obj_antes;
-
+        $this->_obj_antes = $obj_antes;                               
     }
 
 

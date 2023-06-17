@@ -39,8 +39,6 @@ include_once "../Models/global.php";
         $this->_milhagem = $milhagem;
         $this->_companhia = $companhia;
         $this->_companhia->addPlanejamento($this);
-        $log = new Log_escrita(new DateTime(), "Planejamento", "null", serialize($this));
-        $log->save();
       }
 
       //retorna a aeronave, veiculo e tripulação disponível da companhia aérea para criar viagens
@@ -48,26 +46,57 @@ include_once "../Models/global.php";
 
       }
 
-      public function ExecutarViagem (string $codigo, Viagem $viagem_exe) {
-        
+      public function ExecutarViagem (Viagem $viagem_exe) {
+
+        $codigo = $viagem_exe->getCodigo();
+
         foreach ($this->_viagens_planejadas as $viagem){
 
           if ($viagem->getCodigo() == $codigo){
 
-            $this->_viagens_executadas [ $codigo ] = array('planejado' => $viagem,
-                                                           'executado' => $viagem_exe);
-            unset($viagem);
+            $viagem_exe->ViagemExecutada();
+            $this->_viagens_executadas [ $codigo ] = $viagem_exe;
+            $this->setPontos($viagem_exe->getPassageiros());
+            //unset($viagem);
+            return;
 
-
-            break;
           }
+
         }
 
+        throw new Exception("Essa viagem não foi encontrada no planejamento.");
+
       }
-      
+      private function setPontos($passageiros){
+        $milhagem = $this->_companhia->getMilhagem();
+        $mpassageiros = $milhagem->getPassageiros();
+        echo "Passageiros: ".count($passageiros )."  Milhagem: ".count($mpassageiros);
+        foreach($passageiros as $p){
+          echo "Passageiros da Viagem";
+          foreach($mpassageiros as $m){
+            echo "Passageiros Milhagem\n";
+            echo $p->_cadastro->getNome() ." e ". $m->_cadastro->getNome();
+            //Verificação se faz parte;
+            if($p->_cadastro->getNome() == $m->_cadastro->getNome()){
+              echo "Encontrado";
+              //Adicionar Pontos
+              $m->addPontos($this->_milhagem);
+
+              //Upgrade de passageito;
+              $milhagem->Upgrade($m);
+            
+            }
+          }
+          
+        }
+        echo "Fim do loop";
+      }
       public function ProgramaViagens(){
         $obj_antes = serialize($this);
         $data = new DateTime();
+        $aeronave = $this->_companhia->getAeronavesDisponiveis();
+        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível", "Verificação de aeronaves disponíveis da companhia ". $this->_companhia->getRazao());
+        $log->save();
 
         for($i=0;$i<30;$i++){
 
@@ -107,18 +136,19 @@ include_once "../Models/global.php";
             $codigo = $letras . substr(str_shuffle($permint), 0, 4);
             
             //construtor da nova viagem.
-            $aeronave = $this->_companhia->getAeronavesDisponiveis();
+            
             $viagem = new Viagem($data_partida,
                         $data_chegada,
                         $codigo,
                         $this->_ae_saida,
                         $this->_ae_chegada,
-                        $this->_companhia,
+                        $this->_companhia->getSigla(),
                         $aeronave,
+                        $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
-            
-            $viagem->save();
+            //$viagem->setCodigoPlan($this->_codigo_plan);
+            //  $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           
@@ -126,7 +156,9 @@ include_once "../Models/global.php";
           $data->setTimestamp($data->getTimestamp() + 86400);
         }
 
-        $log = new Log_escrita(new DateTime(), "PLanejamento", $obj_antes, serialize($this));
+        $mensagem = "Viagens Para os Próximos 30 dias entre ".$this->getAeroportoS()." e ".$this->getAeroportoC(). " Programadas";
+
+        $log = new Log_escrita(new DateTime(), "PLanejamento", $obj_antes, serialize($this), $mensagem);
         $log->save();
       }
 
@@ -282,6 +314,7 @@ include_once "../Models/global.php";
       }
 
       public function createViagem(string $codigo, DateTime $dia_de_saida){
+        $obj_antes = serialize($this);
         $letras = $this->_companhia->getSigla();
         $comp = substr($codigo, 0, 2);
         if($letras != $comp){
@@ -310,12 +343,16 @@ include_once "../Models/global.php";
                         $codigo,
                         $this->_ae_chegada,
                         $this->_ae_saida,
-                        $this->_companhia,
+                        $this->_companhia->getSigla(),
                         $aeronave,
+                        $this->_companhia->getFranquia(),
                         $this->_milhagem
                         );
+        //$viagem->setCodigoPlan($this->_codigo_plan);
         $viagem->save();
         array_push($this->_viagens_planejadas, $viagem);
-        
+        $mensagem = "Viagem ".$codigo."Entre ".$this->getAeroportoS()." e ".$this->getAeroportoC().", para o dia ".$dia_de_saida->format("Y-m-d H:i:s")." criada";
+        $log = new Log_escrita(new DateTime(), "Planejamento", $obj_antes, serialize($this), $mensagem);
+        $log->save();
       }
     }

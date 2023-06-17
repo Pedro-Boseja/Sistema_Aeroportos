@@ -14,7 +14,7 @@ include_once "../Models/global.php";
       $this -> _sigla = $sigla;
       $this -> _cidade = $cidade;
       $this -> _estado = $estado;
-      $log = new Log_escrita(new DateTime(), "Aeroporto", "null", serialize($this));
+      $log = new Log_escrita(new DateTime(), "Aeroporto", "null", serialize($this), "Aeroporto ".$sigla." criado");
       $log->save();
     }
     static public function getFilename() {

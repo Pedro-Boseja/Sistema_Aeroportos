@@ -11,10 +11,10 @@ class Log_leitura extends Log{
 
     public function __construct(DateTime $data_hora,
                                  string $entidade,
-                                 string $info){
+                                 string $info, string $mensagem){
         Usuario::ValidaLogado();
-        $this->_usuario = Usuario::$logado;
-        $this->_data_hora = $data_hora;
+        parent::__construct($data_hora, $mensagem);
+        
         $this->_entidade = $entidade;
         $this->_info = $info;
 

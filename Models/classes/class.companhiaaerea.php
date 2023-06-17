@@ -4,11 +4,12 @@ include_once "../Models/global.php";
 
 
 class CompanhiaAerea extends persist{
-    private string $_nome;
-    private int $_codigo;
+    protected string $_nome;
+    protected int $_codigo;
     private string $_cnpj;
     private string $_razao_social;
-    private string $_sigla;
+    protected
+    string $_sigla;
     private $_planejamentos = array();
     private $_aeronaves = array();
     private float $_franquia;
@@ -31,12 +32,16 @@ class CompanhiaAerea extends persist{
         $this->_franquia = $franquia;
         $this->_programa_de_milhagem = new ProgramaDeMilhagem();
         Usuario::ValidaLogado();
-        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this));
+        $mensagem = "Companhia Aérea ".$razao." criada";
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), $mensagem);
         $log->save();
     }
 //Programa de Milhagem
     //Cadastrar nova categoria;
     public function CadastrarCategoria (string $nome, int $pnts) {
+        $mensagem = "Categoria ".$nome." Cadastrada com valor de ".$pnts;
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), $mensagem);
+        $log->save();
         $this->_programa_de_milhagem->setCategoria($nome, $pnts);
     }
     //Exclui uma categoria existente, com base no nome ou quantidade de pontos;
@@ -44,10 +49,25 @@ class CompanhiaAerea extends persist{
         $this->_programa_de_milhagem->excluirCategoria($parametro);//pts ou nome da categoria
     }
     //Cadastra o passageiro VIP no programa de milhagem;
-    public function CadastrarPassageiroVip (Vip $passageiro){
+    private function CadastrarPassageiroVip (Vip $passageiro){
         $this->_programa_de_milhagem->setPassageiro($passageiro);
+
+
+        $mensagem = "Passageiro ".$passageiro->getCadastro()->getNome()." Adicionado ao programa de milhagem de ".$this->_razao_social;
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), $mensagem);
+        $log->save();
+    }
+  //Promove passageiro para VIP, e cadastra no programa de Milhagem;
+    public function PromoverVIP (Passageiro $p_vip) {
+      $vip = $p_vip->generateVip();
+      $this->CadastrarPassageiroVip($vip);
+      return $vip;
     }
 //Outros
+
+    public function getRazao(){
+        return $this->_razao_social;
+    }
     public function CadastrarComissario(Comissario $comissario){
         array_push($this->_comissarios, $comissario);
     }
@@ -63,12 +83,9 @@ class CompanhiaAerea extends persist{
     public function CadastrarAeronave(Aeronave $aeronave){
         $obj_antes = serialize($this);
         array_push($this->_aeronaves, $aeronave);
-        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this));
+        $mensagem ="Aeronave ". $aeronave->getRegistro()." Cadastrada em ".$this->_razao_social;
+        $log = new Log_escrita(new DateTime(), "companhia aerea", $obj_antes, serialize($this), $mensagem);
         $log->save();
-    }
-
-    public function PromoverVIP (Passageiro $p_vip) {
-        $p_vip = new Vip($p_vip);
     }
     
     public function atualizaViagens(){
@@ -81,7 +98,9 @@ class CompanhiaAerea extends persist{
         $obj_antes = serialize($this);
         $plan->setCompanhia($this);
         array_push($this->_planejamentos, $plan);
-        $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this));
+        $mensagem = "Planejamento entre ".$plan->getAeroportoS()." e ".$plan->getAeroportoC(). " adicionado a ".
+        $this->_razao_social;
+        $log = new Log_escrita(new DateTime(), "Companhia Aerea", $obj_antes, serialize($this), $mensagem);
         $log->save();
     }
     
@@ -150,7 +169,6 @@ class CompanhiaAerea extends persist{
 
     public function getAeronavesDisponiveis(){
         
-        $log = new Log_leitura(new DateTime(), "Companhia Aerea", "Aeronave disponível");
         return $this->_aeronaves[0];
 
     }
@@ -188,5 +206,17 @@ class CompanhiaAerea extends persist{
     }
     public function getSigla(){
         return $this->_sigla;
+    }
+    public function getMilhagem(){
+        return $this->_programa_de_milhagem;
+    }
+    public function executaViagem($v){
+        foreach($this->_planejamentos as $p){
+            if($v->getAeroportoChegada() ==$p->getAeroportoC() && $v->getAeroportoSaida() ==$p->getAeroportoS() ){
+                $p->ExecutarViagem($v);
+                break;
+            }
+        }
+
     }
 }

@@ -18,11 +18,17 @@ class Passageiro extends persist{
                                   Usuario::ValidaLogado();
     $this->_cadastro = $cadastro;
     $this->_cadastro->fillPassageiro($data_nascimento, $nacionalidade, $numero_cpf, $email);
+    $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", serialize($this), "Passageiro ".$cadastro->getNome(). " Cadastrado");
+    $log->save();
   }
   static public function getFilename() {
     return get_called_class()::$local_filename;
   }
-
+  
+  public function __toString(){
+        return $this->_cadastro->__toString();
+  }
+  
   public function addViagem(Viagem $viagem){
     array_push($_viagens, $viagem);
   }
@@ -40,6 +46,10 @@ class Passageiro extends persist{
     return null;
   }
 
+  public function getPassagem(){
+    return $this->_passagem;
+  }
+
   public function getCadastro(){
     return $this->_cadastro;
   }
@@ -55,6 +65,11 @@ class Passageiro extends persist{
 
   public function addPassagem(Passagem $passagem){
     $this->_passagem = $passagem;
+
+    $mensagem = "Passagem adicionada ao Passageiro ".$this->_cadastro->getNome();
+
+    $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
+    $log->save();
   }
 
   public function CancelarPassagem () {
@@ -66,7 +81,7 @@ class Passageiro extends persist{
     $this->_passagem = null;
   }
 
-  public function AlterarPassagem ($codigos = array(),$assentos=array(), $franquias) {
+  public function AlterarPassagem ($codigos ,$assentos, $franquias) {//codigo = array e assentos=array
     if($this->_passagem->inicioDaViagem()<4){
       throw new Exception("O tempo para alterar a passagem terminou.\n");
     }else{
@@ -82,6 +97,11 @@ class Passageiro extends persist{
     }
 
     $this->_passagem->setStatus(EnumStatus::Embarque_realizado);
+    $v = $this->_passagem->getViagens();
+    $mensagem = "Passageiro ".$this->_cadastro->getNome()." embarcou no voo ".$v[0]->getCodigo();
+    $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
+    $log->save();
+
   }
 
   public function IsVIP () {

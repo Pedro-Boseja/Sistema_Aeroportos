@@ -5,7 +5,7 @@ include_once "../Models/global.php";
         protected string $_login;
         private string $_senha;
         private string $_email;
-        static public ?Usuario $logado = null;
+        static protected ?Usuario $logado = null;
         static $local_filename = "usuarios.txt";
 
 
@@ -17,6 +17,12 @@ include_once "../Models/global.php";
         static public function getFilename() {
             return get_called_class()::$local_filename;
         }
+
+        static public function getLogado(){
+            Usuario::ValidaLogado();
+            return Usuario::$logado;
+        }
+
         static public function Registrar ($login, $senha, $email){
             Usuario::ValidaLogado();
 
@@ -28,6 +34,10 @@ include_once "../Models/global.php";
             }else{
                 throw new Exception("Usuário já cadastrado.\n");
             }
+            
+            $mensagem = "Usuário ".$login." Registrado";
+            $log = new Log_escrita(new DateTime(), "Companhia Aerea", "null", $login, $mensagem);
+            $log->save();
         }
         static public function Login ($login, $senha){
             if(Usuario::$logado != null){
