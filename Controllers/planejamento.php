@@ -31,11 +31,11 @@
             if($comps == null){
             throw new Exception("Companhia inválida.");
             }
-            $aeroc = Aeroporto::getRecordsByField("_sigla", $aeroc);
+            $aeroc = Aeroporto::getRecordsByField("_sigla", $ac);
             if($aeroc == null){
             throw new Exception("Aeroporto de chegada inválido.");
             }
-            $aeros = Aeroporto::getRecordsByField("_sigla", $aeros);
+            $aeros = Aeroporto::getRecordsByField("_sigla", $as);
             if($aeros == null){
             throw new Exception("Aeroporto de saída inválido.");
             }
@@ -43,6 +43,7 @@
             $hs = new DateTime($saida);
             $planejamento = new Planejamento($frequencia, $codigo, $aeros[0], $aeroc[0], $hs, $hc, $milhagem, $comps[0]);
             echo "Planejamento cadastrado com sucesso.";
+            $planejamento->ProgramaViagens();
         }catch(Exception $e){
             echo $e->getMessage();
         }catch(Error $e){
@@ -60,7 +61,13 @@
 
         if($planejamento!=null){
             $frequencia = $planejamento->getFrequencia();
-            
+            $codigo = $planejamento->getCodigo();
+            $ac = $planejamento->getAeroportoC();
+            $as = $planejamento->getAeroportoS();
+            $chegada = $planejamento->getHorarioC()->format("H:i");
+            $saida = $planejamento->getHorarioS()->format("H:i");
+            $milhagem = $planejamento->getMilhagem();
+            $companhia = $planejamento->getCompanhia();
         }
     ?>
 
@@ -68,7 +75,7 @@
 
 <body>
   
-  <br><br><label>Frequencia: <?php echo " " . $frequencia; ?></label><br>
+  <br><br><label>Frequencia: <?php foreach($frequencia as $f){echo $f . ", ";} ?></label><br>
   <label>Codigo: <?php echo " " . $codigo; ?></label><br>
   <label>Aeroporto de chegada: <?php echo " " . $ac; ?></label><br>
   <label>Aeroporto de saída: <?php echo " " . $as; ?></label><br>
