@@ -65,9 +65,6 @@ class CompanhiaAerea extends persist{
     }
 //Outros
 
-    public function getRazao(){
-        return $this->_razao_social;
-    }
     public function CadastrarComissario(Comissario $comissario){
         array_push($this->_comissarios, $comissario);
     }
