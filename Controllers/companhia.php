@@ -21,8 +21,12 @@
         $franquia = $_GET['franquia'];
 
         $companhia=null;
+
         
         try{
+          if(count(CompanhiaAerea::getRecordsByField('_nome', $nome))!=0){
+            throw new Exception("Essa companhia já está cadastrada.");
+          }
           $companhia = new CompanhiaAerea($nome, $codigo, $cnpj, $razao, $sigla, $franquia);
           $companhia->save();
           echo "Companhia cadastrada com sucesso.";
