@@ -1,7 +1,7 @@
 <?php
 use Vtiful\Kernel\Format;
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
 enum EnumStatus : string { //utilizado para determinar o status da passagem
@@ -34,7 +34,24 @@ class Passagem  {
         $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), "Passagem criada");
         $log->save();
     }
-
+    public function ExecutarViagens(){
+        foreach($this->_viagens as $v){
+            if(!in_array(EnumStatus::Checkin_realizado, $this->_status)){
+                $v->ViagemExecutada(false);
+                $this->_passageiro->Embarcar();
+                $msg = "Viagem entre ".$v->getAeroportoSaida()." e ".$v->getAeroportoChegada()." executada";
+                $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), $msg);
+                $log->save();
+            }else{
+                $v->ViagemExecutada(true);
+                $this->_passageiro->Embarcar();
+                $msg = "Viagem entre ".$v->getAeroportoSaida()." e ".$v->getAeroportoChegada()." executada";
+                $log = new Log_escrita(new DateTime(), "Passagem", "null", serialize($this), $msg);
+                $log->save();
+            }
+        }
+        
+    }
     public function CheckIn () {
         $date_atual = new DateTime("now", new DateTimeZone('America/Bahia'));
         $t = $date_atual->getTimestamp();

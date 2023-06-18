@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
 class ProgramaDeMilhagem{
@@ -16,7 +16,7 @@ class ProgramaDeMilhagem{
     private function localizaChave(Vip $passageiro){
       $chave = -1;
       foreach ($this->_passageirosvip as $key => $value) {
-          if($value[0] == $passageiro){
+          if($value[0]->getNome() == $passageiro->getNome()){
               $chave = $key;
               break;
           }
@@ -31,6 +31,11 @@ class ProgramaDeMilhagem{
         $chave = $this->localizaChave($passageiro);
         $this->_passageirosvip[$chave][1] = $this->getCategoria($passageiro->verificaPontos());
         $this->Downgrade(); //Atualização deve ser diária, mas nesse caso já serve
+    }
+    public function UpgradeAll (){
+        foreach($this->getPassageiros() as $p){
+            $this->Upgrade($p);
+        }
     }
     public function Downgrade(){
     //Realiza a atualização dos pontos de todos funcionários. (Deve ser execultada diariamente)
@@ -51,7 +56,7 @@ class ProgramaDeMilhagem{
                 $p = $valor;
             }
         }
-        return $p[1];
+        return $p;
     }
     public function setCategoria(string $nome, int $pontos){
         $this->_categorias[$pontos]=$nome;
@@ -78,7 +83,12 @@ class ProgramaDeMilhagem{
       //$this->_passageirosvip = $this->getCategoria($passageiro->verificaPontos());
     }
     public function getPassageiros(){
-        return array_keys($this->_passageirosvip);
+        $retorno = array();
+        $passageiros = array_values($this->_passageirosvip);
+        foreach($passageiros as $p){
+            array_push($retorno, $p[0]);
+        }
+        return $retorno;
     }
     public function imprimeCategoria(int $pts){
         return $this->getCategoria($pts);

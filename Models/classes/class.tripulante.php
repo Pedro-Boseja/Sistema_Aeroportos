@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
 class Tripulante extends persist{
@@ -56,7 +56,7 @@ class Tripulante extends persist{
     
       }
     
-      public function isAvaliable(Viagem $viagem){
+      public function isAvailable(Viagem $viagem){
         if(Usuario::$logado == null){
           throw new Exception("não há usuário logado");
         }

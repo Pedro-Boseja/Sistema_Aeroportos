@@ -33,16 +33,16 @@ class apigooglemaps {
       //get geocode lat/lon points for given address from google
       public function geoGetCoords($address,$depth=0) {      
         $url = sprintf('https://%s/maps/api/geocode/json?&address=%s&output=csv&key=%s',$this->_lookup_server['GOOGLE'],rawurlencode($address),$this->_api_key);
-        //echo $url . "\n";
   
         $result = false;
                   
           if($result = $this->fetchURL($url)) {
-            $result_parts = explode(':',$result);
-
+            $result_parts = explode(':',$result);  
         
             $coords['lat'] = floatval($result_parts[27]);
+            echo "lat: " . $coords['lat'] . "\n";
             $coords['lng'] = floatval($result_parts[28]);
+            echo "lon: " . $coords['lng'] . "\n";
           }
           return $coords;       
       }
@@ -53,19 +53,17 @@ class apigooglemaps {
       }
   
       //get distance between to geocoords using great circle distance 
-      public function geoGetDistance($origens, $destinos) {
+      public function geoGetDistance($origem, $destino) {
 
-        $url = sprintf('https://%s/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=driving&language=pt-BR&sensor=false&key=%s', $this->_lookup_server['GOOGLE'], rawurlencode($origens[0]), rawurlencode($destinos[0]), $this->_api_key);
-        
+        $url = sprintf('https://%s/maps/api/distancematrix/json?origins=%s&destinations=%s&mode=driving&language=pt-BR&sensor=false&key=%s', $this->_lookup_server['GOOGLE'], rawurlencode($origem), rawurlencode($destino), $this->_api_key);
+          
         $result = false;
                   
           if($result = $this->fetchURL($url)) {
             $result_parts = explode(':',$result);
         
             $matrix['distance'] = intval($result_parts[7]);
-            echo $matrix['distance'] . "\n";
             $matrix['duration'] = intval($result_parts[10]);
-            echo $matrix['duration'] . "\n";
           }
         
           return $matrix;      

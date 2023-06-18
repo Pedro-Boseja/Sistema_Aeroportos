@@ -148,10 +148,6 @@ $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
 $cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
 
-$viagens = $passageiro->getPassagem()->getViagens();
-$v = $viagens[0];
-
-
 //Logando com Outro Usuário:
 Usuario::Sair();
 Usuario::Login("Enzo Magico", "696969");
@@ -166,16 +162,16 @@ $cad4 = new Cadastro("Erica", "RG");
 
 
 $piloto = new Piloto($cad1, DateTime::createFromFormat("d/m/Y","25/11/1982"), "brasileiro", "jmaldade@gmail.com", 
-                        "RG", "Av. do Contorno", $azul, $confins, "000.000.070-67" );
+                        "RG", "Av. do Contorno, Belo Horizonte", $azul, $confins, "000.000.070-67" );
 
 $copiloto = new Piloto($cad2, DateTime::createFromFormat("d/m/Y","03/04/1983"), "brasileira", "malvadeza@gmail.com", 
-                        "RG", "Av. Antonio Carlos", $azul, $confins, "100.000.090-98" );
+                        "RG", "Av. Antonio Carlos, Belo Horizonte", $azul, $confins, "100.000.090-98" );
 
 $comissario1 = new Comissario($cad3, DateTime::createFromFormat("d/m/Y","21/04/1995"), "brasileiro", "dtca@gmail.com", 
-                        "RG", "Alameda das Falcatas", $azul, $confins, "970.030.100-08" );
+                        "RG", "Alameda das Falcatas, Belo Horizonte", $azul, $confins, "970.030.100-08" );
 
 $comissario2 = new Comissario($cad4, DateTime::createFromFormat("d/m/Y","15/09/1993"), "brasileira", "ricare@gmail.com", 
-                        "RG", "Rua João Fernandes", $azul, $confins, "088.430.000-79" );
+                        "RG", "Rua João Fernandes, Belo Horizonte", $azul, $confins, "088.430.000-79" );
 
 
 $tripulacao = array ();
@@ -197,19 +193,25 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 // A rota da van que vai buscar a tripulação para a realização da viagem
 // também deve ser planejada. Os horários em que cada tripulante embarca na van devem
 // ser exibidos.
+$veiculo = new Veiculo(12, 18, $viagem_escolhida[0]);
+
+$rota = $veiculo->getRota();
+
+
+
+$horarios = $veiculo->CalculaHorariosEmbarque();
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
-// tela.
+// tela. Feito isto, simule a realização das viagens envolvidas.
 $passageiro->getPassagem()->CheckIn();
 $passageiro->getPassagem()->PrintCartaoEmbarque();
-
-// Feito isto, simule a realização das viagens envolvidas.
+$passageiro->getPassagem()->ExecutarViagens();
 
 
 
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "21/06/2023");
+$datacliente2 = DateTime::createFromFormat("d/m/Y", "28/06/2023");
 $lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
@@ -228,4 +230,4 @@ $passageiro->getPassagem()->CancelarPassagem();
 
 
 // Ao final todos os logs das operações realizadas devem ser exibidos na tela.
-// Log::ImprimirLogs();
+Log::ImprimirLogs();

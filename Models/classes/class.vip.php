@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
     class Vip extends Passageiro{
@@ -63,5 +63,6 @@ include_once "../Models/global.php";
         public function IsVIP () {
             return true;
           }
+        
     }
 

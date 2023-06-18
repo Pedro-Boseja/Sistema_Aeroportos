@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
 class Passageiro extends persist{
@@ -107,5 +107,7 @@ class Passageiro extends persist{
   public function IsVIP () {
     return false;
   }
-
+  public function getNome(){
+    return $this->_cadastro->getNome();
+}
 }  

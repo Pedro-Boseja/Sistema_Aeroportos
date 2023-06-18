@@ -1,5 +1,5 @@
 <?php
- include_once "../Models/global.php";
+include_once "../global.php";
 
 
   class Viagem extends persist{
@@ -116,13 +116,6 @@
       }
 
       public function getPassageiros(){
-        // echo "Entrou add passageiro";
-        // $passageiros = array();
-        // foreach($this->_assentos as $a){
-        //   array_push($passageiros, $a);
-        // }
-        //$passageiros = array_values($this->_assentos);
-        //return $passageiros;
         return $this->_assentos;
       }
 
@@ -150,6 +143,10 @@
       public function getAeroportoSaida () {
         // return $this->_aeroporto_saida;
         return $this->_aeroporto_saida->getSigla();
+      }
+
+      public function getAeroportoSaida1 () {
+        return $this->_aeroporto_saida;
       }
 
       public function getDuracao () {
@@ -182,7 +179,7 @@
         if(count($this->_assentos) == 0){
           return $assentos;
         }
-    
+      
         $assentos_ocupados = array_diff($this->_assentos, $assentos);
         $assentos_livres = array_diff($this->_assentos, $assentos_ocupados);
 
@@ -237,13 +234,37 @@
         $this->_aeronave = $aeronave;
         $this->save();
       }
-      public function ViagemExecutada(){
-        echo "A viagem foi executada";
+      public function ViagemExecutada($is){
+        //Execução da Viagem
         $this->_executado = true;
-        //Verificação de Clientes VIP para contabilizar programa de milhagem.
-       // $milhagem = end($companhia)->getMilhagem();
+        $this->ContabilizaPontos($is);
+   
+      }
+      private function ContabilizaPontos($is){
+        if($is){
+        //Dados.
+          $companhia = CompanhiaAerea::getRecordsByField('_sigla', $this->_companhia);
+          $milhagem = $companhia[0]->getMilhagem();
+          $passageiros_milhagem = $milhagem->getPassageiros();
 
-        
+          $passageiros_voo = $this->_assentos;
+
+          //echo "Passageiros: ".count($passageiros_voo )."  Milhagem: ".count($passageiros_milhagem)."\n";
+          foreach($passageiros_voo as $p){
+
+            foreach($passageiros_milhagem as $m){
+
+              //Verificação se faz parte;
+              if($p->getNome() == $m->getNome()){
+
+                //Adicionar Pontos
+                $m->addPontos($this->_milhagem);
+                echo "Foram adicionados ".$this->_milhagem." pontos de milhagem para o passageiro ".$p->getNome()."\n";
+
+              }
+            }
+          }
+        }
       }
 
       public function getMulta(){

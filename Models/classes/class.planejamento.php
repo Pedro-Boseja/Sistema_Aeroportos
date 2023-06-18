@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
   // enum EnumDias{ //utilizado para determinar a frequencia de um voo
@@ -46,7 +46,7 @@ include_once "../Models/global.php";
 
       }
 
-      public function ExecutarViagem (Viagem $viagem_exe) {
+     /* public function ExecutarViagem (Viagem $viagem_exe) {
 
         $codigo = $viagem_exe->getCodigo();
 
@@ -90,7 +90,7 @@ include_once "../Models/global.php";
           
         }
         echo "Fim do loop";
-      }
+      }*/
       public function ProgramaViagens(){
         $obj_antes = serialize($this);
         $data = new DateTime();
@@ -148,7 +148,7 @@ include_once "../Models/global.php";
                         $this->_milhagem
                         );
             //$viagem->setCodigoPlan($this->_codigo_plan);
-            //$viagem->save(); //comentar
+            // $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           

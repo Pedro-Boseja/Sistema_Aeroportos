@@ -134,13 +134,13 @@ $nascimento = DateTime::createFromFormat("d/m/Y", "31/03/2004");
 $passageiro = new Passageiro($cadPassageiro, $nascimento, "brasileiro", "ramo@magno.com", "12314525877");
 
 
-$azul->CadastrarCategoria("ouro", "1000");
+$azul->CadastrarCategoria("ouro", "100");
 $azul->CadastrarCategoria("diamante", "2000");
 $azul->CadastrarCategoria("platina", "3000");
 $passageiro= $azul->PromoverVIP($passageiro);
 
 
-$datacliente = DateTime::createFromFormat("d/m/Y", "18/06/2023");
+$datacliente = DateTime::createFromFormat("d/m/Y", "19/06/2023");
 
 $lista_viagens = $cliente->SolicitarViagem($confins, $afonso, $datacliente, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
@@ -182,8 +182,6 @@ $azul->CadastrarPiloto($copiloto);
 $azul->CadastrarComissario($comissario1);
 $azul->CadastrarComissario($comissario2);
 
-$viagem_escolhida[0]->setAeronave($aviao2);
-$viagem_escolhida[1]->setAeronave($aviao2);
 
 $viagem_escolhida[0]->AddTripulaçao($tripulacao);
 $viagem_escolhida[1]->AddTripulaçao($tripulacao);
@@ -196,36 +194,23 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela.
 $passageiro->getPassagem()->CheckIn();
-$passageiro->getPassagem()->PrintCartaoEmbarque();
-
-// Feito isto, simule a realização das viagens envolvidas.
-
-/*
-// Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
-// dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "19/06/2023");
-$lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
-$viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
-// $cliente->EscolherAssentos($viagem_escolhida);
-$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["10E"], 1);
-
-try{
-    $passageiro->getPassagem()->CheckIn();
-}catch(Exception $e){
-    echo $e->getMessage();
-}
-*/
-echo $passageiro->verificaPontos();
-$assentos = $viagem_escolhida[0]->getPassageiros();
-print_r($assentos);
-//$azul->executaViagem($viagem_escolhida[0]);
-//$azul->executaViagem($viagem_escolhida[1]);
-echo $passageiro->verificaPontos();
+//$passageiro->getPassagem()->PrintCartaoEmbarque();
+$viagens = $passageiro->getPassagem()->getViagens();
 
 
 
-
-
+// echo $passageiro->verificaPontos();
+// $assentos = $viagem_escolhida[0]->getPassageiros();
+// print_r($assentos);
+// //$azul->executaViagem($viagem_escolhida[0]);
+// //$azul->executaViagem($viagem_escolhida[1]);
+// echo $passageiro->verificaPontos();
+$pmil = $azul->getMilhagem();
+echo $passageiro->verificaPontos()." - " .$pmil->getCategoriaPassageiro($passageiro)."\n";
+$pass = $passageiro->getPassagem();
+$pass->ExecutarViagens();
+$pmil->UpgradeAll();
+echo $passageiro->verificaPontos()." - " .$pmil->getCategoriaPassageiro($passageiro)."\n";
 
 
 
