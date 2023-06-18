@@ -47,6 +47,10 @@ include_once "../Models/global.php";
             return $this->_t_percurso;
         }
 
+        public function getViagem () {
+            return $this->_viagem;
+        }
+
         public function getDTotal () {
             return $this->_d_total;
         }

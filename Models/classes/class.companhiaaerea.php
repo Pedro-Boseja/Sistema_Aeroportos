@@ -73,7 +73,7 @@ class CompanhiaAerea extends persist{
         array_push($this->_pilotos, $piloto);
     }
     
-    public function CadastraVeiculo (Veiculo $veiculo) {
+    public function CadastrarVeiculo (Veiculo $veiculo) {
         array_push($this->_frota, $veiculo);
     }
 
