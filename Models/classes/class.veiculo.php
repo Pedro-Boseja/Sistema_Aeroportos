@@ -108,6 +108,10 @@ include_once "../global.php";
               array_push($rota, $k);
             }
             array_push($rota, $endereco_aeroporto);
+
+            $mensagem = "Rota calculada para buscar os tripulantes da viagem ".$this->_viagem->getCodigo();
+            $log = new Log_leitura(new DateTime(), "Veiculo", serialize($this), $mensagem);
+            $log->save();
     
             return $rota;
         }
@@ -143,6 +147,10 @@ include_once "../global.php";
             array_push($horarios, $h2);
             $i += 1;
           }
+
+          $mensagem = "Horarios de embarque dos tripulantes da viagem ".$this->_viagem->getCodigo()." calculado";
+          $log = new Log_leitura(new DateTime(), "Veiculo", serialize($this), $mensagem);
+          $log->save();
     
           return array_reverse($horarios);
         } 
@@ -168,6 +176,7 @@ include_once "../global.php";
                 $distancia += $this->_map->geoGetDistance($this->_rota[$i-1], $this->_rota[$i])['distance'];
             }
             
+          
             return $distancia;
         }
 

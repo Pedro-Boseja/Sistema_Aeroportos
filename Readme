@@ -1,0 +1,4 @@
+Professor, 
+
+O arquivo final de teste se encontra em Models/Teste/FinalTest.php, se for executado várias vezes o programa vai gerar muitos arquivos que podem extrapolar a memória disponivel.
+Se for esse o caso, basta deletar o que estiver em viagens.txt e Logs.txt em Models/classes/datafiles/. Lembrando que os Logs antigos vão continuar salvos de uma execução para outra.

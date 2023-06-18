@@ -148,7 +148,7 @@ include_once "../global.php";
                         $this->_milhagem
                         );
             //$viagem->setCodigoPlan($this->_codigo_plan);
-            // $viagem->save(); //comentar
+            $viagem->save(); //comentar
             array_push($this->_viagens_planejadas, $viagem);
           }
           
@@ -303,15 +303,15 @@ include_once "../global.php";
 
       }
 
-      public function assignTripulante(Tripulante $tripulante, Viagem $viagem){
+      // public function assignTripulante(Tripulante $tripulante, Viagem $viagem){
 
-        if( $tripulante->isAvaliable($viagem) ){
+      //   if( $tripulante->isAvaliable($viagem) ){
 
-          $tripulante->addViagem($viagem);
+      //     $tripulante->addViagem($viagem);
 
-        }
+      //   }
 
-      }
+      // }
 
       public function createViagem(string $codigo, DateTime $dia_de_saida){
         $obj_antes = serialize($this);

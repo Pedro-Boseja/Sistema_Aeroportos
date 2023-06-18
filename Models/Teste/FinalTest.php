@@ -26,7 +26,7 @@ $latam->save();
 // • CNPJ: 22.111.333/4444-55
 // • Sigla: AD
 $azul = new CompanhiaAerea("Azul", 002, "22.111.333/4444-55", "Azul Linhas Aéreas Brasileiras S.A.", "AD", 300);
-$latam->save();
+$azul->save();
 // Cadastre duas aeronaves 
 //modelo 175 
 // fabricante Embraer, 
@@ -93,7 +93,7 @@ $data9 = Datetime::createFromFormat('H:i', "18:30");
 $cnf_cgh = new PLanejamento($freq, "CNF-CGH",$confins, $congonhas, $data1, $data2, 200, $azul);
 $cnf_cgh->ProgramaViagens();
 //congonhas - confins 
-$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 300, $azul);
+$cgh_cnf = new PLanejamento($freq, "CGH-CNF",$congonhas,$confins, $data4, $data5, 300, $latam);
 $cgh_cnf->ProgramaViagens();
 
 //confins - guarulhos
@@ -114,7 +114,7 @@ $gig_gru->ProgramaViagens();
 $cgh_cwb = new PLanejamento($freq, "CGH-CWB",$congonhas,$afonso, $data8, $data9, 300, $azul);
 $cgh_cwb->ProgramaViagens();
 //afonso pena - congonhas
-$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 300, $azul);
+$cwb_cgh = new PLanejamento($freq, "CWB-CGH",$congonhas,$afonso, $data7, $data5, 300, $latam);
 $cwb_cgh->ProgramaViagens();
 
 //afonso pena - confins
@@ -149,8 +149,8 @@ $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 $cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["A1", "A2"], 1);
 
 //Logando com Outro Usuário:
-Usuario::Sair();
-Usuario::Login("Enzo Magico", "696969");
+// Usuario::Sair();
+// Usuario::Login("Enzo Magico", "696969");
 
 // Cadastre e planeje a tripulação que atuará na primeira viagem do vôo de ida do
 // passageiro.
@@ -196,10 +196,18 @@ $viagem_escolhida[1]->AddTripulaçao($tripulacao);
 $veiculo = new Veiculo(12, 18, $viagem_escolhida[0]);
 
 $rota = $veiculo->getRota();
-
-
-
 $horarios = $veiculo->CalculaHorariosEmbarque();
+
+
+$i = 1;
+echo"\n_______________________\n";
+echo"Embarque dos Tripulantes:\n";
+for(;$i<count($rota)+1;){
+    echo $i."º Parada => ".$rota[$i-1].". Horário de embarque: ".$horarios[$i-1]->format("d/m/Y H:i a")."\n";
+    $i++;
+    
+}
+echo"_______________________\n";
 
 // Deve ser feito o checkin da passagem e os cartões de embarque gerados e impressos na
 // tela. Feito isto, simule a realização das viagens envolvidas.
@@ -211,11 +219,11 @@ $passageiro->getPassagem()->ExecutarViagens();
 
 // Deve ser adquirida também uma passagem de volta em pelo menos um vôo da Latam
 // dois dias após a ida. Deve-se tentar fazer checkin dessa passagem.
-$datacliente2 = DateTime::createFromFormat("d/m/Y", "28/06/2023");
+$datacliente2 = DateTime::createFromFormat("d/m/Y", "26/06/2023");
 $lista_viagens = $cliente->SolicitarViagem($afonso, $confins, $datacliente2, 1);
 $viagem_escolhida = $cliente->EscolherViagem($lista_viagens, 0);
 // $cliente->EscolherAssentos($viagem_escolhida);
-$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["10E"], 1);
+$cliente->ComprarPassagem($viagem_escolhida, $passageiro, ["10E"], 2);
 
 try{
     $passageiro->getPassagem()->CheckIn();

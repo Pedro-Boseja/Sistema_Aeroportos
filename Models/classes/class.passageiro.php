@@ -91,14 +91,14 @@ class Passageiro extends persist{
 
   }
 
-  public function Embarcar(){
+  public function Embarcar($i){
     if($this->_passagem == null){
       throw new Exception("Não há viagens para embarcar");
     }
 
     $this->_passagem->setStatus(EnumStatus::Embarque_realizado);
     $v = $this->_passagem->getViagens();
-    $mensagem = "Passageiro ".$this->_cadastro->getNome()." embarcou no voo ".$v[0]->getCodigo();
+    $mensagem = "Passageiro ".$this->_cadastro->getNome()." embarcou no voo ".$v[$i]->getCodigo();
     $log = new Log_leitura(new DateTime(), "Passageiro", "viagens", $mensagem);
     $log->save();
 
