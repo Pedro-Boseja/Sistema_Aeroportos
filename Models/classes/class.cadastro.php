@@ -1,5 +1,5 @@
 <?php
-include_once "../global.php";
+include_once "../Models/global.php";
 
 
 class Cadastro extends persist{
@@ -39,6 +39,7 @@ class Cadastro extends persist{
         $this -> _nacionalidade = strtoupper($nacionalidade);
         $this -> _numero_cpf = $numero_cpf;
         $this -> _email = $email;
+        $this -> setDocumento($documento);
         $this -> _endereco = $endereco;
     }    
 

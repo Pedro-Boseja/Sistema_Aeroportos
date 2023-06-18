@@ -1,6 +1,6 @@
 <?php
 
-include_once "../global.php";
+include_once "../Models/global.php";
 
 
 class CompanhiaAerea extends persist{
@@ -74,7 +74,7 @@ class CompanhiaAerea extends persist{
         array_push($this->_pilotos, $piloto);
     }
     
-    public function CadastraVeiculo (Veiculo $veiculo) {
+    public function CadastrarVeiculo (Veiculo $veiculo) {
         array_push($this->_frota, $veiculo);
     }
 

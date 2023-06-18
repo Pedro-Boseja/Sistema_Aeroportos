@@ -1,6 +1,6 @@
 <?php
 
-include_once "../global.php";
+include_once "../Models/global.php";
 
   
   ini_set('allow_url_fopen', true);
@@ -47,6 +47,10 @@ include_once "../global.php";
 
         public function getTPercurso () {
             return $this->_t_percurso;
+        }
+
+        public function getViagem () {
+            return $this->_viagem;
         }
 
         public function getDTotal () {

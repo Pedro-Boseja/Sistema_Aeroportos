@@ -1,17 +1,17 @@
 <?php
 
-include_once "../global.php";
+include_once "../Models/global.php";
 
 
-  enum EnumDias{ //utilizado para determinar a frequencia de um voo
-    case Sunday;
-    case Monday;
-    case Tuesday;
-    case Wednesday;
-    case Thursday;
-    case Friday;
-    case Saturday;
-  }
+  // enum EnumDias{ //utilizado para determinar a frequencia de um voo
+  //   case Sunday;
+  //   case Monday;
+  //   case Tuesday;
+  //   case Wednesday;
+  //   case Thursday;
+  //   case Friday;
+  //   case Saturday;
+  // }
     class Planejamento {
     
       private $_viagens_planejadas = array();
@@ -197,6 +197,17 @@ include_once "../global.php";
       public function getCodigo(){
           return $this -> _codigo_plan;  
       }
+
+      public function getMilhagem()
+      {
+        return $this -> _milhagem;
+      }
+
+      public function getCompanhia()
+      {
+        return $this -> _companhia->getNome();
+      }
+
 
       public function setFrequencia($frequencia){
         $this -> _frequencia = $frequencia;

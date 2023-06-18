@@ -1,7 +1,7 @@
 <?php
 use Vtiful\Kernel\Format;
 
-include_once "../global.php";
+include_once "../Models/global.php";
 
 
 enum EnumStatus : string { //utilizado para determinar o status da passagem
