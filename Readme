@@ -2,3 +2,7 @@ Professor,
 
 O arquivo final de teste se encontra em Models/Teste/FinalTest.php, se for executado várias vezes o programa vai gerar muitos arquivos que podem extrapolar a memória disponivel.
 Se for esse o caso, basta deletar o que estiver em viagens.txt e Logs.txt em Models/classes/datafiles/. Lembrando que os Logs antigos vão continuar salvos de uma execução para outra.
+Nos usamos o Facade como exemplo de Desing Patterns e temos ums código html que pode ser acessado pelo index como front do projeto, não está totalmente funcional, mas nos esforçamos muito pelos
+pontos extra :). 
+
+ATENÇÂO: para rodar o html deve-se mudar os includes de todos os arquivos da pasta Models/classes de "../global.php" para "../Models/global.php".
