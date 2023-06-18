@@ -31,7 +31,7 @@
           if($comps == null){
             throw new Exception("Companhia inválida.");
           }
-          $veiculo = new Veiculo($capacidade, $velocidade, $viagem[0]);
+          $veiculo = new Veiculo($capacidade, $velocidade, $vi[0]);
           $comps[0]->CadastrarVeículo($veiculo);
           $comps[0]->save();
           $veiculo->save();
