@@ -1,6 +1,6 @@
 <?php
 
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
   // enum EnumDias{ //utilizado para determinar a frequencia de um voo

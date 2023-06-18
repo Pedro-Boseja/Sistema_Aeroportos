@@ -1,5 +1,5 @@
 <?php
-include_once "../Models/global.php";
+include_once "../global.php";
 
 
 class Log_leitura extends Log{
